@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HomePage\Error.aspx" />
+    <Content Include="HomePage\SubPage\imagetest.aspx" />
     <Content Include="HomePage\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="HomePage\obj\Debug\qingjia_WeChat.csprojResolveAssemblyReference.cache" />
     <Content Include="HomePage\obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
@@ -394,6 +395,13 @@
     </Compile>
     <Compile Include="HomePage\Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomePage\SubPage\imagetest.aspx.cs">
+      <DependentUpon>imagetest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomePage\SubPage\imagetest.aspx.designer.cs">
+      <DependentUpon>imagetest.aspx</DependentUpon>
     </Compile>
     <Compile Include="HomePage\Model\API\AccessToken.cs" />
     <Compile Include="HomePage\Model\API\Holiday.cs" />

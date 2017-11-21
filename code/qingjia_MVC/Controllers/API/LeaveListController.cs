@@ -418,6 +418,64 @@ namespace qingjia_MVC.Controllers.API
             return result;
         }
 
+        [HttpGet, Route("print")]
+        public ApiBaseResult PrintLeave(string access_token, string LV_NUM)
+        {
+            ApiBaseResult result = Check(access_token);
+            if (result == null)
+            {
+                result = new ApiBaseResult();
+
+                #region 检查此人是否有打印此请假条的权限
+                string[] sArray = access_token.Split('_');
+                string UserID = sArray[0];
+                string GuidString = sArray[1];
+
+                var accountList = from T_Account in db.T_Account where (T_Account.YB_AccessToken == GuidString) select T_Account;
+                if (accountList.Any())
+                {
+                    T_Account accountModel = accountList.ToList().First();
+                    if (accountModel.RoleID.ToString().Trim() == "1")
+                    {
+                        var leavelist = from vw_LeaveList in db.vw_LeaveList
+                                        where (vw_LeaveList.StudentID == accountModel.ID && vw_LeaveList.ID == LV_NUM)
+                                        select vw_LeaveList;
+                        if (leavelist.Any())
+                        {
+                            string url = UpLoadQiNiu.UploadStream(Print.Print_Form(LV_NUM), LV_NUM);
+                            if (url != null)
+                            {
+                                result.result = "success";
+                                result.data = url;
+                            }
+                            else
+                            {
+                                result.result = "error";
+                                result.messages = "出现错误，请联系系统维护人员";
+                            }
+                        }
+                        else
+                        {
+                            result.result = "error";
+                            result.messages = "您没有请假单号为" + LV_NUM + "此条请假记录";
+                        }
+                    }
+                    else
+                    {
+                        result.result = "error";
+                        result.messages = "此接口仅支持学生账号访问";
+                    }
+                }
+                else
+                {
+                    result.result = "error";
+                    result.messages = "出现未知错误，请联系维护人员";
+                }
+                #endregion
+            }
+            return result;
+        }
+
         #region 其他方法
 
         /// <summary>

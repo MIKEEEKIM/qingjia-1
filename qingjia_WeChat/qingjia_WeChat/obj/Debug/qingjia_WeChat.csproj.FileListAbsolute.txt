@@ -159,3 +159,4 @@ C:\Users\Wong Jianming\Desktop\qingjia-1\qingjia_WeChat\qingjia_WeChat\bin\Syste
 C:\Users\Wong Jianming\Desktop\qingjia-1\qingjia_WeChat\qingjia_WeChat\bin\System.Xml.Linq.dll
 C:\Users\Wong Jianming\Desktop\qingjia-1\qingjia_WeChat\qingjia_WeChat\obj\Debug\qingjia_YiBan.dll
 C:\Users\Wong Jianming\Desktop\qingjia-1\qingjia_WeChat\qingjia_WeChat\obj\Debug\qingjia_YiBan.pdb
+C:\Users\Wong Jianming\Desktop\qingjia-1\qingjia_WeChat\qingjia_WeChat\obj\Debug\qingjia_WeChat.csprojResolveAssemblyReference.cache

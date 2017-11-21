@@ -112,11 +112,19 @@
                 AjaxRequestPost('api/leavelist/leavelesson', data);
             });
 
-            $('#btnLeavelistPrintForm').click(function (e) {
+            $('#btnDownLoadLeavelistPrintForm').click(function (e) {
                 //var data = { "UserID": "0121403490106", "UserPsd": "490106", "YiBanID": "123" };
                 //此处的数据格式，只要有一个参数对应后台API接口可接受的数据模型的一个属性，即可接收到参数，否则，接受参数为空
                 AjaxRequestGet('api/leavelist/downloadpic?LV_NUM=1710300002');
             });
+
+            $('#btnLeavelistPrintForm').click(function (e) {
+                //var data = { "UserID": "0121403490106", "UserPsd": "490106", "YiBanID": "123" };
+                //此处的数据格式，只要有一个参数对应后台API接口可接受的数据模型的一个属性，即可接收到参数，否则，接受参数为空
+                AjaxRequestGet('api/leavelist/print?access_token=0121403490106_ed18d81f-c197-4de4-b3b6-a68002ebe3e2&LV_NUM=1710300002');
+            });
+
+            
 
             $('#btnPathTest').click(function (e) {
                 //var data = { "UserID": "0121403490106", "UserPsd": "490106", "YiBanID": "123" };
@@ -207,7 +215,10 @@
         <input type="button" value="leavelesson" id="btnLeavelistLeavelesson" />
         <br />
         <br />
-        <input type="button" value="printform" id="btnLeavelistPrintForm" />
+        <input type="button" value="printform" id="btnDownLoadLeavelistPrintForm" />
+        <br />
+        <br />
+        <input type="button" value="print" id="btnLeavelistPrintForm" />
         <br />
         <br />
         <input type="button" value="PathTest" id="btnPathTest" />
