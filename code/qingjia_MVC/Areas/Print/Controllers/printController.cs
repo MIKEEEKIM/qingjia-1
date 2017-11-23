@@ -3,7 +3,6 @@ using qingjia_MVC.Common;
 using qingjia_MVC.Controllers;
 using qingjia_MVC.Models;
 using System;
-using System.IO;
 using System.Web.Mvc;
 
 namespace qingjia_MVC.Areas.Print.Controllers
@@ -24,7 +23,7 @@ namespace qingjia_MVC.Areas.Print.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Window1_Close(string Message)
         {
-            string script = String.Format("alert('" + Message + "');");
+            string script = string.Format("alert('" + Message + "');");
             PageContext.RegisterStartupScript(ActiveWindow.GetHideReference() + script);
             return UIHelper.Result();
         }
@@ -45,17 +44,7 @@ namespace qingjia_MVC.Areas.Print.Controllers
                 ShowNotify("加载失败，请联系辅导员。");
                 ViewBag.picUrl = "";
             }
-            
-        }
 
-        //public FileResult PrintForm(string LV_NUM)
-        //{
-        //    byte[] photo = new byte[0];
-        //    byte[] file = Common.Print.Print_Form(LV_NUM);
-        //    photo = new byte[file.Length];
-        //    file.Read(photo, 0, photo.Length);
-        //    file.Close();
-        //    return File(photo, "image/jpeg");
-        //}
+        }
     }
 }
