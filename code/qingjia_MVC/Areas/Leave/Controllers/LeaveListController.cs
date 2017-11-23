@@ -279,7 +279,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
                 string ST_Num = Session["UserID"].ToString();
                 var student = from vw_Student in db.vw_Student where vw_Student.ST_Num == ST_Num select vw_Student;
                 vw_Student modelStudent = student.ToList().First();
-                
+
                 //获取具有早晚自习请假的年级
                 string FreshmanYear = System.Configuration.ConfigurationManager.AppSettings["FreshmanYear"].ToString().Trim();
 

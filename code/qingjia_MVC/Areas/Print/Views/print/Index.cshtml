@@ -9,6 +9,7 @@
     </div>
     <div style="margin-left:auto; margin-right:auto;">
         @*<img src=@ViewBag.ImageUrl style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />*@
-        <img src="@Url.Action("PrintForm", new { LV_NUM = ViewBag.printNum })" style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />
+        @*<img src="@Url.Action("PrintForm", new { LV_NUM = ViewBag.printNum })" style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />*@
+        <img src=@ViewBag.picUrl style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />
     </div>
 }

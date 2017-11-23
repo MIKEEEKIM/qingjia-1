@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/weui.css" />
     <link rel="stylesheet" href="css/example.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <script src="js/example.js"></script>
+    <%--<script src="js/example.js"></script>--%>
     <script src="js/router.min.js"></script>
     <script src="js/zepto.min.js"></script>
 </head>

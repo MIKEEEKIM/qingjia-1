@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Data;
-using qingjia_YiBan.HomePage.Class;
+﻿using qingjia_YiBan.HomePage.Class;
 using qingjia_YiBan.HomePage.Model.API;
+using System;
+using System.Collections.Generic;
+using System.Web.UI.HtmlControls;
 
 namespace qingjia_YiBan.SubPage
 {
@@ -34,33 +29,19 @@ namespace qingjia_YiBan.SubPage
                     List<LeaveList> list = result.data;
                     foreach (LeaveList item in list)
                     {
-                        if (item.State == "待销假")
+                        if (item.State == "待销假" || item.State == "已销假")
                         {
                             string LV_NUM = item.ID;
                             string LeaveType = item.Type;
                             string go_time = item.TimeBack.ToString("yyyy-MM-dd HH:MM:ss");
                             string back_time = item.SubmitTime;
-                            leave_list_div.Controls.Add(CreatLeaveList(LV_NUM, LeaveType, go_time, back_time));
+                            bool IsPrint = (item.IsPrint == "1") ? true : false;
+                            leave_list_div.Controls.Add(CreatLeaveList(LV_NUM, LeaveType, go_time, back_time, IsPrint));
                             leave_list_div.Controls.Add(CreatBr());
                         }
                     }
                 }
             }
-
-            //string ST_NUM = Request.Cookies["UserInfo"]["UserID"].ToString();
-
-            //string strWHere = " StudentID = '" + ST_NUM + "' and StateLeave='1' and StateBack='0'";
-            //DataSet ds = LeaveList.GetList3(strWHere);
-            //DataTable dtSource = ds.Tables[0];
-            //for (int i = 0; i < dtSource.Rows.Count; i++)
-            //{
-            //    string LV_NUM = dtSource.Rows[i]["ID"].ToString();
-            //    string LeaveType = DB.getKey("LeaveType", dtSource.Rows[i]["TypeChildID"].ToString());
-            //    string go_time = dtSource.Rows[i]["TimeLeave"].ToString();
-            //    string back_time = dtSource.Rows[i]["TimeBack"].ToString();
-            //    leave_list_div.Controls.Add(CreatLeaveList(LV_NUM, LeaveType, go_time, back_time));
-            //    leave_list_div.Controls.Add(CreatBr());
-            //}
         }
 
         /// <summary>
@@ -71,7 +52,7 @@ namespace qingjia_YiBan.SubPage
         /// <param name="go_Time"></param>
         /// <param name="back_Time"></param>
         /// <returns></returns>
-        private HtmlGenericControl CreatLeaveList(string LV_NUM, string Class, string go_Time, string back_Time)
+        private HtmlGenericControl CreatLeaveList(string LV_NUM, string Class, string go_Time, string back_Time, bool IsPrint)
         {
             //请假记录
             HtmlGenericControl LeaveList = CreatDiv("", "weui-cells weui-cells_form", "");
@@ -81,7 +62,7 @@ namespace qingjia_YiBan.SubPage
             HtmlGenericControl Div_02 = CreatDiv("", "weui-cell", "");
             HtmlGenericControl Div_03 = CreatDiv("", "weui-cell", "");
             HtmlGenericControl Div_04 = CreatDiv("", "weui-cell", "");
-            //HtmlGenericControl Div_05 = CreatDiv("", "page__bd page__bd_spacing", "");
+            HtmlGenericControl Div_05 = CreatDiv("", "page__bd page__bd_spacing", "");
 
             //内部构成  创建第二层
             HtmlGenericControl Div_01_01 = CreatDiv("", "weui-cell__hd", "");
@@ -117,7 +98,7 @@ namespace qingjia_YiBan.SubPage
             Div_04_02.Controls.Add(Text_04);
 
             //创建按钮
-            HtmlGenericControl Div_05_01 = CreatSubmit("", "weui-btn weui-btn_primary", "", "Print.aspx?LV_NUM='" + LV_NUM + "'");
+            HtmlGenericControl Div_05_01 = CreatSubmit("", "weui-btn weui-btn_primary", "", "LeavePrint.aspx?LV_NUM=" + LV_NUM);
 
             //创建换行
             HtmlGenericControl br1 = CreatBr();
@@ -127,8 +108,8 @@ namespace qingjia_YiBan.SubPage
             //组装div
             //Div_05.Controls.Add(br1);
             //Div_05.Controls.Add(br2);
-            //Div_05.Controls.Add(Div_05_01);
-            //Div_05.Controls.Add(br3);
+            Div_05.Controls.Add(Div_05_01);
+            Div_05.Controls.Add(br3);
 
             Div_04.Controls.Add(Div_04_01);
             Div_04.Controls.Add(Div_04_02);
@@ -146,8 +127,10 @@ namespace qingjia_YiBan.SubPage
             LeaveList.Controls.Add(Div_02);
             LeaveList.Controls.Add(Div_03);
             LeaveList.Controls.Add(Div_04);
-            //LeaveList.Controls.Add(Div_05);
-
+            if (IsPrint)
+            {
+                LeaveList.Controls.Add(Div_05);
+            }
             return LeaveList;
         }
 

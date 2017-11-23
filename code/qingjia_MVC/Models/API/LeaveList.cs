@@ -20,6 +20,6 @@ namespace qingjia_MVC.Models.API
         public string LeaveAddress { get; set; }
         public string Lesson { get; set; }
         public string TeacherName { get; set; }
-
+        public string IsPrint { get; set; }//0代表不需要打印 1代表需要打印
     }
 }

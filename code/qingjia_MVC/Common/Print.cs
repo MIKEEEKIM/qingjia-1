@@ -20,11 +20,13 @@ namespace qingjia_MVC.Common
         private static int ToWidth = 1241;//宽度
         private static int ToHeight = 1755;//高度
 
-        public static FileStream Print_Form(string LV_NUM)
+        public static byte[] Print_Form(string LV_NUM)
         {
             //标准尺寸
             Bitmap b = new Bitmap(ToWidth, ToHeight);
             Graphics g = Graphics.FromImage(b);
+            MemoryStream ms = new MemoryStream();
+
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
             var leavelist = from vw_LeaveList in db.vw_LeaveList where (vw_LeaveList.ID == LV_NUM) select vw_LeaveList;
@@ -69,13 +71,14 @@ namespace qingjia_MVC.Common
                 #region 打印假条
                 try
                 {
-                    #region 请假条打印-原先
+                    #region 请假条打印
                     //上课请假
                     if (LL.LeaveType.ToString().Substring(0, 2) == "上课")
                     {
                         //私假
                         if (LL.LeaveType.ToString().Substring(7, 2) == "事假" || LL.LeaveType.ToString().Substring(7, 2) == "病假")
                         {
+                            #region 绘图
                             Bitmap Imgc = (Bitmap)Bitmap.FromFile(picPath + @"\res\images\qingjia\stu_class_record_modle.jpg");
                             Bitmap Bitmapc = new Bitmap(Imgc);
                             Graphics C_teachername = Graphics.FromImage(Bitmapc);
@@ -111,21 +114,29 @@ namespace qingjia_MVC.Common
                             C_time_now.DrawString(C_nowtime, font, brush, 1500, 2850);
                             Rectangle C_rec = new Rectangle(767, 1327, 1700, 150);//文字区域，画一个矩形用来控制转行
                             C_reason.DrawString("" + LL.Reason.ToString(), font, brush, C_rec);
+                            #endregion
 
                             g.DrawImage(Bitmapc, new Rectangle(0, 0, ToWidth, ToHeight), new Rectangle(0, 0, Bitmapc.Width, Bitmapc.Height), GraphicsUnit.Pixel);
                             g.Dispose();
-                            b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg"));
+                            b.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            byte[] buffur = new byte[ms.Length];
+                            ms.Seek(0, SeekOrigin.Begin); // 此处需要将流重置，不然下面的代码读取不到数据。
+                            ms.Read(buffur, 0, Convert.ToInt32(ms.Length));
+                            Bitmapc.Dispose();
+                            ms.Dispose();
+                            return buffur;
 
-                            string C_filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg");
-                            //ViewBag.ImageUrl = "../../res/images/qingjia/stu_class_prove.jpg";
-                            //return picReturn(Bitmapc);
+                            //b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg"));
 
-                            return picSaveReturn(C_filename);
+                            //string C_filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg");
+
+                            //return picSaveReturn(C_filename);
                         }
 
                         //公假
                         else
                         {
+                            #region 绘图
                             Bitmap Imgs = (Bitmap)Bitmap.FromFile(picPath + @"\res\images\qingjia\stu_class_prove_modle.jpg");
                             Bitmap Bitmaps = new Bitmap(Imgs);
                             Graphics S_teachername = Graphics.FromImage(Bitmaps);
@@ -160,25 +171,28 @@ namespace qingjia_MVC.Common
                             S_time_now.DrawString(S_nowtime, font, brush, 1500, 2950);
                             Rectangle S_rec = new Rectangle(787, 1322, 1700, 150);//文字区域，画一个矩形用来控制转行
                             S_reason.DrawString("" + LL.Reason.ToString(), font, brush, S_rec);
+                            #endregion
 
                             g.DrawImage(Bitmaps, new Rectangle(0, 0, ToWidth, ToHeight), new Rectangle(0, 0, Bitmaps.Width, Bitmaps.Height), GraphicsUnit.Pixel);
                             g.Dispose();
-                            b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg"));
+                            b.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            byte[] buffur = new byte[ms.Length];
+                            ms.Seek(0, SeekOrigin.Begin); // 此处需要将流重置，不然下面的代码读取不到数据。
+                            ms.Read(buffur, 0, Convert.ToInt32(ms.Length));
+                            Bitmaps.Dispose();
+                            ms.Dispose();
+                            return buffur;
 
-                            string S_filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg");
-
-                            //直接输出二进制流到页面，输出图片过大
-                            //return picReturn(Bitmaps);
-
-
-                            //先保存到本地，在从本地读取成二进制，输出到页面
-                            return picSaveReturn(S_filename);
+                            //b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg"));
+                            //string S_filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_class_prove.jpg");
+                            //return picSaveReturn(S_filename);
                         }
                     }
 
                     //离校请假
                     else
                     {
+                        #region 绘图
                         Bitmap img;
                         img = (Bitmap)Bitmap.FromFile(picPath + @"\res\images\qingjia\stu_Leaveform_modle.jpg");
                         //此处使用png格式 会降低图片大小，约为4兆左右，加载时间约为40秒，如果可以做出进度条效果，可以考虑使用，否则用户体验不佳
@@ -319,24 +333,44 @@ namespace qingjia_MVC.Common
                         sf.LineAlignment = StringAlignment.Center;
 
                         img.Dispose();
+                        #endregion
                         if (LL.LeaveType != "长期请假")
                         {
                             g.DrawImage(bitmap, new Rectangle(0, 0, ToWidth, ToHeight), new Rectangle(0, 0, bitmap.Width, bitmap.Height), GraphicsUnit.Pixel);
                             g.Dispose();
-                            b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform.jpg"));
-                            string filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform.jpg");
+                            b.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            byte[] buffur = new byte[ms.Length];
+                            ms.Seek(0, SeekOrigin.Begin); // 此处需要将流重置，不然下面的代码读取不到数据。
+                            ms.Read(buffur, 0, Convert.ToInt32(ms.Length));
+                            bitmap.Dispose();
+                            ms.Dispose();
+                            return buffur;
 
-                            return picSaveReturn(filename);
+                            //b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform.jpg"));
+                            //string filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform.jpg");
+
+                            //return picSaveReturn(filename);
                         }
                         else
                         {
+
                             g.DrawImage(bitmap, new Rectangle(0, 0, ToWidth, ToHeight), new Rectangle(0, 0, bitmap.Width, bitmap.Height), GraphicsUnit.Pixel);
                             g.Dispose();
-                            string _path = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg");
-                            b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg"));
-                            string filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg");
 
-                            return picSaveReturn(filename);
+                            b.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            byte[] buffur = new byte[ms.Length];
+                            ms.Seek(0, SeekOrigin.Begin); // 此处需要将流重置，不然下面的代码读取不到数据。
+                            ms.Read(buffur, 0, Convert.ToInt32(ms.Length));
+                            bitmap.Dispose();
+                            ms.Dispose();
+                            return buffur;
+                            //return ms;
+
+                            //string _path = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg");
+                            //b.Save(System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg"));
+                            //string filename = System.Web.HttpContext.Current.Server.MapPath(@"~\res\images\qingjia\stu_Leaveform_l.jpg");
+
+                            //return picSaveReturn(filename);
                         }
                     }
                     #endregion
@@ -344,8 +378,6 @@ namespace qingjia_MVC.Common
                 }
                 catch (Exception ex)
                 {
-                    //提示  打印请假条错误
-                    //Window1_Close("出现未知错误，请联系管理员！");
                     return null;
                 }
                 #endregion
@@ -353,7 +385,6 @@ namespace qingjia_MVC.Common
             else
             {
                 //无需打印假条
-                //Window1_Close("无需打印假条！");
                 return null;
             }
         }

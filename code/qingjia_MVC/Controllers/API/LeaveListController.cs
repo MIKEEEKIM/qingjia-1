@@ -151,27 +151,47 @@ namespace qingjia_MVC.Controllers.API
 
                 string UserID = access_token.Substring(0, access_token.IndexOf("_"));
 
-                var leavelist = from vw_LeaveList in db.vw_LeaveList where ((vw_LeaveList.StudentID == UserID) && (vw_LeaveList.StateBack == "0")) select vw_LeaveList;
+                var leavelist = from vw_LeaveList in db.vw_LeaveList where ((vw_LeaveList.StudentID == UserID)) orderby vw_LeaveList.SubmitTime descending select vw_LeaveList;
                 if (leavelist.Any())
                 {
+                    List<vw_LeaveList> list = new List<vw_LeaveList>();
+                    if (leavelist.Count() >= 30)
+                    {
+                        list = (List<vw_LeaveList>)leavelist.ToList().Take(30);
+                    }
+                    else
+                    {
+                        list = leavelist.ToList();
+                    }
+                    
                     List<LeaveList> data = new List<LeaveList>();
                     foreach (vw_LeaveList item in leavelist)
                     {
+                        string leaveTypeName = item.LeaveType.ToString().Trim();
+
                         LeaveList ll = new LeaveList();
                         ll.ID = item.ID;
                         ll.Reasoon = item.Reason;
-                        ll.SubmitTime = item.Reason;
+                        ll.SubmitTime = item.SubmitTime.ToString("yyyy-MM-dd HH:MM:ss");
                         ll.Type = item.LeaveType;
                         ll.State = "";
-                        ll.TimeLeave = (DateTime)item.TimeLeave;
+                        ll.TimeLeave = item.TimeLeave;
                         ll.TimeBack = (DateTime)item.TimeBack;
-                        if (item.StateLeave == "0")
+                        if (item.StateLeave == "0" && item.StateBack == "0")
                         {
                             ll.State = "待审核";
                         }
-                        if (item.StateLeave == "1")
+                        if (item.StateLeave == "1" && item.StateBack == "0")
                         {
                             ll.State = "待销假";
+                        }
+                        if (item.StateLeave == "1" && item.StateBack == "1")
+                        {
+                            ll.State = "已销假";
+                        }
+                        if (item.StateLeave == "2" && item.StateBack == "1")
+                        {
+                            ll.State = "已驳回";
                         }
                         ll.RejectNote = (item.Notes == null) ? "" : item.Notes;
                         ll.LeaveWay = (item.LeaveWay == null) ? "" : item.LeaveWay;
@@ -179,6 +199,16 @@ namespace qingjia_MVC.Controllers.API
                         ll.LeaveAddress = (item.Address == null) ? "" : item.Address;
                         ll.Lesson = (item.Lesson == null) ? "" : item.Lesson;
                         ll.TeacherName = (item.Teacher == null) ? "" : item.Teacher;
+
+                        //上课请假、短期请假、长期请假 需要打印请假条
+                        if (item.StateLeave == "1" && (leaveTypeName.Substring(0, 2) == "上课" || leaveTypeName.Substring(0, 2) == "短期" || leaveTypeName.Substring(0, 2) == "长期"))
+                        {
+                            ll.IsPrint = "1";//需要打印
+                        }
+                        else
+                        {
+                            ll.IsPrint = "0";//不需要打印
+                        }
 
                         data.Add(ll);
                     }
@@ -398,8 +428,8 @@ namespace qingjia_MVC.Controllers.API
             //string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "res\\images\\qingjia", "测试图片.jpg");
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
             //FileStream fileStream = File.OpenRead(filePath);
-            FileStream fileStream = Print.Print_Form(LV_NUM);
-            httpResponseMessage.Content = new StreamContent(fileStream);
+            byte[] fileStream = Print.Print_Form(LV_NUM);
+            //httpResponseMessage.Content = new StreamContent(fileStream);
             httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
@@ -442,7 +472,7 @@ namespace qingjia_MVC.Controllers.API
                                         select vw_LeaveList;
                         if (leavelist.Any())
                         {
-                            string url = UpLoadQiNiu.UploadStream(Print.Print_Form(LV_NUM), LV_NUM);
+                            string url = UpLoadQiNiu.UpLoadData(Print.Print_Form(LV_NUM), LV_NUM);
                             if (url != null)
                             {
                                 result.result = "success";

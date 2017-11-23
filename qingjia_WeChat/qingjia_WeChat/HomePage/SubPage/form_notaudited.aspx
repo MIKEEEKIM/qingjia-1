@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
     <title>请假系统-特殊请假-IMAW</title>
     <link rel="stylesheet" href="css/weui.css" />
     <link rel="stylesheet" href="css/example.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <script src="js/example.js"></script>
+    <%--<script src="js/example.js"></script>--%>
     <script src="js/router.min.js"></script>
     <script src="js/zepto.min.js"></script>
 </head>

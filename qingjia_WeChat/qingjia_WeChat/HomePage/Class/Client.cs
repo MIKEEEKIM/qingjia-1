@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 using System.Net;
 using System.Text;
-using System.Configuration;
 
 namespace qingjia_YiBan.HomePage.Class
 {
@@ -13,7 +9,7 @@ namespace qingjia_YiBan.HomePage.Class
         private WebClient client = new WebClient();
         private string url = ConfigurationManager.AppSettings["qingjiaApiUrl"].ToString();
         private ApiResult<T> error_result = new ApiResult<T>("error");
-        
+
         /// <summary>
         /// POST请求
         /// </summary>
@@ -62,13 +58,12 @@ namespace qingjia_YiBan.HomePage.Class
             url = url + _url + "?" + _postString;
 
             //string response = client.DownloadString(url);
-
-            byte[] responseData = client.DownloadData(url);
-            //将byte字节转换为字符串
-            string response = Encoding.UTF8.GetString(responseData);
-
             try
             {
+
+                byte[] responseData = client.DownloadData(url);
+                //将byte字节转换为字符串
+                string response = Encoding.UTF8.GetString(responseData);
                 var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();//解析JSON数据
                 ApiResult<T> result = serializer.Deserialize<ApiResult<T>>(response);
                 return result;
