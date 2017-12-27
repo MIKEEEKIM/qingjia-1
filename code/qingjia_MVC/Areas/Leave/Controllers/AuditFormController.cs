@@ -204,7 +204,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
                 {
                     holidayNum++;
                 }
-                if (row["LeaveType"].ToString().Substring(0, 3) == "晚点名") 
+                if (row["LeaveType"].ToString().Substring(0, 3) == "晚点名")
                 {
                     nightNum++;
                 }
@@ -1809,7 +1809,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             MessageModel model = new MessageModel();
             //是否需要打印假条
             bool isPrint = false;
-            
+
             #region 同意请假操作
             foreach (string rowId in selectedRows)
             {
@@ -1850,10 +1850,10 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             {
                 ShowNotify(string.Format("操作失败！"));
             }
-            
+
             //发送短信
             ShortMessageClass.SendShortMessage(model);
-            
+
 
             //绑定Grid数据
             if (Session["AuditClassName"] == null || Session["AuditClassName"].ToString() == "-1")

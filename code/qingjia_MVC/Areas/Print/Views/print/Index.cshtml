@@ -1,15 +1,18 @@
 ﻿@{
-    ViewBag.Title = "打印";
-    var F = @Html.F();
+        ViewBag.Title = "打印";
+        var F = @Html.F();
+    }
+
+    @section script{
+
 }
 
 @section body{
     <div>
-        请将鼠标放到图片上方点击右键，保存至电脑后打印请假条。
+        请将鼠标放到图片上方点击右键，保存至电脑后打印请假条
     </div>
-    <div style="margin-left:auto; margin-right:auto;">
-        @*<img src=@ViewBag.ImageUrl style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />*@
-        @*<img src="@Url.Action("PrintForm", new { LV_NUM = ViewBag.printNum })" style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />*@
+    <div id="leavePic" style="margin-left:auto; margin-right:auto;">
         <img src=@ViewBag.picUrl style="height:800px; margin-left:auto; margin-right:auto; width:565.63px;" />
     </div>
 }
+

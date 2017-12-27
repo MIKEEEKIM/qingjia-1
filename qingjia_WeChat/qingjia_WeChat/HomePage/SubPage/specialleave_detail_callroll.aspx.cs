@@ -210,7 +210,7 @@ namespace qingjia_YiBan.SubPage
             #region 发送Post请求
             Client<string> client = new Client<string>();
             string _postString = String.Format("access_token={0}&leave_type={1}&leave_child_type={2}&leave_date={3}&leave_time={4}&back_date={5}&back_time={6}&leave_reason={7}", access_token, leave_type, leave_child_type, leave_date, leave_time, back_date, back_time, leave_reason);//8个参数
-            ApiResult<string> result = client.PostRequest(_postString, "/api/leavelist/leaveschool");
+            ApiResult<string> result = client.PostRequest(_postString, "/api/leavelist/leavespecial");
             if (result != null)
             {
                 if (result.result == "success")

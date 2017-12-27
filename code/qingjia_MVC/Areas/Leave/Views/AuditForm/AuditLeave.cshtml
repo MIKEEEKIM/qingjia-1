@@ -229,19 +229,20 @@
         function renderExpanderDetail(value, params) {
             var LeaveType = "";
             var returnString = "";
+            console.log('打印');
+            console.log(params);
             returnString = '<div class="expander">' +
                 '<p><strong>联系人：</strong>' + params.rowData.values.ContactOne + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '<strong>联系方式：</strong>' + params.rowData.values.OneTel + '</p>';
             returnString = returnString + '<p><strong>请假原因：</strong>' + params.rowData.values.Reason + '</p>';
             LeaveType = (params.rowData.values.LeaveType).substring(0, 4);
             if (LeaveType == "节假日请") {
                 returnString = returnString + '<p><strong>离校方式：</strong>' + params.rowData.values.LeaveWay + '</p>' +
-                '<p><strong>返校方式：</strong>' + params.rowData.values.BackWay + '</p>';
+                '<p><strong>返校方式：</strong>' + params.rowData.values.BackWay + '</p>' + '<p><strong>假期去向：</strong>' + params.rowData.values.Address;
             }
             if (LeaveType == "上课请假") {
                 returnString = returnString + '<p><strong>请假课段：</strong>' + params.rowData.values.Lesson + '</p>' +
                 '<p><strong>任课老师：</strong>' + params.rowData.values.Teacher + '</p>';
             }
-
             return returnString + '</div>';
         }
     </script>
@@ -496,6 +497,12 @@
                     .HeaderText("联系方式")
                     .TextAlign(TextAlign.Center)
                     .DataField("OneTel")
+                    .Width(100),
+                    F.RenderField()
+                    .Hidden(true)
+                    .HeaderText("去向地址")
+                    .TextAlign(TextAlign.Center)
+                    .DataField("Address")
                     .Width(100),
                     F.RenderField()
                     .DataField("")

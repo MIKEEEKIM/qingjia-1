@@ -46,19 +46,16 @@ namespace qingjia_MVC.Common
             {
                 return false;
             }
-            
+
 
             //AccessKey 和 AccessKeyCode
             IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", "LTAI7W5SRT92SGZD", "F7Gv1zZvwHYHLbkSIXnn1Dx9HUIi0K");
-            IAcsClient client = new DefaultAcsClient(profile);
+             IAcsClient client = new DefaultAcsClient(profile);
             SingleSendSmsRequest request = new SingleSendSmsRequest();
             try
             {
                 //短信签名  【请假系统】
                 request.SignName = "请假系统";
-
-                //短信模板尚未申请下来 model.picurl赋值为空  2017.11.14修改
-                model.picurl = "";
 
                 if (model.MessageType == "go" && model.picurl != "")
                 {
@@ -115,42 +112,6 @@ namespace qingjia_MVC.Common
         }
 
         /// <summary>
-        /// 将发送的短信内容保存至数据库_Old
-        /// </summary>
-        /// <param name="ST_NUM"></param>
-        /// <param name="LV_Num"></param>
-        /// <param name="ST_Tel"></param>
-        /// <param name="MessageType"></param>
-        /// <returns></returns>
-        //private static bool SaveMessageList(string ST_Num, string LV_Num, string ST_Tel, string MessageType)
-        //{
-        //    string connString = ConfigurationManager.AppSettings["ConnectionString"].ToString();
-        //    string timeString = DateTime.Now.ToString();
-
-        //    using (SqlConnection conn = new SqlConnection(connString))
-        //    {
-        //        conn.Open();
-
-        //        string cmdString = "INSERT INTO T_SendList VALUES (' " + LV_Num + "','" + ST_Num + "','" + MessageType + "','" + ST_Tel + "','" + timeString + "')";
-        //        int flag = 0;
-
-        //        using (SqlCommand cmd = new SqlCommand(cmdString, conn))
-        //        {
-        //            flag = (int)cmd.ExecuteNonQuery();
-        //        }
-
-        //        if (flag == 1)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
-
-        /// <summary>
         /// 将发送的短信内容保存至数据库
         /// </summary>
         /// <param name="ST_NUM"></param>
@@ -177,40 +138,11 @@ namespace qingjia_MVC.Common
                 return false;
             }
         }
-
-        /// <summary>
-        /// 发送通知短信-停用
-        /// </summary>
-        /// <param name="teacherName">教室姓名</param>
-        /// <param name="text">短信内容</param>
-        /// <param name="ST_Tel">学生电话</param>
-        /// <returns></returns>
-        //public static bool SendShortMessage(string teacherName, string text, string ST_Tel)
-        //{
-        //    //AccessKey 和 AccessKeyCode
-        //    IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", "LTAI7W5SRT92SGZD", "F7Gv1zZvwHYHLbkSIXnn1Dx9HUIi0K");
-        //    IAcsClient client = new DefaultAcsClient(profile);
-        //    SingleSendSmsRequest request = new SingleSendSmsRequest();
-        //    try
-        //    {
-
-        //        //短信签名  【请假系统】
-        //        request.SignName = "请假系统";
-        //        request.TemplateCode = "SMS_63430002";
-
-        //        request.RecNum = ST_Tel;
-        //        request.ParamString = "{\"name\":\"" + teacherName + "\",\"text\":\"" + text + "\"}";
-        //        SingleSendSmsResponse httpResponse = client.GetAcsResponse(request);
-
-        //        return true;
-        //    }
-        //    catch (ServerException e)
-        //    {
-        //        return false;
-        //    }
-        //}
     }
 
+    /// <summary>
+    /// 短信模板
+    /// </summary>
     public class MessageModel
     {
         //学生姓名

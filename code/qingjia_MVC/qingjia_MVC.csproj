@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\aliyun-net-sdk-core.dll</HintPath>
     </Reference>
+    <Reference Include="aliyun-net-sdk-dysmsapi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\aliyun-net-sdk-dysmsapi.dll</HintPath>
+    </Reference>
     <Reference Include="aliyun-net-sdk-sms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\aliyun-net-sdk-sms.dll</HintPath>
@@ -255,6 +259,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LeavePrint.aspx.cs">
+      <DependentUpon>LeavePrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LeavePrint.aspx.designer.cs">
+      <DependentUpon>LeavePrint.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AccessToken.cs" />
     <Compile Include="Models\API\Holiday.cs" />
@@ -385,6 +396,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LeavePrint.aspx" />
     <Content Include="Models\qingjia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>qingjia.edmx</DependentUpon>
@@ -2459,6 +2471,8 @@
     <Content Include="res\images\visa.png" />
     <Content Include="res\js\grid.js" />
     <Content Include="res\js\index.js" />
+    <Content Include="res\js\jquery-1.4.4.min.js" />
+    <Content Include="res\js\jquery.jqprint-0.3.js" />
     <Content Include="res\js\viewer.min.js" />
     <Content Include="res\languages\zh_UEY.js" />
     <Content Include="res\themes\bootstrap_pure\theme.css" />
@@ -2518,6 +2532,7 @@
       <DependentUpon>qingjia.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Leave\Views\LeaveList\leaveinternshiplist.cshtml" />
+    <Compile Include="Common\SendSms.cs" />
     <None Include="Properties\PublishProfiles\text.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
