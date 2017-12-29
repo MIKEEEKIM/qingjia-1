@@ -2,6 +2,7 @@
 using Aliyun.Acs.Core.Exceptions;
 using Aliyun.Acs.Core.Profile;
 using Aliyun.Acs.Dysmsapi.Model.V20170525;
+using qingjia_MVC.Models;
 using System;
 using System.Configuration;
 
@@ -17,6 +18,14 @@ namespace qingjia_MVC.Common
         // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
         const string accessKeyId = "LTAI7W5SRT92SGZD";
         const string accessKeySecret = "F7Gv1zZvwHYHLbkSIXnn1Dx9HUIi0K";
+
+        //实例化数据模型
+        private static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+
+        //密码验证：SMS_60140885
+        //请假失败：SMS_27620081
+        //离校请假成功：SMS_27325377
+        //请假成功：SMS_107115105
 
         public static SendSmsResponse sendSms(MessageModel model)
         {
@@ -97,6 +106,9 @@ namespace qingjia_MVC.Common
                 request.OutId = "qingjia";
                 //请求失败这里会抛ClientException异常
                 response = acsClient.GetAcsResponse(request);
+
+                //保存 发送记录
+                SaveMessageList(model.ST_Num, model.LV_Num, model.ST_Tel, model.MessageType);
             }
             catch (ServerException e)
             {
@@ -107,6 +119,34 @@ namespace qingjia_MVC.Common
                 Console.WriteLine(e.ErrorCode);
             }
             return response;
+        }
+
+        /// <summary>
+        /// 将发送的短信内容保存至数据库
+        /// </summary>
+        /// <param name="ST_NUM"></param>
+        /// <param name="LV_Num"></param>
+        /// <param name="ST_Tel"></param>
+        /// <param name="MessageType"></param>
+        /// <returns></returns>
+        private static bool SaveMessageList(string ST_Num, string LV_Num, string ST_Tel, string MessageType)
+        {
+            T_SendList LL = new T_SendList();
+            LL.LV_Num = LV_Num;
+            LL.ST_Num = ST_Num;
+            LL.MessageType = MessageType;
+            LL.ST_Tel = ST_Tel;
+            LL.timeString = DateTime.Now;
+            db.T_SendList.Add(LL);
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

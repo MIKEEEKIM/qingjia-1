@@ -571,7 +571,7 @@ namespace qingjia_MVC.Controllers.API
                 string leaveReason = data.leave_reason;
                 string leaveWay = data.leave_way;
                 string backWay = data.back_way;
-                string address = data.leave_reason;
+                string address = data.address;
                 string holidayType = data.leave_reason;//节假日请假的原因只能为三种
 
                 //节假日请假时，请假原因为节假日请假的类型

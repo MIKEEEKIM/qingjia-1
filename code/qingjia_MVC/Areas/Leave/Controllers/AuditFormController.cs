@@ -1852,8 +1852,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             }
 
             //发送短信
-            ShortMessageClass.SendShortMessage(model);
-
+            SendSms.sendSms(model);
 
             //绑定Grid数据
             if (Session["AuditClassName"] == null || Session["AuditClassName"].ToString() == "-1")
@@ -1917,7 +1916,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             }
             db.SaveChanges();
             //发送短信
-            ShortMessageClass.SendShortMessage(model);
+            SendSms.sendSms(model);
 
             ShowNotify(String.Format("已同意销假！"));
 
@@ -1968,7 +1967,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             model.ST_Tel = vw_LL.ST_Tel;
             model.MessageType = "failed";
             //发送短信
-            ShortMessageClass.SendShortMessage(model);
+            SendSms.sendSms(model);
 
             UIHelper.Window("cancelWindow").Close();
             ShowNotify(string.Format("驳回请假成功！"));
@@ -2866,7 +2865,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         //    model.ST_Name = Name;
         //    model.ST_Tel = Tel;
         //    model.MessageType = Type;
-        //    ShortMessageClass.SendShortMessage(model);
+        //    SendSms.sendSms(model);
         //}
 
     }
