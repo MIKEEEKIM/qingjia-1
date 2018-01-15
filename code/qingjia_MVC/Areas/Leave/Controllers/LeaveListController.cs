@@ -1711,7 +1711,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnHoliday_ReloadData(JArray fields)
         {
-            ChangeBtnPressedStatus("btnHolida");
+            ChangeBtnPressedStatus("btnHoliday");
             staticLeaveType = "btnHoliday";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1749,67 +1749,67 @@ namespace qingjia_MVC.Areas.Leave.Controllers
 
         private void ChangeBtnPressedStatus(string type)
         {
-            //if (type == "total")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "total")
+            {
+                UIHelper.Button("btnTotal").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnTotal").Pressed(false);
+            }
 
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "btnShort")
+            {
+                UIHelper.Button("btnShort").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnShort").Pressed(false);
+            }
 
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "btnLong")
+            {
+                UIHelper.Button("btnLong").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnLong").Pressed(false);
+            }
 
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "btnHoliday")
+            {
+                UIHelper.Button("btnHoliday").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnHoliday").Pressed(false);
+            }
 
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "btnCall")
+            {
+                UIHelper.Button("btnCall").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnCall").Pressed(false);
+            }
+            if (type == "btnClass")
+            {
+                UIHelper.Button("btnClass").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnClass").Pressed(false);
+            }
 
-            //if (type == "")
-            //{
-            //    UIHelper.Button("").Pressed(true);
-            //}
-            //else
-            //{
-            //    UIHelper.Button("").Pressed(false);
-            //}
+            if (type == "btnZixi")
+            {
+                UIHelper.Button("btnZixi").Pressed(true);
+            }
+            else
+            {
+                UIHelper.Button("btnZixi").Pressed(false);
+            }
         }
         #endregion
 

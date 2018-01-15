@@ -144,8 +144,8 @@ namespace qingjia_MVC.Areas.Vacation.Controllers
             //获取班级同学名单
             var studentList = from vw_Student in db.vw_Student where (vw_Student.ST_Class == className) select vw_Student;
             dtStudent = studentList.ToDataTable(rec => new object[] { studentList });
-            //获取班级同学请假记录
-            var LeaveList = from LL in db.vw_LeaveList where ((LL.ST_Class == className) && (LL.TypeChildID == 6) && ((LL.TimeLeave <= start && LL.TimeBack > start && LL.TimeBack <= end) || (LL.TimeLeave <= start && LL.TimeBack >= end) || (LL.TimeLeave >= start && LL.TimeBack <= end) || (LL.TimeLeave >= start && LL.TimeLeave < end && LL.TimeBack >= end))) select LL;
+            //获取班级同学请假记录 StateLeave == 1 选取通过的请假条、驳回的请假不能导出
+            var LeaveList = from LL in db.vw_LeaveList where ((LL.ST_Class == className) && (LL.TypeChildID == 6) && (LL.StateLeave == "1") && ((LL.TimeLeave <= start && LL.TimeBack > start && LL.TimeBack <= end) || (LL.TimeLeave <= start && LL.TimeBack >= end) || (LL.TimeLeave >= start && LL.TimeBack <= end) || (LL.TimeLeave >= start && LL.TimeLeave < end && LL.TimeBack >= end))) select LL;
             dtLeaveList = LeaveList.ToDataTable(rec => new object[] { LeaveList });
 
             DataTable dtSource = new DataTable();
