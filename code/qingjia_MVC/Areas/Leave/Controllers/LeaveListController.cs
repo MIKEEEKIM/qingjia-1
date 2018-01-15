@@ -1289,6 +1289,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
             if (RoleID == "3")//登录用户为辅导员
             {
                 Get_LL_DataTable(UserID, "total", RoleID);
+                LoadClassDDL();
             }
             else if (RoleID == "1")//登录用户为学生
             {
@@ -1489,7 +1490,50 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 根据学号查找请假记录  DataTable格式
+        /// </summary>
+        /// <param name="ST_NUM"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public DataTable Get_LL_DataTable_BY_ST_Num(string type, string ST_NUM)
+        {
+            var ll_list = from vw_LeaveList in db.vw_LeaveList where (vw_LeaveList.StudentID == ST_NUM) orderby vw_LeaveList.SubmitTime descending select vw_LeaveList;
+            if (ll_list.Any())
+            {
+                DataTable dtSource = LeaveListToDataTable(ll_list.ToList());
+
+                //绑定数据源
+                ViewBag.leavetable = dtSource;
+
+                return dtSource;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据班级名称查找请假记录  DataTable格式
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public DataTable Get_LL_DataTable_BY_ClassName(string type, string className)
+        {
+            var list = from vw_LeaveList in db.vw_LeaveList where (vw_LeaveList.ST_Class == className) orderby vw_LeaveList.SubmitTime descending select vw_LeaveList;
+            if (list.Any())
+            {
+                return LeaveListToDataTable(list.ToList());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据请假单号获取请假记录
         /// </summary>
         /// <param name="LL_ID">请假单号</param>
         /// <returns></returns>
@@ -1637,6 +1681,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnTotal_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("total");
             staticLeaveType = "total";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1646,6 +1691,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnShort_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnShort");
             staticLeaveType = "btnShort";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1655,6 +1701,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnLong_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnLong");
             staticLeaveType = "btnLong";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1664,6 +1711,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnHoliday_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnHolida");
             staticLeaveType = "btnHoliday";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1673,6 +1721,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnCall_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnCall");
             staticLeaveType = "btnCall";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1682,6 +1731,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnClass_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnClass");
             staticLeaveType = "btnClass";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
@@ -1691,9 +1741,75 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult btnZixi_ReloadData(JArray fields)
         {
+            ChangeBtnPressedStatus("btnZixi");
             staticLeaveType = "btnZixi";
             UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(Session["UserID"].ToString(), staticLeaveType, Session["RoleID"].ToString()), fields);
             return UIHelper.Result();
+        }
+
+        private void ChangeBtnPressedStatus(string type)
+        {
+            //if (type == "total")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
+
+            //if (type == "")
+            //{
+            //    UIHelper.Button("").Pressed(true);
+            //}
+            //else
+            //{
+            //    UIHelper.Button("").Pressed(false);
+            //}
         }
         #endregion
 
@@ -1713,7 +1829,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
 
                 if (!String.IsNullOrEmpty(text))
                 {
-                    // 执行搜索动作
+                    #region 执行搜索动作
                     var ST_Num_List = from vw_Student in db.vw_Student where (vw_Student.ST_Name == text) select vw_Student.ST_Num;
                     if (ST_Num_List.Any())
                     {
@@ -1736,10 +1852,11 @@ namespace qingjia_MVC.Areas.Leave.Controllers
                     }
 
                     TwinTriggerBox1.ShowTrigger1(true);
+                    #endregion
                 }
                 else
                 {
-                    ShowNotify("请输入你要搜索的关键词！");
+                    ShowNotify("请输入你要搜索的学生姓名！");
                 }
             }
             else
@@ -1778,22 +1895,25 @@ namespace qingjia_MVC.Areas.Leave.Controllers
 
                 if (!String.IsNullOrEmpty(text))
                 {
-                    // 执行搜索动作
+                    #region 执行搜索动作
+
                     var ST_Info_List = from vw_Student in db.vw_Student where (vw_Student.ST_Num == text) select vw_Student;
                     if (ST_Info_List.Any())
                     {
                         ShowNotify(String.Format("检索完成！"));
-                        UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable(text, staticLeaveType, Session["RoleID"].ToString()), fields);
+                        UIHelper.Grid("gridLeaveList").DataSource(Get_LL_DataTable_BY_ST_Num(staticLeaveType, text), fields);
                     }
                     else
                     {
                         ShowNotify(String.Format("学号为{0}的学生不存在，请检查后重新检索！", text));
                     }
+
                     TwinTriggerBox2.ShowTrigger1(true);
+                    #endregion
                 }
                 else
                 {
-                    ShowNotify("请输入你要搜索的关键词！");
+                    ShowNotify("请输入你要搜索的学生学号！");
                 }
             }
             else
@@ -1899,16 +2019,63 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         #region 按班级查找  尚未完成
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ddlST_Class_SelectedIndexChanged(string ddlST_Class, string ddlST_ClassDropDownList1_text, JArray fields)
+        public ActionResult ddlST_Class_SelectedIndexChanged(string ddlST_Class, string ddlST_Class_text, JArray fields)
         {
-            //按班级、请假类型查找
-            //尚未完成
+            string userID = Session["UserID"].ToString();
+            string roleID = Session["RoleID"].ToString();
+            DataTable dtSource = new DataTable();
 
+            if (ddlST_Class == "-1")//-1代表选取全部班级
+            {
+                dtSource = Get_LL_DataTable(userID, "total", roleID);
+            }
+            else
+            {
+                dtSource = Get_LL_DataTable_BY_ClassName("", ddlST_Class_text);
+            }
+            ShowNotify("检索完成！");
+            UIHelper.Grid("gridLeaveList").DataSource(dtSource, fields);
             return UIHelper.Result();
         }
-        #endregion
+
+        /// <summary>
+        /// 班级下拉框 数据绑定
+        /// </summary>
+        public void LoadClassDDL()
+        {
+            string grade = Session["Grade"].ToString();
+            string ST_TeacherID = Session["UserID"].ToString();
+
+            var classList = from T_Class in db.T_Class where (T_Class.Grade == grade && T_Class.TeacherID == ST_TeacherID) select T_Class;
+
+            if (classList.Any())
+            {
+                DataTable dtSource = new DataTable();
+                dtSource.Columns.Add("ClassID");
+                dtSource.Columns.Add("ClassName");
+
+                DataRow firstRow = dtSource.NewRow();
+                firstRow["ClassID"] = "-1";
+                firstRow["ClassName"] = "全部班级";
+                dtSource.Rows.Add(firstRow);
+
+                foreach (T_Class item in classList.ToList())
+                {
+                    DataRow row = dtSource.NewRow();
+                    row["ClassID"] = item.ID;
+                    row["ClassName"] = item.ClassName;
+
+                    dtSource.Rows.Add(row);
+                }
+                ViewBag.ddlST_Class = dtSource;
+            }
+        }
         #endregion
 
+
+        #endregion
+
+        #region 图片压缩
         /// 无损压缩图片    
         /// <param name="sFile">原图片</param>    
         /// <param name="dFile">压缩后保存位置</param>    
@@ -1993,6 +2160,112 @@ namespace qingjia_MVC.Areas.Leave.Controllers
                 ob.Dispose();
             }
         }
+        #endregion
 
+        #region 请假记录模型转换
+        private DataTable LeaveListToDataTable(List<vw_LeaveList> list)
+        {
+            DataTable dtSource = new DataTable();
+
+            //List 转换为 DataTable
+            dtSource = list.ToDataTable(rec => new object[] { list });
+
+            #region 更改DataTable中某一列的属性
+            DataTable dtClone = new DataTable();
+            dtClone = dtSource.Clone();
+            foreach (DataColumn col in dtClone.Columns)
+            {
+                if (col.ColumnName == "SubmitTime" || col.ColumnName == "TimeLeave" || col.ColumnName == "TimeBack")
+                {
+                    col.DataType = typeof(string);
+                }
+                if (col.ColumnName == "Lesson")
+                {
+                    col.DataType = typeof(string);
+                }
+            }
+
+            DataColumn newCol = new DataColumn();
+            newCol.ColumnName = "auditState";
+            newCol.DataType = typeof(string);
+            dtClone.Columns.Add(newCol);
+
+            foreach (DataRow row in dtSource.Rows)
+            {
+                DataRow rowNew = dtClone.NewRow();
+                rowNew["ID"] = row["ID"];
+                rowNew["Reason"] = row["Reason"];
+                rowNew["StateLeave"] = row["StateLeave"];
+                rowNew["StateBack"] = row["StateBack"];
+                rowNew["Notes"] = row["Notes"];
+                rowNew["TypeID"] = row["TypeID"];
+                rowNew["SubmitTime"] = ((DateTime)row["SubmitTime"]).ToString("yyyy-MM-dd HH:mm:ss");//按指定格式输出
+                rowNew["TimeLeave"] = ((DateTime)row["TimeLeave"]).ToString("yyyy-MM-dd HH:mm:ss");
+                rowNew["TimeBack"] = ((DateTime)row["TimeBack"]).ToString("yyyy-MM-dd HH:mm:ss");
+                rowNew["LeaveWay"] = row["LeaveWay"];
+                rowNew["BackWay"] = row["BackWay"];
+                rowNew["Address"] = row["Address"];
+                rowNew["TypeChildID"] = row["TypeChildID"];
+                rowNew["Teacher"] = row["Teacher"];
+                rowNew["ST_Name"] = row["ST_Name"];
+                rowNew["ST_Tel"] = row["ST_Tel"];
+                rowNew["ST_Grade"] = row["ST_Grade"];
+                rowNew["ST_Class"] = row["ST_Class"];
+                rowNew["ST_Teacher"] = row["ST_Teacher"];
+                rowNew["StudentID"] = row["StudentID"];
+                rowNew["LeaveType"] = row["LeaveType"];
+                rowNew["AuditName"] = row["AuditName"];
+                rowNew["ContactOne"] = row["ContactOne"];
+                rowNew["OneTel"] = row["OneTel"];
+
+                //审核状态属性
+                rowNew["auditState"] = "Error";
+                if (row["StateLeave"].ToString() == "0" && row["StateBack"].ToString() == "0")
+                {
+                    rowNew["auditState"] = "待审核";
+                }
+                if (row["StateLeave"].ToString() == "1" && row["StateBack"].ToString() == "0")
+                {
+                    rowNew["auditState"] = "待销假";
+                }
+                if (row["StateLeave"].ToString() == "1" && row["StateBack"].ToString() == "1")
+                {
+                    rowNew["auditState"] = "已销假";
+                }
+                if (row["StateLeave"].ToString() == "2" && row["StateBack"].ToString() == "1")
+                {
+                    rowNew["auditState"] = "已驳回";
+                }
+
+                //请假课段属性
+                rowNew["Lesson"] = "";
+                if (row["Lesson"].ToString() == "1")
+                {
+                    rowNew["Lesson"] = "第一大节（08:00~09:40）";
+                }
+                if (row["Lesson"].ToString() == "2")
+                {
+                    rowNew["Lesson"] = "第二大节（10:10~11:50）";
+                }
+                if (row["Lesson"].ToString() == "3")
+                {
+                    rowNew["Lesson"] = "第三大节（14:00~15:30）";
+                }
+                if (row["Lesson"].ToString() == "4")
+                {
+                    rowNew["Lesson"] = "第四大节（16:00~17:40）";
+                }
+                if (row["Lesson"].ToString() == "5")
+                {
+                    rowNew["Lesson"] = "第五大节（18:30~21:40）";
+                }
+
+                dtClone.Rows.Add(rowNew);
+            }
+            #endregion
+
+            return dtClone;
+        }
+        #endregion
     }
 }

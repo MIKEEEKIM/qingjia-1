@@ -162,7 +162,7 @@ namespace qingjia_MVC.Controllers.API
                     {
                         list = leavelist.ToList();
                     }
-                    
+
                     List<LeaveList> data = new List<LeaveList>();
                     foreach (vw_LeaveList item in leavelist)
                     {
@@ -580,8 +580,6 @@ namespace qingjia_MVC.Controllers.API
                     leaveReason = data.leave_reason;
                 }
 
-                //string LV_Time_Go = leaveDate + " " + leaveTime + ":00";
-                //string LV_Time_Back = backDate + " " + backTime + ":00";
                 string LV_Time_Go = leaveDate + " " + leaveTime;
                 string LV_Time_Back = backDate + " " + backTime;
 

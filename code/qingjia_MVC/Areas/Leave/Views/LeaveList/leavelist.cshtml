@@ -182,6 +182,8 @@
                             .MarginLeft(60)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnTotal_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
+                            .Pressed(true)
                             .Text("全部请假"),
                         F.ToolbarSeparator()
                             .MarginLeft(10)
@@ -191,6 +193,7 @@
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnShort_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("短期请假"),
                         F.ToolbarSeparator()
                             .MarginLeft(10)
@@ -200,6 +203,7 @@
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnLong_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("长期请假"),
                         F.ToolbarSeparator()
                             .MarginLeft(10)
@@ -209,6 +213,7 @@
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnHoliday_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("节假日请假"),
                         F.ToolbarSeparator()
                             .MarginLeft(10)
@@ -218,6 +223,7 @@
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnCall_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("晚点名请假"),
                         F.ToolbarSeparator(),
                         F.Button()
@@ -225,12 +231,15 @@
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnClass_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("上课请假备案"),
+                        F.ToolbarSeparator(),
                         F.Button()
                             .ID("btnZixi")
                             .MarginLeft(10)
                             .MarginRight(10)
                             .OnClick(Url.Action("btnZixi_ReloadData"), new Parameter("fields", "F.ui.gridLeaveList.fields"))
+                            .EnablePress(true)
                             .Text("早晚自习请假")
                     ),
                 F.Toolbar()
@@ -283,6 +292,9 @@
                             .OnSelectedIndexChanged(Url.Action("ddlST_Class_SelectedIndexChanged"), "ddlST_Class", new Parameter("fields", "F.ui.gridLeaveList.fields"))
                             .MarginLeft(30)
                             .MarginRight(30)
+                            .DataTextField("ClassName")
+                            .DataValueField("ClassID")
+                            .DataSource(ViewBag.ddlST_Class)
                             .EmptyText("请选择班级！")
                     )
             )

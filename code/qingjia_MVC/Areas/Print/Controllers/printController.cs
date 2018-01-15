@@ -28,6 +28,9 @@ namespace qingjia_MVC.Areas.Print.Controllers
             return UIHelper.Result();
         }
 
+        /// <summary>
+        /// 加载请假条
+        /// </summary>
         private void LoadData()
         {
             //获取打印的请假单号，将请假单号用ViewBag传到View中，在View中调用Controller中的方法，获得生成图片的二进制流
@@ -44,7 +47,6 @@ namespace qingjia_MVC.Areas.Print.Controllers
                 ShowNotify("加载失败，请联系辅导员。");
                 ViewBag.picUrl = "";
             }
-
         }
     }
 }

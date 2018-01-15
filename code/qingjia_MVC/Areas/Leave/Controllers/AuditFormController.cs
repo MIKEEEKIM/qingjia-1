@@ -18,6 +18,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
         //实例化数据库
         private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
         private string staticLeaveType = "total";
+
         //Session["AuditLeaveType"]     请假审批当前请假类型
         //Session["AuditBackType"]      销假审批当前请假类型
         //Session["AuditState"]         请销假状态
@@ -2853,20 +2854,6 @@ namespace qingjia_MVC.Areas.Leave.Controllers
 
         #endregion
 
-        /// <summary>
-        /// 调用短信模块发送短信
-        /// </summary>
-        /// <param name="sendSMessage"></param>
-        /// <returns></returns>
-        //public void sendSMessage(string Num, string Name, string Tel, string Type)
-        //{
-        //    MessageModel model = new MessageModel();
-        //    model.LV_Num = Num;
-        //    model.ST_Name = Name;
-        //    model.ST_Tel = Tel;
-        //    model.MessageType = Type;
-        //    SendSms.sendSms(model);
-        //}
 
     }
 }
