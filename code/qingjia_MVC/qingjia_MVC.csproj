@@ -244,16 +244,19 @@
     <Compile Include="Areas\Vacation\Controllers\VacationController.cs" />
     <Compile Include="Areas\Vacation\VacationAreaRegistration.cs" />
     <Compile Include="Common\ApiBaseResult.cs" />
+    <Compile Include="Common\OutputLog.cs" />
     <Compile Include="Common\Print.cs" />
     <Compile Include="Common\PublicMethod.cs" />
     <Compile Include="Common\ShortMessageClass.cs" />
     <Compile Include="Common\UpLoadQiNiu.cs" />
     <Compile Include="Content\DataTableHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\LeaveListController.cs" />
     <Compile Include="Controllers\API\OauthController.cs" />
     <Compile Include="Controllers\API\StudentController.cs" />
-    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\ApiTestController.cs" />
+    <Compile Include="Controllers\API\T_Audit\AuditLeaveController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -268,9 +271,11 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AccessToken.cs" />
+    <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Holiday.cs" />
     <Compile Include="Models\API\LeaveList.cs" />
     <Compile Include="Models\API\NightInfo.cs" />
+    <Compile Include="Models\API\SelectCondition.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -2571,8 +2576,11 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\Default_ST.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\BaseAPI\Index.cshtml" />
+    <Content Include="Views\ApiTest\Index.cshtml" />
     <Content Include="Views\Home\Default_T.cshtml" />
+    <Content Include="Views\ApiTest\Default.cshtml" />
+    <Content Include="Views\ApiTest\_ApiLayout.cshtml" />
+    <Content Include="Views\ApiTest\Api_Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2595,6 +2603,7 @@
     <Folder Include="Areas\UserInfo\Views\Shared\" />
     <Folder Include="Areas\Vacation\Models\" />
     <Folder Include="Areas\Vacation\Views\Shared\" />
+    <Folder Include="Controllers\API\Common\" />
     <Folder Include="res\images\fa_png\" />
     <Folder Include="res\images\internship\" />
     <Folder Include="res\images\loading\" />

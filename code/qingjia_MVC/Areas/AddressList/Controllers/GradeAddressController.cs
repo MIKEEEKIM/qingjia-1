@@ -1,14 +1,11 @@
 ﻿using FineUIMvc;
 using Newtonsoft.Json.Linq;
-using System;
+using qingjia_MVC.Common;
+using qingjia_MVC.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using qingjia_MVC.Models;
-using System.Web.UI;
-using qingjia_MVC.Common;
 
 namespace qingjia_MVC.Areas.AddressList.Controllers
 {

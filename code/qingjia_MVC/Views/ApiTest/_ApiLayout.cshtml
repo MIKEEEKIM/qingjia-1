@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("API接口测试", "Default", "ApiTest", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("测试API", "Api_Test", "ApiTest", new { area = "" }, null)</li>
+                    @*<li>@Html.ActionLink("基础数据API", "Api_JC", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("系统管理API", "Api_Sys", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("记录填报API", "Api_TB", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("记录管理API", "Api_Record", "Home", new { area = "" }, null)</li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 我的 Api测试 应用程序</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery1.42.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/respond.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
