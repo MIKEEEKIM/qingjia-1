@@ -170,6 +170,15 @@
     <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="AuditTeacherID" Type="varchar" MaxLength="64" />
     <Property Name="PrintTimes" Type="int" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
+  <EntityType Name="T_LeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="T_Menu">
     <Key>
@@ -260,6 +269,15 @@
     <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Grade" Type="nchar" MaxLength="10" />
     <Property Name="Email" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="T_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="LeaveTypeID" Type="int" />
+    <Property Name="Enable" Type="int" />
   </EntityType>
   <EntityType Name="T_Type">
     <Key>
@@ -459,6 +477,46 @@
     <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
   </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherGrade" Type="nchar" MaxLength="10" />
+    <Property Name="LeaveTypeID" Type="int" />
+    <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
+    <Property Name="LeaveTypeDescription" Type="varchar" MaxLength="200" />
+    <Property Name="Enable" Type="int" />
+  </EntityType>
+  <Association Name="FK_T_TeacherLeaveType_T_LeaveType">
+    <End Role="T_LeaveType" Type="Self.T_LeaveType" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_LeaveType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="LeaveTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_TeacherLeaveType_T_Teacher">
+    <End Role="T_Teacher" Type="Self.T_Teacher" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Teacher">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="TeacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_getNightNameList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TeacherID" Type="varchar" Mode="In" />
   </Function>
@@ -474,12 +532,14 @@
     <EntitySet Name="T_InfoDetail" EntityType="Self.T_InfoDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveIntership" EntityType="Self.T_LeaveIntership" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Menu" EntityType="Self.T_Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_SendList" EntityType="Self.T_SendList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Statistic" EntityType="Self.T_Statistic" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Student" EntityType="Self.T_Student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Teacher" EntityType="Self.T_Teacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_TeacherLeaveType" EntityType="Self.T_TeacherLeaveType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Type" EntityType="Self.T_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Vacation" EntityType="Self.T_Vacation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_NightNameList" EntityType="Self.T_NightNameList" store:Type="Tables" store:Schema="dbo">
@@ -613,5 +673,26 @@
     [vw_Student].[ST_TeacherID] AS [ST_TeacherID]
     FROM [dbo].[vw_Student] AS [vw_Student]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_TeacherLeaveType].[ID] AS [ID], 
+    [vw_TeacherLeaveType].[TeacherID] AS [TeacherID], 
+    [vw_TeacherLeaveType].[TeacherName] AS [TeacherName], 
+    [vw_TeacherLeaveType].[TeacherTel] AS [TeacherTel], 
+    [vw_TeacherLeaveType].[TeacherGrade] AS [TeacherGrade], 
+    [vw_TeacherLeaveType].[LeaveTypeID] AS [LeaveTypeID], 
+    [vw_TeacherLeaveType].[LeaveTypeName] AS [LeaveTypeName], 
+    [vw_TeacherLeaveType].[LeaveTypeDescription] AS [LeaveTypeDescription], 
+    [vw_TeacherLeaveType].[Enable] AS [Enable]
+    FROM [dbo].[vw_TeacherLeaveType] AS [vw_TeacherLeaveType]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">
+      <End Role="T_LeaveType" EntitySet="T_LeaveType" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_Teacher" Association="Self.FK_T_TeacherLeaveType_T_Teacher">
+      <End Role="T_Teacher" EntitySet="T_Teacher" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

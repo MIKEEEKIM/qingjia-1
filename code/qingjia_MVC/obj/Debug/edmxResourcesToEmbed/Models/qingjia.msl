@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="imaw_qingjiaModelStoreContainer" CdmEntityContainer="imaw_qingjiaEntities">
+  <EntityContainerMapping StorageEntityContainer="imaw_qingjiaModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="T_Account">
       <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Account">
         <MappingFragment StoreEntitySet="T_Account">
@@ -180,6 +180,16 @@
           <ScalarProperty Name="Teacher" ColumnName="Teacher" />
           <ScalarProperty Name="AuditTeacherID" ColumnName="AuditTeacherID" />
           <ScalarProperty Name="PrintTimes" ColumnName="PrintTimes" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_LeaveType">
+      <EntityTypeMapping TypeName="imaw_qingjiaModel.T_LeaveType">
+        <MappingFragment StoreEntitySet="T_LeaveType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -199,6 +209,17 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_SendList">
+      <EntityTypeMapping TypeName="imaw_qingjiaModel.T_SendList">
+        <MappingFragment StoreEntitySet="T_SendList">
+          <ScalarProperty Name="LV_Num" ColumnName="LV_Num" />
+          <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
+          <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+          <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+          <ScalarProperty Name="timeString" ColumnName="timeString" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -285,6 +306,16 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="XML" ColumnName="XML" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_TeacherLeaveType">
+      <EntityTypeMapping TypeName="imaw_qingjiaModel.T_TeacherLeaveType">
+        <MappingFragment StoreEntitySet="T_TeacherLeaveType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="LeaveTypeID" ColumnName="LeaveTypeID" />
+          <ScalarProperty Name="Enable" ColumnName="Enable" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -418,17 +449,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjiaModel.Store.sp_getNightNameList" />
-    <EntitySetMapping Name="T_SendList">
-      <EntityTypeMapping TypeName="imaw_qingjiaModel.T_SendList">
-        <MappingFragment StoreEntitySet="T_SendList">
-          <ScalarProperty Name="timeString" ColumnName="timeString" />
-          <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
-          <ScalarProperty Name="MessageType" ColumnName="MessageType" />
-          <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
-          <ScalarProperty Name="LV_Num" ColumnName="LV_Num" />
+    <EntitySetMapping Name="vw_TeacherLeaveType">
+      <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_TeacherLeaveType">
+        <MappingFragment StoreEntitySet="vw_TeacherLeaveType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+          <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
+          <ScalarProperty Name="TeacherGrade" ColumnName="TeacherGrade" />
+          <ScalarProperty Name="LeaveTypeID" ColumnName="LeaveTypeID" />
+          <ScalarProperty Name="LeaveTypeName" ColumnName="LeaveTypeName" />
+          <ScalarProperty Name="LeaveTypeDescription" ColumnName="LeaveTypeDescription" />
+          <ScalarProperty Name="Enable" ColumnName="Enable" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjiaModel.Store.sp_getNightNameList" />
   </EntityContainerMapping>
 </Mapping>

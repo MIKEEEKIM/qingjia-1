@@ -32,5 +32,6 @@ namespace qingjia_MVC.Models
         public string Teacher { get; set; }
         public string AuditTeacherID { get; set; }
         public Nullable<int> PrintTimes { get; set; }
+        public Nullable<int> IsDelete { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1dd16fd7a6a649dc8300261c239359b1" Name="Diagram1">
+      <Diagram DiagramId="ed54223a6bd742808ff7a75692813861" Name="Diagram1">
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_Batch" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_BatchLeave" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -16,22 +16,27 @@
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_InfoDetail" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_LeaveIntership" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjiaModel.T_LeaveList" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Menu" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_RoleMenu" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Statistic" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Student" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Teacher" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Type" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Vacation" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_NightNameList" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Role" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_ClassBatch" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_LeaveIntership" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_LeaveList" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_NightNameList" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_StudenBatch" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_Student" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjiaModel.T_SendList" Width="1.5" PointX="15.375" PointY="4.75" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_LeaveType" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Menu" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_RoleMenu" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_SendList" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Statistic" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Student" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Teacher" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Type" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Vacation" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_NightNameList" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_Role" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.T_TeacherLeaveType" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_ClassBatch" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_LeaveIntership" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_LeaveList" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_NightNameList" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_StudenBatch" Width="1.5" PointX="4.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_Student" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="imaw_qingjiaModel.vw_TeacherLeaveType" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="imaw_qingjiaModel.FK_T_TeacherLeaveType_T_LeaveType" />
+        <AssociationConnector Association="imaw_qingjiaModel.FK_T_TeacherLeaveType_T_Teacher" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

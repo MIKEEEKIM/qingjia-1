@@ -91,9 +91,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -107,13 +107,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -162,6 +162,10 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.7.14.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.7.14\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +248,7 @@
     <Compile Include="Areas\Vacation\Controllers\VacationController.cs" />
     <Compile Include="Areas\Vacation\VacationAreaRegistration.cs" />
     <Compile Include="Common\ApiBaseResult.cs" />
+    <Compile Include="Common\ForceHttpStatusCodeResult.cs" />
     <Compile Include="Common\OutputLog.cs" />
     <Compile Include="Common\Print.cs" />
     <Compile Include="Common\PublicMethod.cs" />
@@ -251,12 +256,14 @@
     <Compile Include="Common\UpLoadQiNiu.cs" />
     <Compile Include="Content\DataTableHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\Audit\AuditBackController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\LeaveListController.cs" />
     <Compile Include="Controllers\API\OauthController.cs" />
     <Compile Include="Controllers\API\StudentController.cs" />
     <Compile Include="Controllers\ApiTestController.cs" />
-    <Compile Include="Controllers\API\T_Audit\AuditLeaveController.cs" />
+    <Compile Include="Controllers\API\Audit\AuditLeaveController.cs" />
+    <Compile Include="Controllers\API\Setting\SystemSettingController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -271,11 +278,13 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AccessToken.cs" />
+    <Compile Include="Models\API\AccountInfo.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Holiday.cs" />
     <Compile Include="Models\API\LeaveList.cs" />
     <Compile Include="Models\API\NightInfo.cs" />
     <Compile Include="Models\API\SelectCondition.cs" />
+    <Compile Include="Models\API\Setting\SetLeaveType.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -327,6 +336,9 @@
     <Compile Include="Models\T_LeaveList.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\T_LeaveType.cs">
+      <DependentUpon>qingjia.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\T_Menu.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
@@ -351,6 +363,9 @@
     <Compile Include="Models\T_Teacher.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\T_TeacherLeaveType.cs">
+      <DependentUpon>qingjia.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\T_Type.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
@@ -373,6 +388,9 @@
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Student.cs">
+      <DependentUpon>qingjia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_TeacherLeaveType.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2529,6 +2547,8 @@
     <Content Include="Areas\Leave\Views\AuditForm\ModifyLL.cshtml" />
     <Content Include="Areas\Leave\Views\LeaveList\leaveinternship.cshtml" />
     <Content Include="Areas\Leave\Views\AuditForm\AuditInternship.cshtml" />
+    <Content Include="Areas\Leave\Views\LeaveList\leaveinternshiplist.cshtml" />
+    <Compile Include="Common\SendSms.cs" />
     <EntityDeploy Include="Models\qingjia.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>qingjia.Designer.cs</LastGenOutput>
@@ -2536,8 +2556,6 @@
     <Content Include="Models\qingjia.edmx.diagram">
       <DependentUpon>qingjia.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Leave\Views\LeaveList\leaveinternshiplist.cshtml" />
-    <Compile Include="Common\SendSms.cs" />
     <None Include="Properties\PublishProfiles\text.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

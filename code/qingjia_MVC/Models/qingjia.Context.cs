@@ -38,8 +38,10 @@ namespace qingjia_MVC.Models
         public virtual DbSet<T_InfoDetail> T_InfoDetail { get; set; }
         public virtual DbSet<T_LeaveIntership> T_LeaveIntership { get; set; }
         public virtual DbSet<T_LeaveList> T_LeaveList { get; set; }
+        public virtual DbSet<T_LeaveType> T_LeaveType { get; set; }
         public virtual DbSet<T_Menu> T_Menu { get; set; }
         public virtual DbSet<T_RoleMenu> T_RoleMenu { get; set; }
+        public virtual DbSet<T_SendList> T_SendList { get; set; }
         public virtual DbSet<T_Statistic> T_Statistic { get; set; }
         public virtual DbSet<T_Student> T_Student { get; set; }
         public virtual DbSet<T_Teacher> T_Teacher { get; set; }
@@ -47,13 +49,14 @@ namespace qingjia_MVC.Models
         public virtual DbSet<T_Vacation> T_Vacation { get; set; }
         public virtual DbSet<T_NightNameList> T_NightNameList { get; set; }
         public virtual DbSet<T_Role> T_Role { get; set; }
+        public virtual DbSet<T_TeacherLeaveType> T_TeacherLeaveType { get; set; }
         public virtual DbSet<vw_ClassBatch> vw_ClassBatch { get; set; }
         public virtual DbSet<vw_LeaveIntership> vw_LeaveIntership { get; set; }
         public virtual DbSet<vw_LeaveList> vw_LeaveList { get; set; }
         public virtual DbSet<vw_NightNameList> vw_NightNameList { get; set; }
         public virtual DbSet<vw_StudenBatch> vw_StudenBatch { get; set; }
         public virtual DbSet<vw_Student> vw_Student { get; set; }
-        public virtual DbSet<T_SendList> T_SendList { get; set; }
+        public virtual DbSet<vw_TeacherLeaveType> vw_TeacherLeaveType { get; set; }
     
         public virtual ObjectResult<string> sp_getNightNameList(string teacherID)
         {
