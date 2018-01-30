@@ -14,7 +14,7 @@ namespace qingjia_MVC.Models.API
         public int page { get; set; }
 
         //每页条数
-        public int limit { get; set; }
+        public int pageSize { get; set; }
 
         //排序方式 ASC 或 DESC
         public string sortDirection { get; set; }

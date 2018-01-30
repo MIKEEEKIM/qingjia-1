@@ -189,6 +189,37 @@
     <Property Name="FatherID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Url" Type="varchar" MaxLength="128" />
   </EntityType>
+  <EntityType Name="T_New_LeaveList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="StudentID" Type="varchar" MaxLength="64" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+    <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="StateLeave" Type="char" MaxLength="1" />
+    <Property Name="StateBack" Type="char" MaxLength="1" />
+    <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
+    <Property Name="LeaveType" Type="int" />
+    <Property Name="LeaveTypeChildrenID" Type="int" />
+    <Property Name="LeaveTime" Type="datetime" />
+    <Property Name="BackTime" Type="datetime" />
+    <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="BackWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="Address" Type="nvarchar" MaxLength="255" />
+    <Property Name="Lesson" Type="char" MaxLength="1" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
+    <Property Name="PrintTimes" Type="int" />
+    <Property Name="IntershipCompany" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="PrincipalName" Type="varchar" MaxLength="64" />
+    <Property Name="PrincipalTel" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_One" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Two" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Three" Type="varchar" MaxLength="64" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="T_NightNameList">
@@ -277,7 +308,8 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TeacherID" Type="varchar" MaxLength="64" />
     <Property Name="LeaveTypeID" Type="int" />
-    <Property Name="Enable" Type="int" />
+    <Property Name="EnableMessage" Type="int" />
+    <Property Name="IsDelete" Type="int" />
   </EntityType>
   <EntityType Name="T_Type">
     <Key>
@@ -413,6 +445,58 @@
     <Property Name="AuditName" Type="nvarchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_New_LeaveList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ST_Name" />
+      <PropertyRef Name="ST_Tel" />
+      <PropertyRef Name="ST_ContactOne" />
+      <PropertyRef Name="ST_OneTel" />
+      <PropertyRef Name="ST_Class" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="StudentID" Type="varchar" MaxLength="64" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+    <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="StateLeave" Type="char" MaxLength="1" />
+    <Property Name="StateBack" Type="char" MaxLength="1" />
+    <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
+    <Property Name="LeaveType" Type="int" />
+    <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
+    <Property Name="LeaveTypeChildrenID" Type="int" />
+    <Property Name="LeaveTime" Type="datetime" />
+    <Property Name="BackTime" Type="datetime" />
+    <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="BackWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="Address" Type="nvarchar" MaxLength="255" />
+    <Property Name="Lesson" Type="char" MaxLength="1" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
+    <Property Name="PrintTimes" Type="int" />
+    <Property Name="ST_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Email" Type="varchar" MaxLength="64" />
+    <Property Name="ST_QQ" Type="varchar" MaxLength="64" />
+    <Property Name="ST_ContactOne" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_OneTel" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Sex" Type="nchar" MaxLength="10" />
+    <Property Name="ST_Dor" Type="nchar" MaxLength="10" />
+    <Property Name="ST_Class" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Grade" Type="nchar" MaxLength="10" />
+    <Property Name="ST_MonitorID" Type="varchar" MaxLength="64" />
+    <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipCompany" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="PrincipalName" Type="varchar" MaxLength="64" />
+    <Property Name="PrincipalTel" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_One" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Two" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Three" Type="varchar" MaxLength="64" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_NightNameList">
     <Key>
@@ -491,7 +575,8 @@
     <Property Name="LeaveTypeID" Type="int" />
     <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
     <Property Name="LeaveTypeDescription" Type="varchar" MaxLength="200" />
-    <Property Name="Enable" Type="int" />
+    <Property Name="EnableMessage" Type="int" />
+    <Property Name="IsDelete" Type="int" />
   </EntityType>
   <Association Name="FK_T_TeacherLeaveType_T_LeaveType">
     <End Role="T_LeaveType" Type="Self.T_LeaveType" Multiplicity="0..1" />
@@ -534,6 +619,7 @@
     <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Menu" EntityType="Self.T_Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_New_LeaveList" EntityType="Self.T_New_LeaveList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_SendList" EntityType="Self.T_SendList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Statistic" EntityType="Self.T_Statistic" Schema="dbo" store:Type="Tables" />
@@ -627,6 +713,50 @@
     [vw_LeaveList].[AuditName] AS [AuditName]
     FROM [dbo].[vw_LeaveList] AS [vw_LeaveList]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_New_LeaveList].[ID] AS [ID], 
+    [vw_New_LeaveList].[StudentID] AS [StudentID], 
+    [vw_New_LeaveList].[Reason] AS [Reason], 
+    [vw_New_LeaveList].[SubmitTime] AS [SubmitTime], 
+    [vw_New_LeaveList].[StateLeave] AS [StateLeave], 
+    [vw_New_LeaveList].[StateBack] AS [StateBack], 
+    [vw_New_LeaveList].[RejectReason] AS [RejectReason], 
+    [vw_New_LeaveList].[LeaveType] AS [LeaveType], 
+    [vw_New_LeaveList].[LeaveTypeName] AS [LeaveTypeName], 
+    [vw_New_LeaveList].[LeaveTypeChildrenID] AS [LeaveTypeChildrenID], 
+    [vw_New_LeaveList].[LeaveTime] AS [LeaveTime], 
+    [vw_New_LeaveList].[BackTime] AS [BackTime], 
+    [vw_New_LeaveList].[LeaveWay] AS [LeaveWay], 
+    [vw_New_LeaveList].[BackWay] AS [BackWay], 
+    [vw_New_LeaveList].[Address] AS [Address], 
+    [vw_New_LeaveList].[Lesson] AS [Lesson], 
+    [vw_New_LeaveList].[Teacher] AS [Teacher], 
+    [vw_New_LeaveList].[AuditTeacher] AS [AuditTeacher], 
+    [vw_New_LeaveList].[PrintTimes] AS [PrintTimes], 
+    [vw_New_LeaveList].[ST_Name] AS [ST_Name], 
+    [vw_New_LeaveList].[ST_Tel] AS [ST_Tel], 
+    [vw_New_LeaveList].[ST_Email] AS [ST_Email], 
+    [vw_New_LeaveList].[ST_QQ] AS [ST_QQ], 
+    [vw_New_LeaveList].[ST_ContactOne] AS [ST_ContactOne], 
+    [vw_New_LeaveList].[ST_OneTel] AS [ST_OneTel], 
+    [vw_New_LeaveList].[ST_Sex] AS [ST_Sex], 
+    [vw_New_LeaveList].[ST_Dor] AS [ST_Dor], 
+    [vw_New_LeaveList].[ST_Class] AS [ST_Class], 
+    [vw_New_LeaveList].[ST_Grade] AS [ST_Grade], 
+    [vw_New_LeaveList].[ST_MonitorID] AS [ST_MonitorID], 
+    [vw_New_LeaveList].[ST_Teacher] AS [ST_Teacher], 
+    [vw_New_LeaveList].[ST_TeacherID] AS [ST_TeacherID], 
+    [vw_New_LeaveList].[IntershipCompany] AS [IntershipCompany], 
+    [vw_New_LeaveList].[IntershipAddress] AS [IntershipAddress], 
+    [vw_New_LeaveList].[PrincipalName] AS [PrincipalName], 
+    [vw_New_LeaveList].[PrincipalTel] AS [PrincipalTel], 
+    [vw_New_LeaveList].[Pic_One] AS [Pic_One], 
+    [vw_New_LeaveList].[Pic_Two] AS [Pic_Two], 
+    [vw_New_LeaveList].[Pic_Three] AS [Pic_Three], 
+    [vw_New_LeaveList].[IsDelete] AS [IsDelete]
+    FROM [dbo].[vw_New_LeaveList] AS [vw_New_LeaveList]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_NightNameList].[Batch] AS [Batch], 
@@ -683,7 +813,8 @@
     [vw_TeacherLeaveType].[LeaveTypeID] AS [LeaveTypeID], 
     [vw_TeacherLeaveType].[LeaveTypeName] AS [LeaveTypeName], 
     [vw_TeacherLeaveType].[LeaveTypeDescription] AS [LeaveTypeDescription], 
-    [vw_TeacherLeaveType].[Enable] AS [Enable]
+    [vw_TeacherLeaveType].[EnableMessage] AS [EnableMessage], 
+    [vw_TeacherLeaveType].[IsDelete] AS [IsDelete]
     FROM [dbo].[vw_TeacherLeaveType] AS [vw_TeacherLeaveType]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">

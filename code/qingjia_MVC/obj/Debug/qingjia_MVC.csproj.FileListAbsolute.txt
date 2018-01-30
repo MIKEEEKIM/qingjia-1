@@ -75,3 +75,4 @@ C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\zh-Hans\Microsoft.
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.dll
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.pdb
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\Z.EntityFramework.Plus.EF6.dll
+C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.csprojResolveAssemblyReference.cache

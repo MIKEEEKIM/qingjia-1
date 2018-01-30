@@ -143,24 +143,24 @@ namespace qingjia_MVC.Common
     /// <summary>
     /// 短信模板
     /// </summary>
-    public class MessageModel
-    {
-        //学生姓名
-        public string ST_Name { get; set; }
+    //public class MessageModel
+    //{
+    //    //学生姓名
+    //    public string ST_Name { get; set; }
 
-        //学生学号
-        public string ST_Num { get; set; }
+    //    //学生学号
+    //    public string ST_Num { get; set; }
 
-        //请假单号
-        public string LV_Num { get; set; }
+    //    //请假单号
+    //    public string LV_Num { get; set; }
 
-        //电话号码
-        public string ST_Tel { get; set; }
+    //    //电话号码
+    //    public string ST_Tel { get; set; }
 
-        //链接网址
-        public string picurl { get; set; }
+    //    //链接网址
+    //    public string picurl { get; set; }
 
-        //短信类型  go/back/failed
-        public string MessageType { get; set; }
-    }
+    //    //短信类型  go/back/failed
+    //    public string MessageType { get; set; }
+    //}
 }

@@ -24,4 +24,10 @@ namespace qingjia_MVC.Models.API
         /// </summary>
         public object data { get; set; }
     }
+
+    public class DataList
+    {
+        public int total { get; set; }
+        public object list { get; set; }
+    }
 }

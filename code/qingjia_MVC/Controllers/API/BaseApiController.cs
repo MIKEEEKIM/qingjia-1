@@ -3,6 +3,7 @@ using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -29,6 +30,19 @@ namespace qingjia_MVC.Controllers.API
             #region 访问日志
             OutputLog.WriteLog("访问API接口 " + HttpContext.Current.Request.Path);
             #endregion
+
+            #region 测试状态模拟登陆
+            AccountInfo accountInfo = new AccountInfo();
+            accountInfo.access_token = "11";
+            accountInfo.userID = "1214001";
+            accountInfo.userName = "王健铭";
+            accountInfo.userRoleID = "3";
+            accountInfo.userRoleName = "辅导员";
+            accountInfo.Grade = "2014";
+            accountInfo.permissionList = null;
+
+            HttpRuntime.Cache.Insert(accountInfo.access_token, accountInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
+            #endregion
         }
 
         /// <summary>
@@ -39,7 +53,7 @@ namespace qingjia_MVC.Controllers.API
         /// <summary>
         ///  实例化数据库连接
         /// </summary>
-        public imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        public static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
 
         #region 返回ApiResult 方法
         /// <summary>
@@ -404,16 +418,19 @@ namespace qingjia_MVC.Controllers.API
         /// <param name="model"></param>
         /// <param name="returnList"></param>
         /// <returns></returns>
-        public static List<T> GetList<T>(SelectCondition model, IQueryable<T> returnList)
+        public static DataList GetList<T>(SelectCondition model, IQueryable<T> returnList)
         {
+            DataList result = new DataList();
             if (model.conditions != null)
             {
                 foreach (var item in model.conditions)
                 {
                     returnList = returnList.Where(GetConditionExpression<T>(item));
                 }
+                result.total = returnList.Count();
             }
-            return GetList(returnList, model.page, model.limit, model.sortDirection, model.sortField);
+            result.list = GetList(returnList, model.page, model.pageSize, model.sortDirection, model.sortField);
+            return result;
         }
 
         /// <summary>
@@ -457,6 +474,34 @@ namespace qingjia_MVC.Controllers.API
                 model.fieldValues.Add(valueItem);
             }
             return model;
+        }
+
+        /// <summary>
+        /// 拼装查询条件 多值检索
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="fieldValue"></param>
+        /// <returns></returns>
+        public static ConditionModel CreatCondition(string fieldName, List<FieldValue> fieldValue)
+        {
+            if (fieldName == "" || fieldName == null || fieldValue == null || fieldName.Count() == 0)
+            {
+                return null;
+            }
+            ConditionModel model = new ConditionModel();
+            model.fieldName = fieldName;
+            model.fieldValues = fieldValue;
+            return model;
+        }
+
+        public static vw_New_LeaveList GetLeaveListModel(string LL_ID)
+        {
+            var _result = from vw_New_LeaveList in db.vw_New_LeaveList where (vw_New_LeaveList.ID == LL_ID && vw_New_LeaveList.IsDelete == 0) select vw_New_LeaveList;
+            if (_result.Any() && _result.ToList().Count() == 1)
+            {
+                return _result.ToList().First();
+            }
+            return null;
         }
         #endregion
 

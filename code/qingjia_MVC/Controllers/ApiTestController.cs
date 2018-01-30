@@ -23,5 +23,12 @@ namespace qingjia_MVC.Controllers
 
             return View();
         }
+
+        public ActionResult Api_Audit()
+        {
+            ViewBag.Title = "Api_Audit";
+
+            return View();
+        }
     }
 }

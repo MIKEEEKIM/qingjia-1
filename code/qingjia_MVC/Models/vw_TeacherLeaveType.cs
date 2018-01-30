@@ -22,6 +22,7 @@ namespace qingjia_MVC.Models
         public Nullable<int> LeaveTypeID { get; set; }
         public string LeaveTypeName { get; set; }
         public string LeaveTypeDescription { get; set; }
-        public Nullable<int> Enable { get; set; }
+        public Nullable<int> EnableMessage { get; set; }
+        public Nullable<int> IsDelete { get; set; }
     }
 }

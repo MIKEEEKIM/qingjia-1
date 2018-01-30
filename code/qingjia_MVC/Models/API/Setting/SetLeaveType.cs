@@ -6,5 +6,6 @@ namespace qingjia_MVC.Models.API.Setting
     {
         public string access_token { get; set; }
         public List<string> leaveTypeIdList { get; set; }
+        public List<string> enableMessage { get; set; }
     }
 }

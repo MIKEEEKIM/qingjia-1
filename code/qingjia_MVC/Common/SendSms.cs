@@ -149,4 +149,50 @@ namespace qingjia_MVC.Common
             }
         }
     }
+
+    /// <summary>
+    /// 短信模板
+    /// </summary>
+    public class MessageModel
+    {
+        //学生姓名
+        public string ST_Name { get; set; }
+
+        //学生学号
+        public string ST_Num { get; set; }
+
+        //请假单号
+        public string LV_Num { get; set; }
+
+        //电话号码
+        public string ST_Tel { get; set; }
+
+        //链接网址
+        public string picurl { get; set; }
+
+        //短信类型  go/back/failed
+        public string MessageType { get; set; }
+
+        public MessageModel()
+        {
+
+        }
+
+        public MessageModel(vw_New_LeaveList LL, string _MessageType)
+        {
+            this.ST_Name = LL.ST_Name;
+            this.ST_Num = LL.StudentID;
+            this.LV_Num = LL.ID;
+            this.ST_Tel = LL.ST_Tel;
+            this.picurl = "";
+            if (_MessageType == "go" || _MessageType == "back" || _MessageType == "failed")
+            {
+                this.MessageType = _MessageType;
+            }
+            else
+            {
+                this.MessageType = null;
+            }
+        }
+    }
 }

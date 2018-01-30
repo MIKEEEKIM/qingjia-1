@@ -17,7 +17,8 @@ namespace qingjia_MVC.Models
         public int ID { get; set; }
         public string TeacherID { get; set; }
         public Nullable<int> LeaveTypeID { get; set; }
-        public Nullable<int> Enable { get; set; }
+        public Nullable<int> EnableMessage { get; set; }
+        public Nullable<int> IsDelete { get; set; }
     
         public virtual T_LeaveType T_LeaveType { get; set; }
         public virtual T_Teacher T_Teacher { get; set; }
