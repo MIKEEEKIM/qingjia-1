@@ -257,6 +257,7 @@
     <Compile Include="Content\DataTableHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
+    <Compile Include="Controllers\API\Common\PrintPic.cs" />
     <Compile Include="Controllers\API\LeaveListController.cs" />
     <Compile Include="Controllers\API\OauthController.cs" />
     <Compile Include="Controllers\API\StudentController.cs" />
@@ -279,6 +280,8 @@
     <Compile Include="Models\API\AccessToken.cs" />
     <Compile Include="Models\API\AccountInfo.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
+    <Compile Include="Models\API\Audit\AuditReject.cs" />
+    <Compile Include="Models\API\Common\PrintLeaveListModel.cs" />
     <Compile Include="Models\API\Holiday.cs" />
     <Compile Include="Models\API\LeaveList.cs" />
     <Compile Include="Models\API\NightInfo.cs" />
@@ -2627,7 +2630,6 @@
     <Folder Include="Areas\UserInfo\Views\Shared\" />
     <Folder Include="Areas\Vacation\Models\" />
     <Folder Include="Areas\Vacation\Views\Shared\" />
-    <Folder Include="Controllers\API\Common\" />
     <Folder Include="res\images\fa_png\" />
     <Folder Include="res\images\internship\" />
     <Folder Include="res\images\loading\" />

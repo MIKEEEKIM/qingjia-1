@@ -1,5 +1,6 @@
 ﻿using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
+using qingjia_MVC.Models.API.Audit;
 using System.Linq;
 using System.Web.Http;
 using qingjia_MVC.Common;
@@ -30,6 +31,13 @@ namespace qingjia_MVC.Controllers.API.Audit
         #endregion
 
         //此模块包含 获取请假记录数据、审批通过、审批驳回、多条件查询接口
+
+        /// <summary>
+        /// Get 令牌、请假类型ID
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="leaveTypeID"></param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token, string leaveTypeID)
         {
@@ -55,7 +63,10 @@ namespace qingjia_MVC.Controllers.API.Audit
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
                 conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
-                conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                if (leaveTypeID != "0")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                }
                 conditionsModel.sortDirection = "DSEC";
                 conditionsModel.sortField = "SubmitTime";
                 return Success("获取成功", GetList(conditionsModel, leaveList));
@@ -67,6 +78,14 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
+        /// <summary>
+        /// Get 获取请假记录 参数为授权令牌、请假类型ID、页面显示数据条数、页数
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="leaveTypeID"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token, string leaveTypeID, int pageSize, int page)
         {
@@ -92,7 +111,10 @@ namespace qingjia_MVC.Controllers.API.Audit
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
                 conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
-                conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                if (leaveTypeID != "0")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                }
                 conditionsModel.sortDirection = "DSEC";
                 conditionsModel.sortField = "SubmitTime";
                 conditionsModel.pageSize = pageSize;
@@ -106,6 +128,16 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
+        /// <summary>
+        /// Get 获取请假记录 参数为授权令牌、请假类型ID、页面显示数据条数、页数、排序字段、排序方向
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="leaveTypeID"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="page"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortField"></param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token, string leaveTypeID, int pageSize, int page, string sortDirection, string sortField)
         {
@@ -139,7 +171,10 @@ namespace qingjia_MVC.Controllers.API.Audit
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
                 conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
-                conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                if (leaveTypeID != "0")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
+                }
                 conditionsModel.sortDirection = sortDirection;
                 conditionsModel.sortField = sortField;
                 conditionsModel.pageSize = pageSize;
@@ -153,6 +188,11 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
+        /// <summary>
+        /// Post 多条件查询
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost, Route("post")]
         public ApiResult Post([FromBody]SelectCondition model)
         {
@@ -175,15 +215,27 @@ namespace qingjia_MVC.Controllers.API.Audit
                 {
                     foreach (var item in model.conditions)
                     {
-                        if (item.fieldName == "ST_Grade" || item.fieldName == "ST_TeacherID")
+                        if (item.fieldName == "ST_Grade" || item.fieldName == "ST_TeacherID" || item.fieldName == "IsDelete")
                         {
                             continue;
+                        }
+                        if (item.fieldName == "leaveTypeID")
+                        {
+                            if (item.fieldValues.Count() >= 1)
+                            {
+                                return Error("请假记录搜索仅支持单一请假类型");
+                            }
+                            if (item.fieldValues.First().item == "0")
+                            {
+                                continue;
+                            }
                         }
                         conditionsModel.conditions.Add(CreatCondition(item.fieldName, item.fieldValues));
                     }
                 }
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+                conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
                 conditionsModel.sortDirection = model.sortDirection;
                 conditionsModel.sortField = model.sortField;
                 conditionsModel.pageSize = model.pageSize;
@@ -197,6 +249,12 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
+        /// <summary>
+        /// Get 同意请假操作 授权令牌、请假记录ID
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="LL_ID"></param>
+        /// <returns></returns>
         [HttpGet, Route("auditleave")]
         public ApiResult AuditLeave(string access_token, string LL_ID)
         {
@@ -238,7 +296,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                             db.SaveChanges();
 
                             //发送短信 go 代表同意请假
-                            SendSms.sendSms(new MessageModel(LL, "go"));
+                            SendMsg(LL, "go");
                             return Success("已同意请假！");
                             #endregion
                         }
@@ -264,6 +322,12 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
+        /// <summary>
+        /// Get 同意销假操作 授权令牌、请假记录ID
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="LL_ID"></param>
+        /// <returns></returns>
         [HttpGet, Route("auditback")]
         public ApiResult AuditBack(string access_token, string LL_ID)
         {
@@ -296,8 +360,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                             db.SaveChanges();
 
                             //发送短信 go 代表同意请假  利用线程短信
-                            //Thread sendMsg = new Thread(new ThreadStart());
-                            SendSms.sendSms(new MessageModel(LL, "back"));
+                            SendMsg(LL, "back");
+                            //Thread sendMsg = new Thread(new ThreadStart(SendMsg));
+
                             return Success("已同意销假！");
                             #endregion
                         }
@@ -323,11 +388,17 @@ namespace qingjia_MVC.Controllers.API.Audit
             #endregion
         }
 
-        [HttpGet, Route("auditreject")]
-        public ApiResult AuditReject(string access_token, string LL_ID)
+        /// <summary>
+        /// 驳回请假操作
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="LL_ID"></param>
+        /// <returns></returns>
+        [HttpPost, Route("auditreject")]
+        public ApiResult AuditReject([FromBody]AuditReject model)
         {
             #region 令牌验证
-            result = Check(access_token);
+            result = Check(model.access_token);
             if (result != null)
             {
                 return result;
@@ -337,8 +408,8 @@ namespace qingjia_MVC.Controllers.API.Audit
             #region 逻辑操作
             try
             {
-                AccountInfo accountInfo = GetAccountInfo(access_token);
-                vw_New_LeaveList LL = GetLeaveListModel(LL_ID);
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                vw_New_LeaveList LL = GetLeaveListModel(model.LL_ID);
                 if (LL != null)
                 {
                     if (LL.ST_Grade == accountInfo.Grade && LL.ST_TeacherID == accountInfo.userID)
@@ -346,16 +417,18 @@ namespace qingjia_MVC.Controllers.API.Audit
                         if (LL.StateLeave == "0" && LL.StateBack == "0")
                         {
                             #region 同意请假操作
-                            T_New_LeaveList _LL = db.T_New_LeaveList.Find(LL_ID);
+                            T_New_LeaveList _LL = db.T_New_LeaveList.Find(model.LL_ID);
                             _LL.StateLeave = "2";
                             _LL.StateBack = "1";
                             _LL.AuditTeacher = accountInfo.userName;
+                            _LL.RejectReason = model.rejectReason;
 
                             //保存至数据库
                             db.SaveChanges();
 
                             //发送短信 go 代表同意请假
-                            SendSms.sendSms(new MessageModel(LL, "failed"));
+                            SendMsg(LL, "failed");
+
                             return Success("已驳回请假！");
                             #endregion
                         }
@@ -380,7 +453,7 @@ namespace qingjia_MVC.Controllers.API.Audit
             }
             #endregion
         }
-
+        
         #region 发送短信
         /// <summary>
         /// 

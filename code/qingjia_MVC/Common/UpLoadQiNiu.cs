@@ -95,7 +95,7 @@ namespace qingjia_MVC.Common
         /// </summary>
         /// <param name="LV_NUM"></param>
         /// <returns></returns>
-        public static bool Stat(string LV_NUM)
+        public static string Stat(string LV_NUM)
         {
             // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
             // 实际应用中，请自行设置您的AccessKey和SecretKey
@@ -107,11 +107,11 @@ namespace qingjia_MVC.Common
             if (result.Code.ToString().Trim() == "200")
             {
                 //200 状态码代表 已存在该图片
-                return true;
+                return _QiNiuUrl + LV_NUM;
             }
             else
             {
-                return false;
+                return null;
             }
         }
 
@@ -126,19 +126,12 @@ namespace qingjia_MVC.Common
             LV_NUM += ".jpg"; //保存格式
             string result_string = _QiNiuUrl + LV_NUM;
 
-            if (Stat(LV_NUM))
-            {
-                return result_string;
-            }
-
             // 生成(上传)凭证时需要使用此Mac
             // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
             // 实际应用中，请自行设置您的AccessKey和SecretKey
             Mac mac = new Mac(_AccessKey, _SecretKey);
             string bucket = _bucket;
             string saveKey = LV_NUM;
-            //byte[] data = File.ReadAllBytes("D:/QFL/1.mp3");
-            //byte[] data = System.Text.Encoding.UTF8.GetBytes("Hello World!");
             // 上传策略，参见 
             // https://developer.qiniu.com/kodo/manual/put-policy
             PutPolicy putPolicy = new PutPolicy();
