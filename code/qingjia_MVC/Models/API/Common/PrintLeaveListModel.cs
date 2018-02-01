@@ -40,7 +40,7 @@ namespace qingjia_MVC.Models.API.Common
             {
                 LeaveTypeChildrenName = "公假";
             }
-            if (LeaveTypeChildrenID == "2") 
+            if (LeaveTypeChildrenID == "2")
             {
                 LeaveTypeChildrenName = "事假";
             }
@@ -51,14 +51,15 @@ namespace qingjia_MVC.Models.API.Common
             TeacherName = _LL.Teacher;
             LeaveTime = (DateTime)_LL.LeaveTime;
             BackTime = (DateTime)_LL.BackTime;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
-            ID = _LL.ID;
+            ST_Class = _LL.ST_Class;
+            ST_Name = _LL.ST_Name;
+            StudentID = _LL.StudentID;
+            ST_Tel = _LL.ST_Tel;
+            ST_TeacherName = _LL.ST_Teacher;
+            Reason = _LL.Reason;
+            ST_Dor = _LL.ST_Dor;
+            ST_ContactName = _LL.ST_ContactOne;
+            ST_ContactName = _LL.ST_OneTel;
         }
     }
 }
