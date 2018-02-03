@@ -1,6 +1,7 @@
 ﻿using qingjia_MVC.Common;
 using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
+using qingjia_MVC.Models.API.Common;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,7 +29,7 @@ namespace qingjia_MVC.Controllers.API
             #endregion
 
             #region 访问日志
-            OutputLog.WriteLog("访问API接口 " + HttpContext.Current.Request.Path);
+            //OutputLog.WriteLog("访问API接口 " + HttpContext.Current.Request.Path);
             #endregion
 
             #region 测试状态模拟登陆
@@ -53,7 +54,7 @@ namespace qingjia_MVC.Controllers.API
         /// <summary>
         ///  实例化数据库连接
         /// </summary>
-        public static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        public static Entities db = new Entities();
 
         #region 返回ApiResult 方法
         /// <summary>
@@ -153,7 +154,7 @@ namespace qingjia_MVC.Controllers.API
         {
             #region 测试代码--测试401错误，默认返回ApiResult
             //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
-            if (System.Configuration.ConfigurationManager.AppSettings["IsTest401"].ToString() == "1")
+            if (ConfigurationManager.AppSettings["IsTest401"].ToString() == "1")
             {
                 //强制返回401错误
                 ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
@@ -212,7 +213,7 @@ namespace qingjia_MVC.Controllers.API
             }
             #endregion
         }
-        
+
         /// <summary>
         /// 验证是否为本人操作
         /// 令牌验证
@@ -506,7 +507,112 @@ namespace qingjia_MVC.Controllers.API
         #endregion
 
         #region 数据模型转换
+        /// <summary>
+        /// 此处方法用于 数据库视图转换成 用户使用数据
+        /// </summary>
+        /// <param name="_model_list"></param>
+        /// <returns></returns>
+        public static List<LeaveListModel> TransformLL(List<vw_New_LeaveList> _model_list)
+        {
+            List<LeaveListModel> model_list = new List<LeaveListModel>();
+            foreach (var item in _model_list)
+            {
+                LeaveListModel model = new LeaveListModel();
 
+                #region
+                model.LL_ID = item.ID;
+                model.studentID = item.StudentID;
+                model.reason = item.Reason;
+                model.leaveState = "Error";
+                model.leaveStateCode = "Error";
+                if (item.StateLeave == "0" && item.StateBack == "0")
+                {
+                    model.leaveState = "待审核";
+                    model.leaveStateCode = "1";
+                }
+                if (item.StateLeave == "1" && item.StateBack == "0")
+                {
+                    model.leaveState = "待销假";
+                    model.leaveStateCode = "2";
+                }
+                if (item.StateLeave == "1" && item.StateBack == "1")
+                {
+                    model.leaveState = "已销假";
+                    model.leaveStateCode = "3";
+                }
+                if (item.StateLeave == "2" && item.StateBack == "1")
+                {
+                    model.leaveState = "已驳回";
+                    model.leaveStateCode = "4";
+                }
+                model.rejectReason = item.RejectReason;
+                model.leaveTypeID = item.LeaveType.ToString();
+                model.leaveTypeName = "Error";
+                if (item.LeaveType == "1" || item.LeaveType == "2" || item.LeaveType == "3" || item.LeaveType == "4")
+                {
+                    model.leaveTypeName = item.LeaveTypeName;
+                }
+                if (item.LeaveType == "5" || item.LeaveType == "6" || item.LeaveType == "7")
+                {
+                    if (item.LeaveTypeChildrenID == "1")
+                    {
+                        model.leaveTypeName = item.LeaveTypeName + "（公假）";
+                    }
+                    if (item.LeaveTypeChildrenID == "2")
+                    {
+                        model.leaveTypeName = item.LeaveTypeName + "（事假）";
+                    }
+                    if (item.LeaveTypeChildrenID == "3")
+                    {
+                        model.leaveTypeName = item.LeaveTypeName + "（病假）";
+                    }
+                }
+                model.leaveTime = item.LeaveTime.ToString();
+                model.backTime = item.BackTime.ToString();
+                model.leaveWay = item.LeaveWay;
+                model.backWay = item.BackWay;
+                model.address = item.Address;
+                model.lesson = "Error";
+                if (item.Lesson == "1")
+                {
+                    model.lesson = "第一大节";
+                }
+                if (item.Lesson == "2")
+                {
+                    model.lesson = "第二大节";
+                }
+                if (item.Lesson == "3")
+                {
+                    model.lesson = "第三大节";
+                }
+                if (item.Lesson == "4")
+                {
+                    model.lesson = "第四大节";
+                }
+                if (item.Lesson == "5")
+                {
+                    model.lesson = "第五大节";
+                }
+                model.teacher = item.Teacher;
+                model.auditTeacher = item.AuditTeacher;
+                model.ST_Name = item.ST_Name;
+                model.ST_Tel = item.ST_Tel;
+                model.ST_Class = item.ST_Class;
+                model.ST_Grade = item.ST_Grade;
+                model.ST_TeacherName = item.ST_Teacher;
+                model.intershipCompany = item.IntershipCompany;
+                model.intershipAddress = item.IntershipAddress;
+                model.principalName = item.PrincipalName;
+                model.principalTel = item.PrincipalTel;
+                model.pic_one = item.Pic_One;
+                model.pic_two = item.Pic_Two;
+                model.pic_three = item.Pic_Three;
+                #endregion
+
+                model_list.Add(model);
+            }
+            return model_list;
+        }
         #endregion
     }
 }

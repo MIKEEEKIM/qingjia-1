@@ -9,7 +9,7 @@ namespace qingjia_MVC.Areas.Message.Controllers
 {
     public class DeadlineMessageController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
         
         private int type_night = 2;     //特殊请假
         private int type_vacation = 1;  //离校请教

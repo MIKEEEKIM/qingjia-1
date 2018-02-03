@@ -1,0 +1,199 @@
+DateTime:2018/2/2 9:35:11    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:36:09    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:36:09    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:38:07    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:38:18    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:38:56    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:39:11    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:41:41    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 9:43:16    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:20:56    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:23:09    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:24:16    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:24:28    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:25:37    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:26:19    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:30:31    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:31:09    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:32:49    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:38:48    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:43:20    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 10:44:54    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 11:08:18    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/2 11:08:51    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:44:28    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:51:19    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:51:19    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:51:23    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:51:23    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:10    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:10    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:10    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:10    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:10    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:48    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:48    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:52:49    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:17    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:17    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:18    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:44    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:44    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:44    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:44    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:44    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:49    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:49    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:49    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:52    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:54    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:54    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:54    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:56    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:57    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:58    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:58    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:53:58    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:54:01    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:54:01    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:54:01    Message:访问API接口 /api/audit/get
+
+DateTime:2018/2/3 8:57:39    Message:2018/2/3 8:57:39System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:01:55    Message:2018/2/3 9:01:55System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:02:37    Message:2018/2/3 9:02:37System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:02:53    Message:2018/2/3 9:02:53System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:02:53    Message:2018/2/3 9:02:53System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:03:07    Message:2018/2/3 9:03:07System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:07:53    Message:2018/2/3 9:07:53System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:15:18    Message:2018/2/3 9:15:18System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+
+DateTime:2018/2/3 9:19:15    Message:2018/2/3 9:19:15System.ArgumentException: 无法用“System.Nullable`1[System.Int32]”类型的实例调用在类型“System.String”上声明的方法“Boolean Contains(System.String)”
+   在 System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   在 System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   在 System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, Expression[] arguments)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetConditionExpression[T](ConditionModel model) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 407
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 429
+   在 qingjia_MVC.Controllers.API.Audit.AuditLeaveController.Get(String access_token, String leaveTypeID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Audit\AuditLeaveController.cs:行号 72
+

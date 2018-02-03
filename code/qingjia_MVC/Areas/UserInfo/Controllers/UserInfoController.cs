@@ -9,7 +9,7 @@ namespace qingjia_MVC.Areas.UserInfo.Controllers
 {
     public class UserInfoController : BaseController
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: UserInfo/UserInfo
         public ActionResult Index()

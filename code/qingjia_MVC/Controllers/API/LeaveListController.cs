@@ -129,7 +129,7 @@ namespace qingjia_MVC.Controllers.API
     public class LeaveListController : ApiController
     {
         //实例化数据库
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         /// <summary>
         /// GET

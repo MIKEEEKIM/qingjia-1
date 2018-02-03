@@ -11,7 +11,7 @@ namespace qingjia_MVC.Common
     public class ShortMessageClass
     {
         //实例化数据模型
-        private static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private static Entities db = new Entities();
 
         //密码验证：SMS_60140885
         //请假失败：SMS_27620081

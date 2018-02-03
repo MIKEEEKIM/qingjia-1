@@ -33,7 +33,7 @@ namespace qingjia_MVC.Common
         //获取所有班级
         public static List<ClassList> getClassList()
         {
-            imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+            Entities db = new Entities();
             var classList = from t in db.T_Class
                             select new
                             {
@@ -53,7 +53,7 @@ namespace qingjia_MVC.Common
         //根据辅导员ID获取班级列表
         public static List<ClassList> getClassList(string teacherID)
         {
-            imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+            Entities db = new Entities();
             var classList = from t in db.T_Class
                             where t.TeacherID == teacherID
                             orderby t.ID

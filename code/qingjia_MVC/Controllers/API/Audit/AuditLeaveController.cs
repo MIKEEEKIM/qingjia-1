@@ -1,14 +1,15 @@
-﻿using qingjia_MVC.Models;
+﻿using qingjia_MVC.Common;
+using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.Audit;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using qingjia_MVC.Common;
-using System.Threading;
 
 namespace qingjia_MVC.Controllers.API.Audit
 {
-    [RoutePrefix("api/auditleave")]
+    [RoutePrefix("api/audit")]
     public class AuditLeaveController : BaseApiController
     {
         #region 令牌验证
@@ -58,21 +59,24 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                IQueryable<vw_LeaveList> leaveList = db.vw_LeaveList;
+                IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
-                conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
                 }
-                conditionsModel.sortDirection = "DSEC";
-                conditionsModel.sortField = "SubmitTime";
-                return Success("获取成功", GetList(conditionsModel, leaveList));
+                //conditionsModel.sortDirection = "DESC";
+                //conditionsModel.sortField = "SubmitTime";
+                DataList dtSource = GetList(conditionsModel, leaveList);
+                dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+                return Success("获取成功", dtSource);
             }
-            catch
+            catch (ArgumentException ex)
             {
+                ex.ToString();
+                OutputLog.WriteLog(DateTime.Now.ToString() + ex.ToString());
                 return SystemError();
             }
             #endregion
@@ -106,23 +110,27 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                IQueryable<vw_LeaveList> leaveList = db.vw_LeaveList;
+                IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
-                conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
                 }
-                conditionsModel.sortDirection = "DSEC";
+                conditionsModel.sortDirection = "DESC";
                 conditionsModel.sortField = "SubmitTime";
                 conditionsModel.pageSize = pageSize;
                 conditionsModel.page = page;
-                return Success("获取成功", GetList(conditionsModel, leaveList));
+
+                DataList dtSource = GetList(conditionsModel, leaveList);
+                dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+                return Success("获取成功", dtSource);
             }
-            catch
+            catch (ArgumentException ex)
             {
+                ex.ToString();
+                OutputLog.WriteLog(ex.ToString());
                 return SystemError();
             }
             #endregion
@@ -156,7 +164,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                 {
                     return Error("leaveTypeID参数错误");
                 }
-                if (sortDirection == null || sortDirection == "")
+                if (sortDirection == null || sortDirection == "" || (sortDirection != "DESC" && sortDirection != "ASC"))
                 {
                     return Error("sortDirection参数错误");
                 }
@@ -166,11 +174,10 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                IQueryable<vw_LeaveList> leaveList = db.vw_LeaveList;
+                IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
-                conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
@@ -179,10 +186,15 @@ namespace qingjia_MVC.Controllers.API.Audit
                 conditionsModel.sortField = sortField;
                 conditionsModel.pageSize = pageSize;
                 conditionsModel.page = page;
-                return Success("获取成功", GetList(conditionsModel, leaveList));
+
+                DataList dtSource = GetList(conditionsModel, leaveList);
+                dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+                return Success("获取成功", dtSource);
             }
-            catch
+            catch (ArgumentException ex)
             {
+                ex.ToString();
+                OutputLog.WriteLog(ex.ToString());
                 return SystemError();
             }
             #endregion
@@ -208,7 +220,7 @@ namespace qingjia_MVC.Controllers.API.Audit
             try
             {
                 AccountInfo accountInfo = GetAccountInfo(model.access_token);
-                IQueryable<vw_LeaveList> leaveList = db.vw_LeaveList;
+                IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
                 SelectCondition conditionsModel = new SelectCondition();
 
                 if (model.conditions != null && model.conditions.Count() != 0)
@@ -240,7 +252,10 @@ namespace qingjia_MVC.Controllers.API.Audit
                 conditionsModel.sortField = model.sortField;
                 conditionsModel.pageSize = model.pageSize;
                 conditionsModel.page = model.page;
-                return Success("获取成功", GetList(conditionsModel, leaveList));
+
+                DataList dtSource = GetList(conditionsModel, leaveList);
+                dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+                return Success("获取成功", dtSource);
             }
             catch
             {
@@ -280,7 +295,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                             #region 同意请假操作
                             T_New_LeaveList _LL = db.T_New_LeaveList.Find(LL_ID);
                             //早晚自习请假和上课请假不需要销假
-                            if (_LL.LeaveType == 6 || _LL.LeaveType == 7)
+                            if (_LL.LeaveType == "6" || _LL.LeaveType == "7")
                             {
                                 _LL.StateLeave = "1";
                                 _LL.StateBack = "1";
@@ -389,7 +404,7 @@ namespace qingjia_MVC.Controllers.API.Audit
         }
 
         /// <summary>
-        /// 驳回请假操作
+        /// Post 驳回请假操作
         /// </summary>
         /// <param name="access_token"></param>
         /// <param name="LL_ID"></param>
@@ -453,16 +468,16 @@ namespace qingjia_MVC.Controllers.API.Audit
             }
             #endregion
         }
-        
+
         #region 发送短信
         /// <summary>
-        /// 
+        /// 发送通知短信
         /// </summary>
         /// <param name="_LL"></param>
         /// <param name="messageType"></param>
         private void SendMsg(vw_New_LeaveList _LL, string messageType)
         {
-            var _enableMessage = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.LeaveTypeID == _LL.LeaveType && vw_TeacherLeaveType.TeacherID == _LL.ST_TeacherID) select vw_TeacherLeaveType.EnableMessage;
+            var _enableMessage = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.LeaveTypeID.ToString() == _LL.LeaveType && vw_TeacherLeaveType.TeacherID == _LL.ST_TeacherID) select vw_TeacherLeaveType.EnableMessage;
             if (_enableMessage.Any() && _enableMessage.ToList().First() != 0)
             {
                 SendSms.sendSms(new MessageModel(_LL, messageType));

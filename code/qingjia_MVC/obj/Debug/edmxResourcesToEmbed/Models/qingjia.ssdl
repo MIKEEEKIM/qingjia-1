@@ -200,8 +200,8 @@
     <Property Name="StateLeave" Type="char" MaxLength="1" />
     <Property Name="StateBack" Type="char" MaxLength="1" />
     <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
-    <Property Name="LeaveType" Type="int" />
-    <Property Name="LeaveTypeChildrenID" Type="int" />
+    <Property Name="LeaveType" Type="char" MaxLength="10" />
+    <Property Name="LeaveTypeChildrenID" Type="char" MaxLength="10" />
     <Property Name="LeaveTime" Type="datetime" />
     <Property Name="BackTime" Type="datetime" />
     <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
@@ -210,7 +210,7 @@
     <Property Name="Lesson" Type="char" MaxLength="1" />
     <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
-    <Property Name="PrintTimes" Type="int" />
+    <Property Name="PrintTimes" Type="char" MaxLength="10" />
     <Property Name="IntershipCompany" Type="varchar" MaxLength="64" />
     <Property Name="IntershipAddress" Type="nvarchar" MaxLength="255" />
     <Property Name="PrincipalName" Type="varchar" MaxLength="64" />
@@ -462,9 +462,7 @@
     <Property Name="StateLeave" Type="char" MaxLength="1" />
     <Property Name="StateBack" Type="char" MaxLength="1" />
     <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
-    <Property Name="LeaveType" Type="int" />
     <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
-    <Property Name="LeaveTypeChildrenID" Type="int" />
     <Property Name="LeaveTime" Type="datetime" />
     <Property Name="BackTime" Type="datetime" />
     <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
@@ -473,7 +471,7 @@
     <Property Name="Lesson" Type="char" MaxLength="1" />
     <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
-    <Property Name="PrintTimes" Type="int" />
+    <Property Name="PrintTimes" Type="char" MaxLength="10" />
     <Property Name="ST_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
     <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ST_Email" Type="varchar" MaxLength="64" />
@@ -494,6 +492,8 @@
     <Property Name="Pic_One" Type="varchar" MaxLength="64" />
     <Property Name="Pic_Two" Type="varchar" MaxLength="64" />
     <Property Name="Pic_Three" Type="varchar" MaxLength="64" />
+    <Property Name="LeaveType" Type="char" MaxLength="10" />
+    <Property Name="LeaveTypeChildrenID" Type="char" MaxLength="10" />
     <Property Name="IsDelete" Type="int" />
   </EntityType>
   <!--生成过程中发现错误:
@@ -722,9 +722,7 @@
     [vw_New_LeaveList].[StateLeave] AS [StateLeave], 
     [vw_New_LeaveList].[StateBack] AS [StateBack], 
     [vw_New_LeaveList].[RejectReason] AS [RejectReason], 
-    [vw_New_LeaveList].[LeaveType] AS [LeaveType], 
     [vw_New_LeaveList].[LeaveTypeName] AS [LeaveTypeName], 
-    [vw_New_LeaveList].[LeaveTypeChildrenID] AS [LeaveTypeChildrenID], 
     [vw_New_LeaveList].[LeaveTime] AS [LeaveTime], 
     [vw_New_LeaveList].[BackTime] AS [BackTime], 
     [vw_New_LeaveList].[LeaveWay] AS [LeaveWay], 
@@ -754,6 +752,8 @@
     [vw_New_LeaveList].[Pic_One] AS [Pic_One], 
     [vw_New_LeaveList].[Pic_Two] AS [Pic_Two], 
     [vw_New_LeaveList].[Pic_Three] AS [Pic_Three], 
+    [vw_New_LeaveList].[LeaveType] AS [LeaveType], 
+    [vw_New_LeaveList].[LeaveTypeChildrenID] AS [LeaveTypeChildrenID], 
     [vw_New_LeaveList].[IsDelete] AS [IsDelete]
     FROM [dbo].[vw_New_LeaveList] AS [vw_New_LeaveList]</DefiningQuery>
     </EntitySet>

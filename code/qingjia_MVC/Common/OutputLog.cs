@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Web;
 
 namespace qingjia_MVC.Common
 {
@@ -14,7 +15,7 @@ namespace qingjia_MVC.Common
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.BaseStream.Seek(0, SeekOrigin.End);
-                    sw.WriteLine("DateTime:"+DateTime.Now.ToString() + "    Message:{0}\n", msg, DateTime.Now);
+                    sw.WriteLine("DateTime:" + DateTime.Now.ToString() + "      Url:" + HttpContext.Current.Request.Path + "    Message:{0}\n", msg, DateTime.Now);
                     sw.Flush();
                 }
             }

@@ -15,10 +15,10 @@ namespace qingjia_MVC.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class imaw_qingjiaEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public imaw_qingjiaEntities()
-            : base("name=imaw_qingjiaEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -54,11 +54,11 @@ namespace qingjia_MVC.Models
         public virtual DbSet<vw_ClassBatch> vw_ClassBatch { get; set; }
         public virtual DbSet<vw_LeaveIntership> vw_LeaveIntership { get; set; }
         public virtual DbSet<vw_LeaveList> vw_LeaveList { get; set; }
-        public virtual DbSet<vw_New_LeaveList> vw_New_LeaveList { get; set; }
         public virtual DbSet<vw_NightNameList> vw_NightNameList { get; set; }
         public virtual DbSet<vw_StudenBatch> vw_StudenBatch { get; set; }
         public virtual DbSet<vw_Student> vw_Student { get; set; }
         public virtual DbSet<vw_TeacherLeaveType> vw_TeacherLeaveType { get; set; }
+        public virtual DbSet<vw_New_LeaveList> vw_New_LeaveList { get; set; }
     
         public virtual ObjectResult<string> sp_getNightNameList(string teacherID)
         {

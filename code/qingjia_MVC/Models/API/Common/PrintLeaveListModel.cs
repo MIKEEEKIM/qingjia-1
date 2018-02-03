@@ -31,7 +31,27 @@ namespace qingjia_MVC.Models.API.Common
         public PrintLeaveListModel(vw_New_LeaveList _LL)
         {
             ID = _LL.ID;
-            Lesson = _LL.Lesson;
+            Lesson = "Error";
+            if (_LL.Lesson == "1")
+            {
+                Lesson = "第一大节";
+            }
+            if (_LL.Lesson == "2")
+            {
+                Lesson = "第二大节";
+            }
+            if (_LL.Lesson == "3")
+            {
+                Lesson = "第三大节";
+            }
+            if (_LL.Lesson == "4")
+            {
+                Lesson = "第四大节";
+            }
+            if (_LL.Lesson == "5")
+            {
+                Lesson = "第五大节";
+            }
             LeaveTypeID = _LL.LeaveType.ToString();
             LeaveTypeName = _LL.LeaveTypeName;
             LeaveTypeChildrenID = _LL.LeaveTypeChildrenID.ToString();

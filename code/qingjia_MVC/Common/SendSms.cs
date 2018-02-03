@@ -20,7 +20,7 @@ namespace qingjia_MVC.Common
         const string accessKeySecret = "F7Gv1zZvwHYHLbkSIXnn1Dx9HUIi0K";
 
         //实例化数据模型
-        private static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private static Entities db = new Entities();
 
         //密码验证：SMS_60140885
         //请假失败：SMS_27620081

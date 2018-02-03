@@ -16,7 +16,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
     public class AuditFormController : BaseController
     {
         //实例化数据库
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
         private string staticLeaveType = "total";
 
         //Session["AuditLeaveType"]     请假审批当前请假类型

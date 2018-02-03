@@ -11,7 +11,7 @@ namespace qingjia_MVC.Common
     public static class Print
     {
         //实例化数据库 从数据库中获取数据
-        private static imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private static Entities db = new Entities();
 
         //获取程序根目录路径
         private static string picPath = System.Web.HttpContext.Current.Server.MapPath("~/");

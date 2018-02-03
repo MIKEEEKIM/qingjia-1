@@ -1,20 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using FineUIMvc;
 using qingjia_MVC.Models;
-using FineUIMvc;
+using System;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web.Mvc;
+using System.Xml;
 
 namespace qingjia_MVC.Controllers
 {
     public class HomeController : BaseController
     {
         //实例化数据库
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         public ActionResult Index()
         {

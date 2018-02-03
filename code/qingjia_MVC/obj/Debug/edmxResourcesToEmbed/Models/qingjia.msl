@@ -430,52 +430,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vw_New_LeaveList">
-      <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_New_LeaveList">
-        <MappingFragment StoreEntitySet="vw_New_LeaveList">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-          <ScalarProperty Name="StateLeave" ColumnName="StateLeave" />
-          <ScalarProperty Name="StateBack" ColumnName="StateBack" />
-          <ScalarProperty Name="RejectReason" ColumnName="RejectReason" />
-          <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
-          <ScalarProperty Name="LeaveTypeName" ColumnName="LeaveTypeName" />
-          <ScalarProperty Name="LeaveTypeChildrenID" ColumnName="LeaveTypeChildrenID" />
-          <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
-          <ScalarProperty Name="BackTime" ColumnName="BackTime" />
-          <ScalarProperty Name="LeaveWay" ColumnName="LeaveWay" />
-          <ScalarProperty Name="BackWay" ColumnName="BackWay" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Lesson" ColumnName="Lesson" />
-          <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-          <ScalarProperty Name="AuditTeacher" ColumnName="AuditTeacher" />
-          <ScalarProperty Name="PrintTimes" ColumnName="PrintTimes" />
-          <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
-          <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
-          <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
-          <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
-          <ScalarProperty Name="ST_ContactOne" ColumnName="ST_ContactOne" />
-          <ScalarProperty Name="ST_OneTel" ColumnName="ST_OneTel" />
-          <ScalarProperty Name="ST_Sex" ColumnName="ST_Sex" />
-          <ScalarProperty Name="ST_Dor" ColumnName="ST_Dor" />
-          <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
-          <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
-          <ScalarProperty Name="ST_MonitorID" ColumnName="ST_MonitorID" />
-          <ScalarProperty Name="ST_Teacher" ColumnName="ST_Teacher" />
-          <ScalarProperty Name="ST_TeacherID" ColumnName="ST_TeacherID" />
-          <ScalarProperty Name="IntershipCompany" ColumnName="IntershipCompany" />
-          <ScalarProperty Name="IntershipAddress" ColumnName="IntershipAddress" />
-          <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
-          <ScalarProperty Name="PrincipalTel" ColumnName="PrincipalTel" />
-          <ScalarProperty Name="Pic_One" ColumnName="Pic_One" />
-          <ScalarProperty Name="Pic_Two" ColumnName="Pic_Two" />
-          <ScalarProperty Name="Pic_Three" ColumnName="Pic_Three" />
-          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vw_NightNameList">
       <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_NightNameList">
         <MappingFragment StoreEntitySet="vw_NightNameList">
@@ -545,5 +499,51 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjiaModel.Store.sp_getNightNameList" />
+    <EntitySetMapping Name="vw_New_LeaveList">
+      <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_New_LeaveList">
+        <MappingFragment StoreEntitySet="vw_New_LeaveList">
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="LeaveTypeChildrenID" ColumnName="LeaveTypeChildrenID" />
+          <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+          <ScalarProperty Name="Pic_Three" ColumnName="Pic_Three" />
+          <ScalarProperty Name="Pic_Two" ColumnName="Pic_Two" />
+          <ScalarProperty Name="Pic_One" ColumnName="Pic_One" />
+          <ScalarProperty Name="PrincipalTel" ColumnName="PrincipalTel" />
+          <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
+          <ScalarProperty Name="IntershipAddress" ColumnName="IntershipAddress" />
+          <ScalarProperty Name="IntershipCompany" ColumnName="IntershipCompany" />
+          <ScalarProperty Name="ST_TeacherID" ColumnName="ST_TeacherID" />
+          <ScalarProperty Name="ST_Teacher" ColumnName="ST_Teacher" />
+          <ScalarProperty Name="ST_MonitorID" ColumnName="ST_MonitorID" />
+          <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
+          <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
+          <ScalarProperty Name="ST_Dor" ColumnName="ST_Dor" />
+          <ScalarProperty Name="ST_Sex" ColumnName="ST_Sex" />
+          <ScalarProperty Name="ST_OneTel" ColumnName="ST_OneTel" />
+          <ScalarProperty Name="ST_ContactOne" ColumnName="ST_ContactOne" />
+          <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
+          <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
+          <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+          <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+          <ScalarProperty Name="PrintTimes" ColumnName="PrintTimes" />
+          <ScalarProperty Name="AuditTeacher" ColumnName="AuditTeacher" />
+          <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+          <ScalarProperty Name="Lesson" ColumnName="Lesson" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="BackWay" ColumnName="BackWay" />
+          <ScalarProperty Name="LeaveWay" ColumnName="LeaveWay" />
+          <ScalarProperty Name="BackTime" ColumnName="BackTime" />
+          <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
+          <ScalarProperty Name="LeaveTypeName" ColumnName="LeaveTypeName" />
+          <ScalarProperty Name="RejectReason" ColumnName="RejectReason" />
+          <ScalarProperty Name="StateBack" ColumnName="StateBack" />
+          <ScalarProperty Name="StateLeave" ColumnName="StateLeave" />
+          <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

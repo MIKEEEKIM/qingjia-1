@@ -50,15 +50,27 @@
 
         $(document).ready(function () {
             $('#AuditLeave_GetLeavelist').click(function (e) {
-                AjaxRequestGet('api/auditleave/get?access_token=11&leaveType=11');
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1');
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11');
+            });
+
+            $('#AuditLeave_GetLeavelist_Page').click(function (e) {
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0&pageSize=10&page=20');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&pageSize=10&page=20');
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11&pageSize=10&page=20');
+            });
+
+            $('#AuditLeave_GetLeavelist_Sort').click(function (e) {
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0&pageSize=10&page=20');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&pageSize=10&page=20&sortDirection=DESC&sortField=Reason');
+                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11&pageSize=10&page=20');
             });
 
             $('#TransformLeavelist').click(function (e) {
-                AjaxRequestGet('api/system/changeleavelist');
+                //AjaxRequestGet('api/system/changeleavelist');
             });
         });
-
-
     </script>
 </head>
 <body>
@@ -71,11 +83,20 @@
             <br />
             <h4>请假审批</h4>
             <h5>获取请假记录</h5>
-            <input type="button" value="测试接口" id="AuditLeave_GetLeavelist" />
+            <input type="button" value="获取请假记录" id="AuditLeave_GetLeavelist" />
             <br />
             <br />
+
+            <input type="button" value="分页获取请假记录" id="AuditLeave_GetLeavelist_Page" />
+            <br />
+            <br />
+
+            <input type="button" value="排序_分页获取请假记录" id="AuditLeave_GetLeavelist_Sort" />
+            <br />
+            <br />
+
             <h5>转换请假记录</h5>
-            <input type="button" value="测试接口" id="TransformLeavelist" />
+            <input type="button" value="转换请假记录" id="TransformLeavelist" />
             <br />
             <br />
         </div>

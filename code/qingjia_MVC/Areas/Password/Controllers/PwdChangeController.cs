@@ -9,7 +9,7 @@ namespace qingjia_MVC.Areas.Password.Controllers
     public class PwdChangeController : BaseController
     {
         //实例化数据库连接
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: Password/PwdChange
         public ActionResult PwdChange()

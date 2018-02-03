@@ -21,8 +21,8 @@ namespace qingjia_MVC.Models
         public string StateLeave { get; set; }
         public string StateBack { get; set; }
         public string RejectReason { get; set; }
-        public Nullable<int> LeaveType { get; set; }
-        public Nullable<int> LeaveTypeChildrenID { get; set; }
+        public string LeaveType { get; set; }
+        public string LeaveTypeChildrenID { get; set; }
         public Nullable<System.DateTime> LeaveTime { get; set; }
         public Nullable<System.DateTime> BackTime { get; set; }
         public string LeaveWay { get; set; }
@@ -31,7 +31,7 @@ namespace qingjia_MVC.Models
         public string Lesson { get; set; }
         public string Teacher { get; set; }
         public string AuditTeacher { get; set; }
-        public Nullable<int> PrintTimes { get; set; }
+        public string PrintTimes { get; set; }
         public string IntershipCompany { get; set; }
         public string IntershipAddress { get; set; }
         public string PrincipalName { get; set; }

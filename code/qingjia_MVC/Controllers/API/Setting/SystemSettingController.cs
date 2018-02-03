@@ -160,74 +160,74 @@ namespace qingjia_MVC.Controllers.API.Setting
                     if (listModel.TypeChildID == 4)
                     {
                         //短期请假
-                        newModel.LeaveType = 1;
+                        newModel.LeaveType = "1";
                         newModel.LeaveTypeChildrenID = null;
                     }
                     else if (listModel.TypeChildID == 5)
                     {
                         //长期请假
-                        newModel.LeaveType = 2;
+                        newModel.LeaveType = "2";
                         newModel.LeaveTypeChildrenID = null;
                     }
                     else if (listModel.TypeChildID == 6)
                     {
                         //节假日请假
-                        newModel.LeaveType = 4;
+                        newModel.LeaveType = "4";
                         newModel.LeaveTypeChildrenID = null;
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 7)
                     {
                         //晚点名请假
-                        newModel.LeaveType = 5;
-                        newModel.LeaveTypeChildrenID = 1;
+                        newModel.LeaveType = "5";
+                        newModel.LeaveTypeChildrenID = "1";
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 8)
                     {
                         //晚点名请假
-                        newModel.LeaveType = 5;
-                        newModel.LeaveTypeChildrenID = 2;
+                        newModel.LeaveType = "5";
+                        newModel.LeaveTypeChildrenID = "2";
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 9)
                     {
                         //晚点名请假
-                        newModel.LeaveType = 5;
-                        newModel.LeaveTypeChildrenID = 3;
+                        newModel.LeaveType = "5";
+                        newModel.LeaveTypeChildrenID = "3";
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 10)
                     {
                         //早晚自习
-                        newModel.LeaveType = 6;
-                        newModel.LeaveTypeChildrenID = 1;
+                        newModel.LeaveType = "6";
+                        newModel.LeaveTypeChildrenID = "1";
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 11)
                     {
                         //早晚自习
-                        newModel.LeaveType = 6;
-                        newModel.LeaveTypeChildrenID = 2;
+                        newModel.LeaveType = "6";
+                        newModel.LeaveTypeChildrenID = "2";
                     }
                     else if (listModel.TypeID == 2 && listModel.TypeChildID == 12)
                     {
                         //早晚自习
-                        newModel.LeaveType = 6;
-                        newModel.LeaveTypeChildrenID = 3;
+                        newModel.LeaveType = "6";
+                        newModel.LeaveTypeChildrenID = "3";
                     }
                     else if (listModel.TypeChildID == 13)
                     {
                         //上课请假
-                        newModel.LeaveType = 7;
-                        newModel.LeaveTypeChildrenID = 1;
+                        newModel.LeaveType = "7";
+                        newModel.LeaveTypeChildrenID = "1";
                     }
                     else if (listModel.TypeChildID == 14)
                     {
                         //上课请假
-                        newModel.LeaveType = 7;
-                        newModel.LeaveTypeChildrenID = 2;
+                        newModel.LeaveType = "7";
+                        newModel.LeaveTypeChildrenID = "2";
                     }
                     else if (listModel.TypeChildID == 15)
                     {
                         //上课请假
-                        newModel.LeaveType = 7;
-                        newModel.LeaveTypeChildrenID = 3;
+                        newModel.LeaveType = "7";
+                        newModel.LeaveTypeChildrenID = "3";
                     }
                     else
                     {
@@ -249,7 +249,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                     {
                         newModel.AuditTeacher = teacherModel.Name;
                     }
-                    newModel.PrintTimes = listModel.PrintTimes;
+                    newModel.PrintTimes = listModel.PrintTimes.ToString();
                     newModel.IsDelete = 0;
 
                     db.T_New_LeaveList.Add(newModel);

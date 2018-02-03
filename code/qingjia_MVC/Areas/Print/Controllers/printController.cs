@@ -2,7 +2,6 @@
 using qingjia_MVC.Common;
 using qingjia_MVC.Controllers;
 using qingjia_MVC.Models;
-using System;
 using System.Web.Mvc;
 
 namespace qingjia_MVC.Areas.Print.Controllers
@@ -10,7 +9,7 @@ namespace qingjia_MVC.Areas.Print.Controllers
 
     public class printController : BaseController
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: Print/print
         public ActionResult Index()

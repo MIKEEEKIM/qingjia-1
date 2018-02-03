@@ -36,7 +36,7 @@ namespace qingjia_MVC.Areas.Vacation.Controllers
     public class VacationController : BaseController//继承自basecontroller可实现 跳转控制
     {
         //实例化数据库
-        imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        Entities db = new Entities();
 
         // GET: Vacation/Vacation
         public ActionResult Index()

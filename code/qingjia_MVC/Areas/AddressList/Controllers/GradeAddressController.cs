@@ -11,7 +11,7 @@ namespace qingjia_MVC.Areas.AddressList.Controllers
 {
     public class GradeAddressController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: AddressList/GradeAddress
         public ActionResult Index()

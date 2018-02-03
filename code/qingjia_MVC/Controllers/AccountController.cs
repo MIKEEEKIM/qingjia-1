@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using FineUIMvc;
 using qingjia_MVC.Models;
-using FineUIMvc;
+using System;
+using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 
 namespace qingjia_MVC.Controllers
 {
     public class AccountController : Controller
     {
         //实例化数据库
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: Account
         public ActionResult Index()

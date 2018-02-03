@@ -12,7 +12,7 @@ namespace qingjia_MVC.Areas.Message.Controllers
 {
     public class NightMessageController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: Message/NightMessage
         public ActionResult Index()

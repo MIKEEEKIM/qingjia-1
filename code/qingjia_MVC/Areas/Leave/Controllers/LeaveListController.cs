@@ -19,7 +19,7 @@ namespace qingjia_MVC.Areas.Leave.Controllers
     public class LeaveListController : BaseController
     {
         //实例化数据库
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
         private string staticLeaveType = "total";
 
         #region Index

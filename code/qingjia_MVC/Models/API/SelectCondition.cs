@@ -23,14 +23,14 @@ namespace qingjia_MVC.Models.API
         public string sortField { get; set; }
 
         //查询条件集合
-        public List<ConditionModel> conditions { get; set; }
+        public List<ConditionModel> conditions = new List<ConditionModel>();
     }
 
     //字段 查询条件
     public class ConditionModel
     {
         public string fieldName { get; set; }
-        public List<FieldValue> fieldValues { get; set; }
+        public List<FieldValue> fieldValues = new List<FieldValue>();
     }
 
     //字段 查询条件值

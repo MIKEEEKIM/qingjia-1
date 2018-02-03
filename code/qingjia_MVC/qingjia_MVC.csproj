@@ -281,6 +281,7 @@
     <Compile Include="Models\API\AccountInfo.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Audit\AuditReject.cs" />
+    <Compile Include="Models\API\Common\LeaveListModel.cs" />
     <Compile Include="Models\API\Common\PrintLeaveListModel.cs" />
     <Compile Include="Models\API\Holiday.cs" />
     <Compile Include="Models\API\LeaveList.cs" />

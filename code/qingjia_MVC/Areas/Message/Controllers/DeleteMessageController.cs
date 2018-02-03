@@ -9,7 +9,7 @@ namespace qingjia_MVC.Areas.Message.Controllers
 {
     public class DeleteMessageController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
         private int type_short = 4;
         private int type_long = 5;
         private int type_vacation = 6;

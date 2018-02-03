@@ -1,5 +1,4 @@
 ﻿using FineUIMvc;
-using Newtonsoft.Json.Linq;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
@@ -12,14 +11,13 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace qingjia_MVC.Areas.CallName.Controllers
 {
     public class NameForTController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: CallName/NameList
         public ActionResult Index()

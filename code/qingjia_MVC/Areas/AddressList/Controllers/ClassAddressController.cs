@@ -6,7 +6,7 @@ namespace qingjia_MVC.Areas.AddressList.Controllers
 {
     public class ClassAddressController : Controller
     {
-        private imaw_qingjiaEntities db = new imaw_qingjiaEntities();
+        private Entities db = new Entities();
 
         // GET: AddressList/ClassAddress
         public ActionResult Index()
