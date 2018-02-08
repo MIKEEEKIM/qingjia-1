@@ -3,6 +3,7 @@
     public class LeaveListModel
     {
         public string LL_ID { get; set; }
+        public string submitTime { get; set; }
         public string studentID { get; set; }
         public string reason { get; set; }
         public string leaveState { get; set; }

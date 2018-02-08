@@ -51,20 +51,45 @@
         $(document).ready(function () {
             $('#AuditLeave_GetLeavelist').click(function (e) {
                 //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0');
-                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&state=4');
                 //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11');
             });
 
             $('#AuditLeave_GetLeavelist_Page').click(function (e) {
-                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0&pageSize=10&page=20');
-                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&pageSize=10&page=20');
-                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11&pageSize=10&page=20');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&state=3&pageSize=10&page=20');
             });
 
             $('#AuditLeave_GetLeavelist_Sort').click(function (e) {
-                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=0&pageSize=10&page=20');
-                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&pageSize=10&page=20&sortDirection=DESC&sortField=Reason');
-                //AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=11&pageSize=10&page=20');
+                AjaxRequestGet('api/audit/get?access_token=11&leaveTypeID=1&state=3&pageSize=10&page=20&sortDirection=DESC&sortField=Reason');
+            });
+
+            $('#GetLeaveTypeListNum').click(function (e) {
+                //AjaxRequestGet('api/audit/leaveTypeListNum?access_token=11&state=1');
+                AjaxRequestGet('api/audit/leaveTypeListNum?access_token=11&state=2');
+                //AjaxRequestGet('api/audit/leaveTypeListNum?access_token=11&state=0');
+            });
+
+            $('#PostSelect').click(function (e) {
+                var data = {
+                    access_token: "11",
+                    leaveTypeID: 0,
+                    state: '0',
+                    pageSize: 10,
+                    page: 1,
+                    sortDirection: '',
+                    sortField: '',
+                    conditions: [
+                        {
+                            fieldName: 'ST_Name',
+                            fieldValues: [
+                                {
+                                    item: '王健铭'
+                                }
+                            ]
+                        }
+                    ]
+                };
+                AjaxRequestPost('api/audit/post', data);
             });
 
             $('#TransformLeavelist').click(function (e) {
@@ -92,6 +117,14 @@
             <br />
 
             <input type="button" value="排序_分页获取请假记录" id="AuditLeave_GetLeavelist_Sort" />
+            <br />
+            <br />
+
+            <input type="button" value="获取请假类型及条数" id="GetLeaveTypeListNum" />
+            <br />
+            <br />
+
+            <input type="button" value="复合条件查询" id="PostSelect" />
             <br />
             <br />
 

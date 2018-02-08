@@ -1,4 +1,5 @@
-﻿using qingjia_MVC.Models;
+﻿using qingjia_MVC.Common;
+using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.Setting;
 using System;
@@ -104,20 +105,20 @@ namespace qingjia_MVC.Controllers.API.Setting
                 {
                     return Error("leaveTypeIdList或enableMessage参数错误");
                 }
-                if (model.leaveTypeIdList.Count() == model.enableMessage.Count())
+                if (model.leaveTypeIdList.Count() != model.enableMessage.Count())
                 {
                     return Error("leaveTypeIdList和enableMessage参数应为一一对应关系");
                 }
                 AccountInfo accountInfo = GetAccountInfo(model.access_token);
 
                 //批量修改 T_TeacherLeaveType.Enable 字段
-                db.T_TeacherLeaveType.Where(q => q.TeacherID == accountInfo.access_token).Update(q => new T_TeacherLeaveType() { IsDelete = 1 });
+                db.T_TeacherLeaveType.Where(q => q.TeacherID == accountInfo.userID).Update(q => new T_TeacherLeaveType() { IsDelete = 1 });
                 List<T_TeacherLeaveType> list = new List<T_TeacherLeaveType>();
-                int i = 1;
+                int i = 0;
                 foreach (string _item in model.leaveTypeIdList)
                 {
-                    int itemID = Convert.ToInt32(model.leaveTypeIdList.Skip(i - 1).Take(1));
-                    int itemEnableMessage = Convert.ToInt32(model.enableMessage.Skip(i - 1).Take(1));
+                    int itemID = Convert.ToInt32(model.leaveTypeIdList[i].ToString().Trim());
+                    int itemEnableMessage = Convert.ToInt32(model.enableMessage[i].ToString().Trim());
                     if (db.T_LeaveType.Find(itemID) != null)
                     {
                         list.Add(new T_TeacherLeaveType() { LeaveTypeID = itemID, TeacherID = accountInfo.userID, EnableMessage = itemEnableMessage, IsDelete = 0 });
@@ -128,8 +129,10 @@ namespace qingjia_MVC.Controllers.API.Setting
                 db.SaveChanges();
                 return Success("修改成功！");
             }
-            catch
+            catch (ArgumentException ex)
             {
+                System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
                 return SystemError();
             }
             #endregion

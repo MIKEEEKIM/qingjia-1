@@ -97,6 +97,10 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -109,6 +113,10 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.0.0\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -281,6 +289,7 @@
     <Compile Include="Models\API\AccountInfo.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Audit\AuditReject.cs" />
+    <Compile Include="Models\API\Audit\LeaveTypes.cs" />
     <Compile Include="Models\API\Common\LeaveListModel.cs" />
     <Compile Include="Models\API\Common\PrintLeaveListModel.cs" />
     <Compile Include="Models\API\Holiday.cs" />
@@ -2607,8 +2616,8 @@
     <Content Include="Views\Home\Default_T.cshtml" />
     <Content Include="Views\ApiTest\Default.cshtml" />
     <Content Include="Views\ApiTest\_ApiLayout.cshtml" />
-    <Content Include="Views\ApiTest\Api_Test.cshtml" />
     <Content Include="Views\ApiTest\Api_Audit.cshtml" />
+    <Content Include="Views\ApiTest\Api_Setting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

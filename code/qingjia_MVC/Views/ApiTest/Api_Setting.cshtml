@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>API接口测试</title>
+    <script>
+        const serverPath = 'http://localhost:12516/';
+        const access_token = '';
+
+        //模拟Get请求
+        function AjaxRequestGet(uri) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Ajax请求失败！');
+                }
+            });
+        }
+
+        //模拟Post请求
+        function AjaxRequestPost(uri, data) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'POST',
+                //contentType: 'application/json',//此句话需要配合 json序列化方法使用
+                dataType: 'json',
+                data: data,
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Ajax请求失败！');
+                    console.log(response);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#button1').click(function (e) {
+                AjaxRequestGet('api/system/getleavetype?access_token=11');
+            });
+
+            $('#button2').click(function (e) {
+                AjaxRequestGet('api/system/leavetype?access_token=11');
+            });
+
+            $('#button3').click(function (e) {
+                var data = { 'access_token': '11', 'leaveTypeIdList': ['1', '2', '3', '4', '5', '6', '7'], 'enableMessage': ['1', '1', '1', '1', '1', '1', '1'] };
+                AjaxRequestPost('api/system/setleavetype', data);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <h1>API 接口测试：</h1>
+        <br />
+        <div style="margin-left:200px;">
+            <h3>辅导员设置接口：</h3>
+            <br />
+            <br />
+            <h4>请假审批</h4>
+            <h5>获取请假记录</h5>
+            <input type="button" value="获取请假类型设置" id="button1" />
+            <br />
+            <br />
+
+            <input type="button" value="获取所有请假类型" id="button2" />
+            <br />
+            <br />
+
+            <input type="button" value="设置所使用的请假类型" id="button3" />
+            <br />
+            <br />
+
+        </div>
+    </div>
+</body>
+</html>

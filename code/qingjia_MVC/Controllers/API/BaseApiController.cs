@@ -21,10 +21,10 @@ namespace qingjia_MVC.Controllers.API
         {
             #region 系统沉睡0.5秒
             //测试状态 沉睡0.5秒
-            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            if (ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
             {
                 //线程 暂停0.5秒
-                System.Threading.Thread.Sleep(500);
+                //System.Threading.Thread.Sleep(500);
             }
             #endregion
 
@@ -521,6 +521,7 @@ namespace qingjia_MVC.Controllers.API
 
                 #region
                 model.LL_ID = item.ID;
+                model.submitTime = ((DateTime)item.SubmitTime).ToString("yyyy/MM/dd HH:mm:ss");
                 model.studentID = item.StudentID;
                 model.reason = item.Reason;
                 model.leaveState = "Error";
@@ -548,48 +549,48 @@ namespace qingjia_MVC.Controllers.API
                 model.rejectReason = item.RejectReason;
                 model.leaveTypeID = item.LeaveType.ToString();
                 model.leaveTypeName = "Error";
-                if (item.LeaveType == "1" || item.LeaveType == "2" || item.LeaveType == "3" || item.LeaveType == "4")
+                if (item.LeaveType.Trim() == "1" || item.LeaveType.Trim() == "2" || item.LeaveType.Trim() == "3" || item.LeaveType.Trim() == "4")
                 {
                     model.leaveTypeName = item.LeaveTypeName;
                 }
-                if (item.LeaveType == "5" || item.LeaveType == "6" || item.LeaveType == "7")
+                if (item.LeaveType.Trim() == "5" || item.LeaveType.Trim() == "6" || item.LeaveType.Trim() == "7")
                 {
-                    if (item.LeaveTypeChildrenID == "1")
+                    if (item.LeaveTypeChildrenID.Trim() == "1")
                     {
                         model.leaveTypeName = item.LeaveTypeName + "（公假）";
                     }
-                    if (item.LeaveTypeChildrenID == "2")
+                    if (item.LeaveTypeChildrenID.Trim() == "2")
                     {
                         model.leaveTypeName = item.LeaveTypeName + "（事假）";
                     }
-                    if (item.LeaveTypeChildrenID == "3")
+                    if (item.LeaveTypeChildrenID.Trim() == "3")
                     {
                         model.leaveTypeName = item.LeaveTypeName + "（病假）";
                     }
                 }
-                model.leaveTime = item.LeaveTime.ToString();
-                model.backTime = item.BackTime.ToString();
+                model.leaveTime = ((DateTime)item.LeaveTime).ToString("yyyy/MM/dd HH:mm:ss");
+                model.backTime = ((DateTime)item.BackTime).ToString("yyyy/MM/dd HH:mm:ss");
                 model.leaveWay = item.LeaveWay;
-                model.backWay = item.BackWay;
+                model.backWay = item.BackWay;   
                 model.address = item.Address;
-                model.lesson = "Error";
-                if (item.Lesson == "1")
+                model.lesson = "";
+                if (item.Lesson != null && item.Lesson.ToString().Trim() == "1")
                 {
                     model.lesson = "第一大节";
                 }
-                if (item.Lesson == "2")
+                if (item.Lesson != null && item.Lesson.ToString().Trim() == "2")
                 {
                     model.lesson = "第二大节";
                 }
-                if (item.Lesson == "3")
+                if (item.Lesson != null && item.Lesson.ToString().Trim() == "3")
                 {
                     model.lesson = "第三大节";
                 }
-                if (item.Lesson == "4")
+                if (item.Lesson != null && item.Lesson.ToString().Trim() == "4")
                 {
                     model.lesson = "第四大节";
                 }
-                if (item.Lesson == "5")
+                if (item.Lesson != null && item.Lesson.ToString().Trim() == "5")
                 {
                     model.lesson = "第五大节";
                 }

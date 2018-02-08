@@ -30,5 +30,12 @@ namespace qingjia_MVC.Controllers
 
             return View();
         }
+
+        public ActionResult Api_Setting()
+        {
+            ViewBag.Title = "Api_Setting";
+
+            return View();
+        }
     }
 }

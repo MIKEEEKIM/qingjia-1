@@ -8,7 +8,10 @@ namespace qingjia_MVC.Models.API
         public string access_token { get; set; }
 
         //记录类型 0代表 同时查询荣誉信息记录和竞赛获奖记录 1代表查询荣誉记录 2代表查询竞赛获奖记录
-        public string type { get; set; }
+        public string leaveTypeID { get; set; }
+
+        //请假状态 0 代表全部请假 1 代表待审核请假 2 代表待销假请假 3 代表已销假 4 代表已驳回请假
+        public string state { get; set; }
 
         //页码
         public int page { get; set; }

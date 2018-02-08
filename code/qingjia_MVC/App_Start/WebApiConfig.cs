@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Formatting;
+﻿using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace qingjia_MVC
 {
@@ -11,6 +9,9 @@ namespace qingjia_MVC
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+
+            // 跨域配置
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

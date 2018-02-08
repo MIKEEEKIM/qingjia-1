@@ -32,6 +32,11 @@ namespace qingjia_MVC.Controllers.API.Audit
         #endregion
 
         //此模块包含 获取请假记录数据、审批通过、审批驳回、多条件查询接口
+        //[HttpOptions,Route("post")]
+        //public ApiResult Options()
+        //{
+        //    return null; // HTTP 200 response with empty body
+        //}
 
         /// <summary>
         /// Get 令牌、请假类型ID
@@ -40,7 +45,7 @@ namespace qingjia_MVC.Controllers.API.Audit
         /// <param name="leaveTypeID"></param>
         /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult Get(string access_token, string leaveTypeID)
+        public ApiResult Get(string access_token, string leaveTypeID, string state)
         {
             #region 令牌验证
             result = Check(access_token);
@@ -63,12 +68,53 @@ namespace qingjia_MVC.Controllers.API.Audit
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+
+                if (state == "0")//全部请假
+                {
+
+                }
+                else if (state == "1")//待审核 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "0"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "2")//待销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "3")//已销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else if (state == "4")//已驳回
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else
+                {
+                    return Error("state参数值范围为[0,1,2,3,4]");
+                }
+
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
                 }
-                //conditionsModel.sortDirection = "DESC";
-                //conditionsModel.sortField = "SubmitTime";
+                else
+                {
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    if (leaveTypeList.Any())
+                    {
+                        conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
+                    }
+                    else
+                    {
+                        return Error("尚未设置可用请假类型");
+                    }
+                }
+
                 DataList dtSource = GetList(conditionsModel, leaveList);
                 dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
                 return Success("获取成功", dtSource);
@@ -91,7 +137,7 @@ namespace qingjia_MVC.Controllers.API.Audit
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult Get(string access_token, string leaveTypeID, int pageSize, int page)
+        public ApiResult Get(string access_token, string leaveTypeID, string state, int pageSize, int page)
         {
             #region 令牌验证
             result = Check(access_token);
@@ -114,12 +160,53 @@ namespace qingjia_MVC.Controllers.API.Audit
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+                
+                if (state == "0")//全部请假
+                {
+
+                }
+                else if (state == "1")//待审核 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "0"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "2")//待销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "3")//已销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else if (state == "4")//已驳回
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else
+                {
+                    return Error("state参数值范围为[0,1,2,3,4]");
+                }
+
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
                 }
-                conditionsModel.sortDirection = "DESC";
-                conditionsModel.sortField = "SubmitTime";
+                else
+                {
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    if (leaveTypeList.Any())
+                    {
+                        conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
+                    }
+                    else
+                    {
+                        return Error("尚未设置可用请假类型");
+                    }
+                }
+
                 conditionsModel.pageSize = pageSize;
                 conditionsModel.page = page;
 
@@ -147,7 +234,7 @@ namespace qingjia_MVC.Controllers.API.Audit
         /// <param name="sortField"></param>
         /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult Get(string access_token, string leaveTypeID, int pageSize, int page, string sortDirection, string sortField)
+        public ApiResult Get(string access_token, string leaveTypeID, string state, int pageSize, int page, string sortDirection, string sortField)
         {
             #region 令牌验证
             result = Check(access_token);
@@ -178,10 +265,53 @@ namespace qingjia_MVC.Controllers.API.Audit
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+
+                if (state == "0")//全部请假
+                {
+
+                }
+                else if (state == "1")//待审核 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "0"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "2")//待销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (state == "3")//已销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else if (state == "4")//已驳回
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else
+                {
+                    return Error("state参数值范围为[0,1,2,3,4]");
+                }
+
                 if (leaveTypeID != "0")
                 {
                     conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeID));
                 }
+                else
+                {
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    if (leaveTypeList.Any())
+                    {
+                        conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
+                    }
+                    else
+                    {
+                        return Error("尚未设置可用请假类型");
+                    }
+                }
+
                 conditionsModel.sortDirection = sortDirection;
                 conditionsModel.sortField = sortField;
                 conditionsModel.pageSize = pageSize;
@@ -227,27 +357,63 @@ namespace qingjia_MVC.Controllers.API.Audit
                 {
                     foreach (var item in model.conditions)
                     {
-                        if (item.fieldName == "ST_Grade" || item.fieldName == "ST_TeacherID" || item.fieldName == "IsDelete")
+                        if (item.fieldName == "ST_Grade" || item.fieldName == "ST_TeacherID" || item.fieldName == "IsDelete" || item.fieldName == "leaveTypeID")
                         {
                             continue;
-                        }
-                        if (item.fieldName == "leaveTypeID")
-                        {
-                            if (item.fieldValues.Count() >= 1)
-                            {
-                                return Error("请假记录搜索仅支持单一请假类型");
-                            }
-                            if (item.fieldValues.First().item == "0")
-                            {
-                                continue;
-                            }
                         }
                         conditionsModel.conditions.Add(CreatCondition(item.fieldName, item.fieldValues));
                     }
                 }
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
-                conditionsModel.conditions.Add(CreatCondition("IsDelete", "0"));
+
+                if (model.state == "0")//全部请假
+                {
+
+                }
+                else if (model.state == "1")//待审核 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "0"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (model.state == "2")//待销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
+                else if (model.state == "3")//已销假 
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "1"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else if (model.state == "4")//已驳回
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
+                }
+                else
+                {
+                    return Error("state参数值范围为[0,1,2,3,4]");
+                }
+
+                //请假类型搜索
+                if (model.leaveTypeID != "0")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("LeaveType", model.leaveTypeID));
+                }
+                else
+                {
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    if (leaveTypeList.Any())
+                    {
+                        conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
+                    }
+                    else
+                    {
+                        return Error("尚未设置可用请假类型");
+                    }
+                }
+
                 conditionsModel.sortDirection = model.sortDirection;
                 conditionsModel.sortField = model.sortField;
                 conditionsModel.pageSize = model.pageSize;
@@ -361,7 +527,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                 vw_New_LeaveList LL = GetLeaveListModel(LL_ID);
                 if (LL != null)
                 {
-                    if (LL.ST_Grade == accountInfo.Grade && LL.ST_TeacherID == accountInfo.userID)
+                    if (LL.ST_Grade.Trim() == accountInfo.Grade.Trim() && LL.ST_TeacherID.Trim() == accountInfo.userID.Trim())
                     {
                         if (LL.StateLeave == "1" && LL.StateBack == "0")
                         {
@@ -460,6 +626,62 @@ namespace qingjia_MVC.Controllers.API.Audit
                 else
                 {
                     return Error("此请假记录ID不存在，请重新输入。");
+                }
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="state">0代表全部请假 1 代表待审核请假 2 代表待销假请假 3 代表已销假 4 代表已驳回请假</param>
+        /// <returns></returns>
+        [HttpGet, Route("leaveTypeListNum")]
+        public ApiResult ListInfo(string access_token, string state)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                if (state != "1" && state != "2")
+                {
+                    return Error("此接口state参数只能为1或2。");
+                }
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                var _leaveTypeList = db.vw_TeacherLeaveType.Where(c => c.TeacherID == accountInfo.userID && c.IsDelete == 0);
+                if (_leaveTypeList.Any())
+                {
+                    List<LeaveTypes> leaveTypeList = new List<LeaveTypes>();
+                    foreach (var item in _leaveTypeList)
+                    {
+                        int _count;
+                        if (state == "1")
+                        {
+                            _count = db.vw_New_LeaveList.Where(c => c.ST_TeacherID == accountInfo.userID && c.ST_Grade == accountInfo.Grade && c.IsDelete == 0 && c.LeaveType == item.LeaveTypeID.ToString().Trim() && c.StateLeave == "0" && c.StateBack == "0").Count();
+                        }
+                        else
+                        {
+                            _count = db.vw_New_LeaveList.Where(c => c.ST_TeacherID == accountInfo.userID && c.ST_Grade == accountInfo.Grade && c.IsDelete == 0 && c.LeaveType == item.LeaveTypeID.ToString().Trim() && c.StateLeave == "1" && c.StateBack == "0").Count();
+                        }
+                        leaveTypeList.Add(new LeaveTypes() { leaveTypeID = item.LeaveTypeID.ToString(), leaveTypeName = item.LeaveTypeName, count = _count, leaveTypeDescription = item.LeaveTypeDescription, enableMessage = item.EnableMessage.ToString() });
+                    }
+                    return Success("获取请假类型成功", leaveTypeList);
+                }
+                else
+                {
+                    return Error("尚未设置可用请假类型。");
                 }
             }
             catch
