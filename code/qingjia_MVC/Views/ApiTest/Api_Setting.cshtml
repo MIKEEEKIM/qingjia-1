@@ -61,6 +61,10 @@
                 var data = { 'access_token': '11', 'leaveTypeIdList': ['1', '2', '3', '4', '5', '6', '7'], 'enableMessage': ['1', '1', '1', '1', '1', '1', '1'] };
                 AjaxRequestPost('api/system/setleavetype', data);
             });
+
+            $('#button4').click(function (e) {
+                //AjaxRequestGet('api/system/psdencryption');
+            });
         });
     </script>
 </head>
@@ -83,6 +87,10 @@
             <br />
 
             <input type="button" value="设置所使用的请假类型" id="button3" />
+            <br />
+            <br />
+
+            <input type="button" value="所有账户密码加密" id="button4" />
             <br />
             <br />
 

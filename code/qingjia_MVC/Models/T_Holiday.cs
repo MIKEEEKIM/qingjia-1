@@ -20,5 +20,6 @@ namespace qingjia_MVC.Models
         public string AutoAudit { get; set; }
         public string TeacherID { get; set; }
         public Nullable<System.DateTime> SubmitTime { get; set; }
+        public Nullable<int> IsDelete { get; set; }
     }
 }

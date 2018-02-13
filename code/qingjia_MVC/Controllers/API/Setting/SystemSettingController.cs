@@ -266,6 +266,33 @@ namespace qingjia_MVC.Controllers.API.Setting
             }
             return Success(message);
         }
+
+        [HttpGet, Route("psdencryption")]
+        public ApiResult PassWordEncryption()
+        {
+            int i = 0;
+            System.Diagnostics.Debug.WriteLine("开始时间：" + DateTime.Now.ToString());
+            try
+            {
+                var psdList = from T_Account in db.T_Account orderby T_Account.ID ascending select T_Account.ID;
+                foreach (var item in psdList)
+                {
+                    T_Account accountModel = db.T_Account.Where(c => c.ID == item).ToList().First();
+                    string _psd = PsdEncryption.Encryption(accountModel.Psd);
+                    accountModel.Psd = _psd;
+                    i++;
+                    System.Diagnostics.Debug.WriteLine("添加第" + i + "条数据");
+                }
+                System.Diagnostics.Debug.WriteLine("开始保存修改的" + i + "条数据");
+                db.SaveChanges();
+                System.Diagnostics.Debug.WriteLine("结束时间：" + DateTime.Now.ToString());
+                return Success("");
+            }
+            catch
+            {
+                return SystemError();
+            }
+        }
         #endregion
     }
 }

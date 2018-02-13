@@ -5,6 +5,7 @@ using qingjia_MVC.Models.API.Audit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
 
 namespace qingjia_MVC.Controllers.API.Audit
@@ -478,6 +479,9 @@ namespace qingjia_MVC.Controllers.API.Audit
 
                             //发送短信 go 代表同意请假
                             SendMsg(LL, "go");
+
+                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+
                             return Success("已同意请假！");
                             #endregion
                         }
@@ -704,6 +708,11 @@ namespace qingjia_MVC.Controllers.API.Audit
             {
                 SendSms.sendSms(new MessageModel(_LL, messageType));
             }
+        }
+
+        private void SendAsync(object data_1, object data_2)
+        {
+
         }
         #endregion
     }

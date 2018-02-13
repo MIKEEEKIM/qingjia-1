@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="imaw_qingjiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="imaw_qingjia_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="T_Account">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="Psd" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Psd" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Wechat" Type="varchar" MaxLength="64" />
     <Property Name="Q1" Type="nvarchar" MaxLength="64" />
@@ -221,7 +221,7 @@
     <Property Name="IsDelete" Type="int" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="T_NightNameList">
     <Key>
       <PropertyRef Name="ID" />
@@ -231,7 +231,7 @@
     <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="T_Role">
     <Key>
       <PropertyRef Name="ID" />
@@ -334,7 +334,7 @@
     <Property Name="Remark" Type="nchar" MaxLength="50" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_ClassBatch">
     <Key>
       <PropertyRef Name="ID" />
@@ -350,7 +350,7 @@
     <Property Name="Location" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_LeaveIntership">
     <Key>
       <PropertyRef Name="ID" />
@@ -395,7 +395,7 @@
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_LeaveList">
     <Key>
       <PropertyRef Name="ID" />
@@ -445,7 +445,7 @@
     <Property Name="AuditName" Type="nvarchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_New_LeaveList">
     <Key>
       <PropertyRef Name="ID" />
@@ -497,7 +497,7 @@
     <Property Name="IsDelete" Type="int" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_NightNameList">
     <Key>
       <PropertyRef Name="Batch" />
@@ -516,7 +516,7 @@
     <Property Name="Datetime" Type="datetime" Nullable="false" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_StudenBatch">
     <Key>
       <PropertyRef Name="ID" />
@@ -532,7 +532,7 @@
     <Property Name="Batch" Type="int" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_Student">
     <Key>
       <PropertyRef Name="ST_Num" />
@@ -562,7 +562,7 @@
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_TeacherLeaveType">
     <Key>
       <PropertyRef Name="ID" />
@@ -605,7 +605,7 @@
   <Function Name="sp_getNightNameList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TeacherID" Type="varchar" Mode="In" />
   </Function>
-  <EntityContainer Name="imaw_qingjiaModelStoreContainer">
+  <EntityContainer Name="imaw_qingjia_newModelStoreContainer">
     <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Batch" EntityType="Self.T_Batch" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" Schema="dbo" store:Type="Tables" />

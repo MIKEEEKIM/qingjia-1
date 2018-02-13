@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="imaw_qingjiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="imaw_qingjia_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_Account">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Psd" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Psd" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Wechat" Type="varchar" MaxLength="64" />
           <Property Name="Q1" Type="nvarchar" MaxLength="64" />
@@ -96,6 +96,7 @@
           <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
           <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
           <Property Name="SubmitTime" Type="datetime" />
+          <Property Name="IsDelete" Type="int" />
         </EntityType>
         <EntityType Name="T_Info">
           <Key>
@@ -226,7 +227,7 @@
           <Property Name="IsDelete" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="T_NightNameList">
           <Key>
             <PropertyRef Name="ID" />
@@ -236,7 +237,7 @@
           <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="T_Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -339,7 +340,7 @@
           <Property Name="Remark" Type="nchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_ClassBatch">
           <Key>
             <PropertyRef Name="ID" />
@@ -355,7 +356,7 @@
           <Property Name="Location" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_LeaveIntership">
           <Key>
             <PropertyRef Name="ID" />
@@ -400,7 +401,7 @@
           <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_LeaveList">
           <Key>
             <PropertyRef Name="ID" />
@@ -450,7 +451,7 @@
           <Property Name="AuditName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_New_LeaveList">
           <Key>
             <PropertyRef Name="ID" />
@@ -502,7 +503,7 @@
           <Property Name="IsDelete" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_NightNameList">
           <Key>
             <PropertyRef Name="Batch" />
@@ -521,7 +522,7 @@
           <Property Name="Datetime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_StudenBatch">
           <Key>
             <PropertyRef Name="ID" />
@@ -537,7 +538,7 @@
           <Property Name="Batch" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_Student">
           <Key>
             <PropertyRef Name="ST_Num" />
@@ -567,7 +568,7 @@
           <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_TeacherLeaveType">
           <Key>
             <PropertyRef Name="ID" />
@@ -610,7 +611,7 @@
         <Function Name="sp_getNightNameList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TeacherID" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="imaw_qingjiaModelStoreContainer">
+        <EntityContainer Name="imaw_qingjia_newModelStoreContainer">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Batch" EntityType="Self.T_Batch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" Schema="dbo" store:Type="Tables" />
@@ -831,16 +832,17 @@
             <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="imaw_qingjiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="imaw_qingjia_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="T_Account">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Psd" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Psd" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Wechat" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Q1" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -926,6 +928,7 @@
           <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Int32" />
         </EntityType>
         <EntityType Name="T_Info">
           <Key>
@@ -1273,6 +1276,56 @@
           <Property Name="PrintTimes" Type="Int32" />
           <Property Name="AuditName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="vw_New_LeaveList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ST_Name" />
+            <PropertyRef Name="ST_Tel" />
+            <PropertyRef Name="ST_ContactOne" />
+            <PropertyRef Name="ST_OneTel" />
+            <PropertyRef Name="ST_Class" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+          <Property Name="StateLeave" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="StateBack" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RejectReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LeaveTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="BackTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BackWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Lesson" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="AuditTeacher" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PrintTimes" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_ContactOne" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ST_OneTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ST_Sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ST_Dor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ST_Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ST_MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IntershipCompany" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IntershipAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PrincipalName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PrincipalTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Pic_One" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Pic_Two" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Pic_Three" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="LeaveType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="LeaveTypeChildrenID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="IsDelete" Type="Int32" />
+        </EntityType>
         <EntityType Name="vw_NightNameList">
           <Key>
             <PropertyRef Name="Batch" />
@@ -1399,6 +1452,7 @@
           <EntitySet Name="vw_ClassBatch" EntityType="Self.vw_ClassBatch" />
           <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" />
           <EntitySet Name="vw_LeaveList" EntityType="Self.vw_LeaveList" />
+          <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" />
           <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" />
           <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" />
           <EntitySet Name="vw_Student" EntityType="Self.vw_Student" />
@@ -1412,68 +1466,17 @@
             <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
           </AssociationSet>
           <FunctionImport Name="sp_getNightNameList" ReturnType="Collection(String)">
-          <Parameter Name="TeacherID" Mode="In" Type="String" />
+            <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vw_New_LeaveList" EntityType="imaw_qingjiaModel.vw_New_LeaveList" />
         </EntityContainer>
-        <EntityType Name="vw_New_LeaveList">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="ST_Name" />
-            <PropertyRef Name="ST_Tel" />
-            <PropertyRef Name="ST_ContactOne" />
-            <PropertyRef Name="ST_OneTel" />
-            <PropertyRef Name="ST_Class" />
-          </Key>
-          <Property Name="ID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
-          <Property Name="StateLeave" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="StateBack" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RejectReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LeaveTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
-          <Property Name="BackTime" Type="DateTime" Precision="3" />
-          <Property Name="LeaveWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="BackWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Lesson" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="AuditTeacher" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="PrintTimes" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Tel" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_ContactOne" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ST_OneTel" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="ST_Dor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="ST_Class" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="ST_MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IntershipCompany" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IntershipAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PrincipalName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="PrincipalTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Pic_One" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Pic_Two" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Pic_Three" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="LeaveType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="LeaveTypeChildrenID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="IsDelete" Type="Int32" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="imaw_qingjiaModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="imaw_qingjia_newModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="T_Account">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Account">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Account">
               <MappingFragment StoreEntitySet="T_Account">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Psd" ColumnName="Psd" />
@@ -1492,7 +1495,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Batch">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Batch">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Batch">
               <MappingFragment StoreEntitySet="T_Batch">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Batch" ColumnName="Batch" />
@@ -1503,7 +1506,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_BatchLeave">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_BatchLeave">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_BatchLeave">
               <MappingFragment StoreEntitySet="T_BatchLeave">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
@@ -1522,7 +1525,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_ChangeBatch">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_ChangeBatch">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_ChangeBatch">
               <MappingFragment StoreEntitySet="T_ChangeBatch">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1537,7 +1540,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Class">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Class">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Class">
               <MappingFragment StoreEntitySet="T_Class">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
@@ -1550,7 +1553,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Deadline">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Deadline">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Deadline">
               <MappingFragment StoreEntitySet="T_Deadline">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
@@ -1560,7 +1563,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Holiday">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Holiday">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
               <MappingFragment StoreEntitySet="T_Holiday">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
@@ -1568,11 +1571,12 @@
                 <ScalarProperty Name="AutoAudit" ColumnName="AutoAudit" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Info">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Info">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Info">
               <MappingFragment StoreEntitySet="T_Info">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
@@ -1591,7 +1595,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_InfoDetail">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_InfoDetail">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_InfoDetail">
               <MappingFragment StoreEntitySet="T_InfoDetail">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="InfoID" ColumnName="InfoID" />
@@ -1610,7 +1614,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_LeaveIntership">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_LeaveIntership">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_LeaveIntership">
               <MappingFragment StoreEntitySet="T_LeaveIntership">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1631,7 +1635,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_LeaveList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_LeaveList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_LeaveList">
               <MappingFragment StoreEntitySet="T_LeaveList">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1656,7 +1660,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_LeaveType">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_LeaveType">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_LeaveType">
               <MappingFragment StoreEntitySet="T_LeaveType">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1665,7 +1669,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Menu">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Menu">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Menu">
               <MappingFragment StoreEntitySet="T_Menu">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1675,7 +1679,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_New_LeaveList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_New_LeaveList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_New_LeaveList">
               <MappingFragment StoreEntitySet="T_New_LeaveList">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1707,7 +1711,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_RoleMenu">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_RoleMenu">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_RoleMenu">
               <MappingFragment StoreEntitySet="T_RoleMenu">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -1716,7 +1720,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_SendList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_SendList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_SendList">
               <MappingFragment StoreEntitySet="T_SendList">
                 <ScalarProperty Name="LV_Num" ColumnName="LV_Num" />
                 <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
@@ -1727,7 +1731,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Statistic">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Statistic">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Statistic">
               <MappingFragment StoreEntitySet="T_Statistic">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TotalNum" ColumnName="TotalNum" />
@@ -1741,7 +1745,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Student">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Student">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Student">
               <MappingFragment StoreEntitySet="T_Student">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1761,7 +1765,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Teacher">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Teacher">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Teacher">
               <MappingFragment StoreEntitySet="T_Teacher">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1772,7 +1776,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_TeacherLeaveType">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_TeacherLeaveType">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_TeacherLeaveType">
               <MappingFragment StoreEntitySet="T_TeacherLeaveType">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
@@ -1783,7 +1787,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Type">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Type">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Type">
               <MappingFragment StoreEntitySet="T_Type">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1792,7 +1796,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Vacation">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Vacation">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Vacation">
               <MappingFragment StoreEntitySet="T_Vacation">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1807,7 +1811,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_NightNameList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_NightNameList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_NightNameList">
               <MappingFragment StoreEntitySet="T_NightNameList">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="State" ColumnName="State" />
@@ -1815,7 +1819,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Role">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.T_Role">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Role">
               <MappingFragment StoreEntitySet="T_Role">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1824,7 +1828,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_ClassBatch">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_ClassBatch">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
               <MappingFragment StoreEntitySet="vw_ClassBatch">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
@@ -1836,7 +1840,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_LeaveIntership">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_LeaveIntership">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_LeaveIntership">
               <MappingFragment StoreEntitySet="vw_LeaveIntership">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1867,7 +1871,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_LeaveList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_LeaveList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_LeaveList">
               <MappingFragment StoreEntitySet="vw_LeaveList">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
@@ -1901,8 +1905,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_New_LeaveList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_New_LeaveList">
+              <MappingFragment StoreEntitySet="vw_New_LeaveList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="StateLeave" ColumnName="StateLeave" />
+                <ScalarProperty Name="StateBack" ColumnName="StateBack" />
+                <ScalarProperty Name="RejectReason" ColumnName="RejectReason" />
+                <ScalarProperty Name="LeaveTypeName" ColumnName="LeaveTypeName" />
+                <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
+                <ScalarProperty Name="BackTime" ColumnName="BackTime" />
+                <ScalarProperty Name="LeaveWay" ColumnName="LeaveWay" />
+                <ScalarProperty Name="BackWay" ColumnName="BackWay" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Lesson" ColumnName="Lesson" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="AuditTeacher" ColumnName="AuditTeacher" />
+                <ScalarProperty Name="PrintTimes" ColumnName="PrintTimes" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+                <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
+                <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
+                <ScalarProperty Name="ST_ContactOne" ColumnName="ST_ContactOne" />
+                <ScalarProperty Name="ST_OneTel" ColumnName="ST_OneTel" />
+                <ScalarProperty Name="ST_Sex" ColumnName="ST_Sex" />
+                <ScalarProperty Name="ST_Dor" ColumnName="ST_Dor" />
+                <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
+                <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
+                <ScalarProperty Name="ST_MonitorID" ColumnName="ST_MonitorID" />
+                <ScalarProperty Name="ST_Teacher" ColumnName="ST_Teacher" />
+                <ScalarProperty Name="ST_TeacherID" ColumnName="ST_TeacherID" />
+                <ScalarProperty Name="IntershipCompany" ColumnName="IntershipCompany" />
+                <ScalarProperty Name="IntershipAddress" ColumnName="IntershipAddress" />
+                <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
+                <ScalarProperty Name="PrincipalTel" ColumnName="PrincipalTel" />
+                <ScalarProperty Name="Pic_One" ColumnName="Pic_One" />
+                <ScalarProperty Name="Pic_Two" ColumnName="Pic_Two" />
+                <ScalarProperty Name="Pic_Three" ColumnName="Pic_Three" />
+                <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+                <ScalarProperty Name="LeaveTypeChildrenID" ColumnName="LeaveTypeChildrenID" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_NightNameList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_NightNameList">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_NightNameList">
               <MappingFragment StoreEntitySet="vw_NightNameList">
                 <ScalarProperty Name="Batch" ColumnName="Batch" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
@@ -1915,7 +1965,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_StudenBatch">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_StudenBatch">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_StudenBatch">
               <MappingFragment StoreEntitySet="vw_StudenBatch">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1930,7 +1980,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_Student">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_Student">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
               <MappingFragment StoreEntitySet="vw_Student">
                 <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
                 <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
@@ -1954,7 +2004,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_TeacherLeaveType">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_TeacherLeaveType">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_TeacherLeaveType">
               <MappingFragment StoreEntitySet="vw_TeacherLeaveType">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
@@ -1969,53 +2019,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjiaModel.Store.sp_getNightNameList" />
-          <EntitySetMapping Name="vw_New_LeaveList">
-            <EntityTypeMapping TypeName="imaw_qingjiaModel.vw_New_LeaveList">
-              <MappingFragment StoreEntitySet="vw_New_LeaveList">
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="LeaveTypeChildrenID" ColumnName="LeaveTypeChildrenID" />
-                <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
-                <ScalarProperty Name="Pic_Three" ColumnName="Pic_Three" />
-                <ScalarProperty Name="Pic_Two" ColumnName="Pic_Two" />
-                <ScalarProperty Name="Pic_One" ColumnName="Pic_One" />
-                <ScalarProperty Name="PrincipalTel" ColumnName="PrincipalTel" />
-                <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
-                <ScalarProperty Name="IntershipAddress" ColumnName="IntershipAddress" />
-                <ScalarProperty Name="IntershipCompany" ColumnName="IntershipCompany" />
-                <ScalarProperty Name="ST_TeacherID" ColumnName="ST_TeacherID" />
-                <ScalarProperty Name="ST_Teacher" ColumnName="ST_Teacher" />
-                <ScalarProperty Name="ST_MonitorID" ColumnName="ST_MonitorID" />
-                <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
-                <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
-                <ScalarProperty Name="ST_Dor" ColumnName="ST_Dor" />
-                <ScalarProperty Name="ST_Sex" ColumnName="ST_Sex" />
-                <ScalarProperty Name="ST_OneTel" ColumnName="ST_OneTel" />
-                <ScalarProperty Name="ST_ContactOne" ColumnName="ST_ContactOne" />
-                <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
-                <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
-                <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
-                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
-                <ScalarProperty Name="PrintTimes" ColumnName="PrintTimes" />
-                <ScalarProperty Name="AuditTeacher" ColumnName="AuditTeacher" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="Lesson" ColumnName="Lesson" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BackWay" ColumnName="BackWay" />
-                <ScalarProperty Name="LeaveWay" ColumnName="LeaveWay" />
-                <ScalarProperty Name="BackTime" ColumnName="BackTime" />
-                <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
-                <ScalarProperty Name="LeaveTypeName" ColumnName="LeaveTypeName" />
-                <ScalarProperty Name="RejectReason" ColumnName="RejectReason" />
-                <ScalarProperty Name="StateBack" ColumnName="StateBack" />
-                <ScalarProperty Name="StateLeave" ColumnName="StateLeave" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2030,7 +2034,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
