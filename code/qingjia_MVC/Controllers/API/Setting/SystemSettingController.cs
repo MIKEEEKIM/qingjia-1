@@ -8,7 +8,6 @@ using System.Linq;
 using System.Web.Http;
 using Z.EntityFramework.Plus;
 
-
 namespace qingjia_MVC.Controllers.API.Setting
 {
     [RoutePrefix("api/system")]
@@ -36,10 +35,11 @@ namespace qingjia_MVC.Controllers.API.Setting
             #region 逻辑操作
             try
             {
+                //系统级接口 需要判断调用接口的角色类型
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                IQueryable<vw_TeacherLeaveType> leaveList = db.vw_TeacherLeaveType;
+                IQueryable<vw_TeacherLeaveType> leaveList = db.vw_TeacherLeaveType.Where(c => c.IsDelete == 0);
                 SelectCondition conditionsModel = new SelectCondition();
-                ConditionModel condition = CreatCondition("TeacherID", accountInfo.userID);
+                ConditionModel condition = CreatCondition("TeacherID", GetTeacherID(accountInfo));
                 conditionsModel.conditions.Add(condition);
                 return Success("获取成功", GetList(conditionsModel, leaveList));
             }
@@ -139,7 +139,284 @@ namespace qingjia_MVC.Controllers.API.Setting
         }
         #endregion
 
-        #region 请假记录 转换
+        #region 设置班级负责人 -- 班长
+        [HttpGet, Route("getclassinfo")]
+        public ApiResult GetClassInfo(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+
+                var classInfoList = db.vw_Class.Where(c => c.TeacherID == accountInfo.userID).OrderBy(c => c.ST_Name).ToList();
+
+                return Success("获取成功！", classInfoList);
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+
+        [HttpPost, Route("setclassinfo")]
+        public ApiResult SetClassInfo([FromBody] SetClassInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            if (model.classInfo == null)
+            {
+                return Error("参数错误");
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                foreach (var item in model.classInfo)
+                {
+                    T_Class classModel = db.T_Class.Where(c => c.ID == item.classID.ToString().Trim() && c.TeacherID == accountInfo.userID).ToList().First();
+                    if (classModel != null)
+                    {
+                        T_Student studentModel = db.T_Student.Where(c => c.ID == item.monitorID.ToString().Trim() && c.ClassName == classModel.ClassName).ToList().First();
+                        if (db.T_Student.Where(c => c.ID == item.monitorID.ToString().Trim() && c.ClassName == classModel.ClassName) != null)
+                        {
+                            classModel.MonitorID = item.monitorID;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                int count = db.SaveChanges();
+                return Success("成功修改" + count + "条记录");
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+        #endregion
+
+        #region 晚点名设置
+        [HttpGet, Route("getweeklymeetinginfo")]
+        public ApiResult GetWeeklyMeetingInfo(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                var list = db.vw_ClassBatch.Where(c => c.TeacherID == accountInfo.userID && c.Grade == accountInfo.Grade).OrderBy(c => c.Batch).ToList();
+
+                return Success("获取数据成功", list);
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+
+        [HttpPost, Route("setweeklymeetinginfo")]
+        public ApiResult SetWeeklyMeetingInfo([FromBody]SetWeeklyMeetingInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            if (model.batchInfo == null)
+            {
+                return Error("参数错误");
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                foreach (var item in model.batchInfo)
+                {
+                    T_Batch batchMode = db.T_Batch.Where(c => c.Batch == item.batchID && c.TeacherID == accountInfo.userID).ToList().First();
+                    if (batchMode != null)
+                    {
+                        string _time = item.date + " " + item.time;
+                        DateTime time = Convert.ToDateTime(_time);
+                        batchMode.Datetime = time;
+                        batchMode.Location = item.location;
+                        foreach (var _item in item.classID)
+                        {
+                            T_Class classModel = db.T_Class.Where(c => c.ID == _item && c.TeacherID == accountInfo.userID && c.Grade == accountInfo.Grade).ToList().First();
+                            if (classModel != null)
+                            {
+                                classModel.Batch = batchMode.ID;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        batchMode = new T_Batch();
+                        batchMode.ID = Guid.NewGuid();
+                        batchMode.Batch = item.batchID;
+                        batchMode.TeacherID = accountInfo.userID;
+                        batchMode.Location = item.location;
+                        string _time = item.date + " " + item.time;
+                        DateTime time = Convert.ToDateTime(_time);
+                        batchMode.Datetime = time;
+
+                        db.T_Batch.Add(batchMode);
+
+                        foreach (var _item in item.classID)
+                        {
+                            T_Class classModel = db.T_Class.Where(c => c.ID == _item && c.TeacherID == accountInfo.userID && c.Grade == accountInfo.Grade).ToList().First();
+                            if (classModel != null)
+                            {
+                                classModel.Batch = batchMode.ID;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                }
+                db.SaveChanges();
+                return Success("保存成功");
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+        #endregion
+
+        #region 节假日设置
+        [HttpGet, Route("getholidayinfo")]
+        public ApiResult GetHolidayInfo(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                T_Holiday holidayModel = db.T_Holiday.Where(c => c.TeacherID == accountInfo.userID && c.IsDelete == 0).ToList().First();
+
+                return Success("获取数据成功", holidayModel);
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+
+        [HttpPost, Route("setholidayinfo")]
+        public ApiResult SetHolidayInfo([FromBody]SetHolidayInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                if (model.autoaudit != 0 && model.autoaudit != 1)
+                {
+                    return Error("autoaudit参数值错误。");
+                }
+
+                string startTime = model.startdate + " " + model.starttime;
+                string endTime = model.enddate + " " + model.endtime;
+                DateTime _startTime = Convert.ToDateTime(startTime);
+                DateTime _endTime = Convert.ToDateTime(endTime);
+
+                db.T_Holiday.Where(q => q.TeacherID == accountInfo.userID).Update(q => new T_Holiday() { IsDelete = 1 });
+
+                T_Holiday holidayModel = new T_Holiday();
+                holidayModel.StartTime = _startTime;
+                holidayModel.EndTime = _endTime;
+                holidayModel.SubmitTime = DateTime.Now;
+                holidayModel.AutoAudit = model.autoaudit.ToString().Trim();
+                holidayModel.TeacherID = accountInfo.userID;
+                holidayModel.IsDelete = 0;
+                db.T_Holiday.Add(holidayModel);
+                db.SaveChanges();
+                return Success("保存成功");
+            }
+            catch
+            {
+                return SystemError();
+            }
+            #endregion
+        }
+        #endregion
+
+        #region 清理数据库数据 请假记录 转换
         [HttpGet, Route("changeleavelist")]
         public ApiResult ChangeLeaveList()
         {

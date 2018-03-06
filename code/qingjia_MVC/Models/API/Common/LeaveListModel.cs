@@ -31,5 +31,6 @@
         public string pic_one { get; set; }
         public string pic_two { get; set; }
         public string pic_three { get; set; }
+        public int isPrint { get; set; }
     }
 }

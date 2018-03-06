@@ -374,7 +374,7 @@ namespace qingjia_MVC.Common
             //var leavelist = from vw_LeaveList in db.vw_LeaveList where (vw_LeaveList.ID == model.ID) select vw_LeaveList;
             //vw_LeaveList LL = leavelist.ToList().First();
 
-            if (model.LeaveTypeID == "1" || model.LeaveTypeID == "2" || model.LeaveTypeID == "4" || model.LeaveTypeID == "7")
+            if (model.LeaveTypeID == "1" || model.LeaveTypeID == "2" || model.LeaveTypeID == "4" || model.LeaveTypeID == "8")
             {
                 #region 打印假条
                 try
@@ -762,9 +762,9 @@ namespace qingjia_MVC.Common
                 Lesson = "第五大节";
             }
 
-            LeaveTypeID = _LL.LeaveType.ToString();
-            LeaveTypeName = _LL.LeaveTypeName;
-            LeaveTypeChildrenID = _LL.LeaveTypeChildrenID.ToString();
+            LeaveTypeID = _LL.LeaveType.ToString().Trim();
+            LeaveTypeName = _LL.LeaveTypeName.ToString().Trim();
+            LeaveTypeChildrenID = (_LL.LeaveTypeChildrenID == null) ? "" : _LL.LeaveTypeChildrenID.ToString().Trim();
             LeaveTypeChildrenName = "";
             if (LeaveTypeChildrenID == "1")
             {
@@ -778,18 +778,18 @@ namespace qingjia_MVC.Common
             {
                 LeaveTypeChildrenName = "病假";
             }
-            TeacherName = _LL.Teacher;
+            TeacherName = (_LL.Teacher == null) ? "" : _LL.Teacher;
             LeaveTime = (DateTime)_LL.LeaveTime;
             BackTime = (DateTime)_LL.BackTime;
             ST_Class = _LL.ST_Class;
             ST_Name = _LL.ST_Name;
             StudentID = _LL.StudentID;
             ST_Tel = _LL.ST_Tel;
-            ST_TeacherName = _LL.ST_Teacher;
-            Reason = _LL.Reason;
-            ST_Dor = _LL.ST_Dor;
-            ST_ContactName = _LL.ST_ContactOne;
-            ST_ContactName = _LL.ST_OneTel;
+            ST_TeacherName = (_LL.ST_Teacher == null) ? "" : _LL.ST_Teacher;
+            Reason = (_LL.Reason == null) ? "" : _LL.Reason;
+            ST_Dor = (_LL.ST_Dor == null) ? "" : _LL.ST_Dor;
+            ST_ContactName = (_LL.ST_ContactOne == null) ? "" : _LL.ST_ContactOne;
+            ST_ContactTel = (_LL.ST_OneTel == null) ? "" : _LL.ST_OneTel;
         }
     }
 }

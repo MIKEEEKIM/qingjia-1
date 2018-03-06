@@ -6,7 +6,7 @@ using System.Web.Http;
 namespace qingjia_MVC.Controllers.API.Common
 {
     [RoutePrefix("api/common")]
-    public class PrintPic : BaseApiController
+    public class PrintPicController : BaseApiController
     {
         /// <summary>
         /// Get 打印接口
@@ -33,6 +33,11 @@ namespace qingjia_MVC.Controllers.API.Common
                 vw_New_LeaveList _LL = GetLeaveListModel(LL_ID);
                 if (_LL != null)
                 {
+                    if (_LL.StateLeave.ToString().Trim() != "1")
+                    {
+                        return Error("请假记录审核状态非待销假或已销假不能打印请假条");
+                    }
+
                     bool flag = false;
                     if (accountInfo.userRoleID == "1")
                     {
@@ -57,18 +62,32 @@ namespace qingjia_MVC.Controllers.API.Common
                     }
                     if (flag)
                     {
+                        if (!IsPrint(_LL.LeaveType.ToString().Trim()))
+                        {
+                            return Error("此请假记录不需要打印");
+                        }
+
                         string picUrl = UpLoadQiNiu.Stat(LL_ID);
                         if (picUrl == null)
                         {
                             picUrl = UpLoadQiNiu.UpLoadData(qingjia_MVC.Common.Print.Print_Form(new _Print_LL(_LL)), LL_ID);
-                        }
 
+                            if (picUrl != null)
+                            {
+                                return Success("生成请假条成功", picUrl);
+                            }
+                            else
+                            {
+                                return Error("请假条打印失败！");
+                            }
+                        }
                         return Success("生成请假条成功", picUrl);
                     }
                     else
                     {
                         return Error("您不具备打印此请假条权限！");
                     }
+
                 }
                 return Error("此请假记录不存在，请重新输入！");
             }

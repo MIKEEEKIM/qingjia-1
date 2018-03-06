@@ -91,6 +91,7 @@
     <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Int32" />
   </EntityType>
   <EntityType Name="T_Info">
     <Key>
@@ -339,6 +340,7 @@
       <PropertyRef Name="ClassName" />
       <PropertyRef Name="Batch" />
       <PropertyRef Name="Datetime" />
+      <PropertyRef Name="Grade" />
     </Key>
     <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
@@ -346,6 +348,7 @@
     <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="vw_LeaveIntership">
     <Key>
@@ -546,6 +549,7 @@
     <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="vw_TeacherLeaveType">
     <Key>
@@ -630,5 +634,26 @@
     <FunctionImport Name="sp_getNightNameList" ReturnType="Collection(String)">
       <Parameter Name="TeacherID" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="vw_Class" EntityType="imaw_qingjia_newModel.vw_Class" />
   </EntityContainer>
+  <EntityType Name="vw_Class">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ClassName" />
+      <PropertyRef Name="Grade" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Batch" Type="Guid" />
+    <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

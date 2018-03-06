@@ -265,9 +265,12 @@
     <Compile Include="Common\UpLoadQiNiu.cs" />
     <Compile Include="Content\DataTableHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\AddressList\AddressListController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\Common\PrintPic.cs" />
+    <Compile Include="Controllers\API\LeaveList\LeaveListController.cs" />
     <Compile Include="Controllers\API\Student\LeaveListController.cs" />
+    <Compile Include="Controllers\API\User\LoginController.cs" />
     <Compile Include="Controllers\API\User\OauthController.cs" />
     <Compile Include="Controllers\API\Student\StudentController.cs" />
     <Compile Include="Controllers\ApiTestController.cs" />
@@ -288,6 +291,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AccessToken.cs" />
     <Compile Include="Models\API\AccountInfo.cs" />
+    <Compile Include="Models\API\AddressList\StudentListModel.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Audit\AuditReject.cs" />
     <Compile Include="Models\API\Audit\LeaveTypes.cs" />
@@ -297,7 +301,10 @@
     <Compile Include="Models\API\LeaveList.cs" />
     <Compile Include="Models\API\NightInfo.cs" />
     <Compile Include="Models\API\SelectCondition.cs" />
+    <Compile Include="Models\API\Setting\SetClassInfo.cs" />
+    <Compile Include="Models\API\Setting\SetHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetLeaveType.cs" />
+    <Compile Include="Models\API\Setting\SetWeeklyMeetingInfo.cs" />
     <Compile Include="Models\API\Student\ChangeInfo.cs" />
     <Compile Include="Models\API\Student\ChangePassword.cs" />
     <Compile Include="Models\API\Student\LeaveClassModel.cs" />
@@ -305,6 +312,9 @@
     <Compile Include="Models\API\Student\LeaveSpecialModel.cs" />
     <Compile Include="Models\API\Student\StudentInfo.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
+    <Compile Include="Models\API\User\LoginModel.cs" />
+    <Compile Include="Models\API\User\LoginStateModel.cs" />
+    <Compile Include="Models\API\User\ReturnUserModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\qingjia.Context.cs">
@@ -392,6 +402,9 @@
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Vacation.cs">
+      <DependentUpon>qingjia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Class.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_ClassBatch.cs">
@@ -2625,6 +2638,9 @@
     <Content Include="Views\ApiTest\_ApiLayout.cshtml" />
     <Content Include="Views\ApiTest\Api_Audit.cshtml" />
     <Content Include="Views\ApiTest\Api_Setting.cshtml" />
+    <Content Include="Views\ApiTest\Api_Login.cshtml" />
+    <Content Include="Views\ApiTest\Api_Student.cshtml" />
+    <Content Include="Views\ApiTest\Api_Teacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2647,6 +2663,7 @@
     <Folder Include="Areas\UserInfo\Views\Shared\" />
     <Folder Include="Areas\Vacation\Models\" />
     <Folder Include="Areas\Vacation\Views\Shared\" />
+    <Folder Include="Models\API\LeaveList\" />
     <Folder Include="res\images\fa_png\" />
     <Folder Include="res\images\internship\" />
     <Folder Include="res\images\loading\" />

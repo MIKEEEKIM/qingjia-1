@@ -66,6 +66,21 @@ namespace qingjia_MVC.Controllers.API.Audit
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
                 IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
+
+                //需判断用户角色
+                if (accountInfo.userRoleID == "1")
+                {
+                    leaveList = leaveList.Where(c => c.StudentID == accountInfo.userID);
+                }
+                else if (accountInfo.userRoleID == "2")
+                {
+                    leaveList = leaveList.Where(c => c.ST_Class == accountInfo.userName);
+                }
+                else if (accountInfo.userRoleID == "3")
+                {
+                    leaveList = leaveList.Where(c => c.ST_TeacherID == accountInfo.userID);
+                }
+
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
@@ -105,7 +120,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
                 else
                 {
-                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    //需要判断用户角色
+                    string teacherID = GetTeacherID(accountInfo);
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == teacherID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
                     if (leaveTypeList.Any())
                     {
                         conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
@@ -158,10 +175,25 @@ namespace qingjia_MVC.Controllers.API.Audit
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
                 IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
+
+                //需判断用户角色
+                if (accountInfo.userRoleID == "1")
+                {
+                    leaveList = leaveList.Where(c => c.StudentID == accountInfo.userID);
+                }
+                else if (accountInfo.userRoleID == "2")
+                {
+                    leaveList = leaveList.Where(c => c.ST_Class == accountInfo.userName);
+                }
+                else if (accountInfo.userRoleID == "3")
+                {
+                    leaveList = leaveList.Where(c => c.ST_TeacherID == accountInfo.userID);
+                }
+
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
                 conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
-                
+
                 if (state == "0")//全部请假
                 {
 
@@ -197,7 +229,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
                 else
                 {
-                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    //需要判断用户角色
+                    string teacherID = GetTeacherID(accountInfo);
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == teacherID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
                     if (leaveTypeList.Any())
                     {
                         conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
@@ -263,13 +297,29 @@ namespace qingjia_MVC.Controllers.API.Audit
 
                 AccountInfo accountInfo = GetAccountInfo(access_token);
                 IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
+                //需判断用户角色
+                if (accountInfo.userRoleID == "1")
+                {
+                    leaveList = leaveList.Where(c => c.StudentID == accountInfo.userID);
+                }
+                else if (accountInfo.userRoleID == "2")
+                {
+                    leaveList = leaveList.Where(c => c.ST_Class == accountInfo.userName);
+                }
+                else if (accountInfo.userRoleID == "3")
+                {
+                    leaveList = leaveList.Where(c => c.ST_TeacherID == accountInfo.userID);
+                }
+
                 SelectCondition conditionsModel = new SelectCondition();
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
-                conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+
+                //需判断用户角色
+                //conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
 
                 if (state == "0")//全部请假
                 {
-
+                    //返回所有类型请假数据
                 }
                 else if (state == "1")//待审核 
                 {
@@ -302,7 +352,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
                 else
                 {
-                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    //需要判断用户角色
+                    string teacherID = GetTeacherID(accountInfo);
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == teacherID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
                     if (leaveTypeList.Any())
                     {
                         conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
@@ -352,6 +404,21 @@ namespace qingjia_MVC.Controllers.API.Audit
             {
                 AccountInfo accountInfo = GetAccountInfo(model.access_token);
                 IQueryable<vw_New_LeaveList> leaveList = db.vw_New_LeaveList.Where(c => c.IsDelete == 0).OrderByDescending(c => c.SubmitTime);
+
+                //需判断用户角色
+                if (accountInfo.userRoleID == "1")
+                {
+                    leaveList = leaveList.Where(c => c.StudentID == accountInfo.userID);
+                }
+                else if (accountInfo.userRoleID == "2")
+                {
+                    leaveList = leaveList.Where(c => c.ST_Class == accountInfo.userName);
+                }
+                else if (accountInfo.userRoleID == "3")
+                {
+                    leaveList = leaveList.Where(c => c.ST_TeacherID == accountInfo.userID);
+                }
+
                 SelectCondition conditionsModel = new SelectCondition();
 
                 if (model.conditions != null && model.conditions.Count() != 0)
@@ -366,7 +433,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                     }
                 }
                 conditionsModel.conditions.Add(CreatCondition("ST_Grade", accountInfo.Grade));
-                conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
+                //conditionsModel.conditions.Add(CreatCondition("ST_TeacherID", accountInfo.userID));
 
                 if (model.state == "0")//全部请假
                 {
@@ -404,7 +471,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                 }
                 else
                 {
-                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == accountInfo.userID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
+                    //需要判断用户角色
+                    string teacherID = GetTeacherID(accountInfo);
+                    var leaveTypeList = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.TeacherID == teacherID && vw_TeacherLeaveType.IsDelete == 0) select vw_TeacherLeaveType.LeaveTypeID.ToString();
                     if (leaveTypeList.Any())
                     {
                         conditionsModel.conditions.Add(CreatCondition("LeaveType", leaveTypeList.ToList()));
@@ -480,7 +549,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                             //发送短信 go 代表同意请假
                             SendMsg(LL, "go");
 
-                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            //Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
 
                             return Success("已同意请假！");
                             #endregion

@@ -75,7 +75,6 @@ namespace qingjia_MVC.Controllers.API
                 //TypeID = 1 代表节假日请假截止时间  TypeID = 2 代表年级周会请假截止时间
                 T_Deadline weeklyMeetingDeadLine = db.T_Deadline.Where(c => c.TeacherID.Trim() == studentModel.ST_TeacherID.Trim() && c.TypeID == 2).ToList().First();
                 T_Deadline holidayDeadLine = db.T_Deadline.Where(c => c.TeacherID.Trim() == studentModel.ST_TeacherID.Trim() && c.TypeID == 1).ToList().First();
-
                 T_Holiday holidayModel = db.T_Holiday.Where(c => c.TeacherID.Trim() == studentModel.ST_TeacherID.Trim() && c.IsDelete == 0).ToList().First();
 
                 if (batchModel != null && weeklyMeetingDeadLine != null)

@@ -37,5 +37,26 @@ namespace qingjia_MVC.Controllers
 
             return View();
         }
+
+        public ActionResult Api_Login()
+        {
+            ViewBag.Title = "Api_Login";
+
+            return View();
+        }
+
+        public ActionResult Api_Student()
+        {
+            ViewBag.Title = "Api_Student";
+
+            return View();
+        }
+
+        public ActionResult Api_Teacher()
+        {
+            ViewBag.Title = "Api_Teacher";
+
+            return View();
+        }
     }
 }

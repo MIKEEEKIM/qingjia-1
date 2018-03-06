@@ -1,4 +1,4 @@
-﻿using qingjia_MVC.Common;
+﻿using qingjia_MVC.Controllers.API;
 using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using System;
@@ -6,6 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Web.Http;
 
+/// <summary>
+/// 用于 微信端口 和 易班端口 授权使用  修改日期：2018.02.24
+/// </summary>
 namespace qingjia_MVC.Controllers
 {
     #region 数据模型
@@ -27,23 +30,18 @@ namespace qingjia_MVC.Controllers
     #endregion
 
     [RoutePrefix("api/oauth")]
-    public class OauthController : ApiController
+    public class OauthController : BaseApiController
     {
-        //实例化数据库
-        private Entities db = new Entities();
-
         /// <summary>
         /// POST
-        /// 
+        /// 用于易班端口验证
         /// 获取授权 用户ID 用户Psd 易班用户ID  返回给用户一个GUID当做AccessToken
         /// </summary>
         /// <param name="user_login_info"></param>
         /// <returns></returns>
         [HttpPost, Route("authorize")]
-        public ApiBaseResult Authorize([FromBody]User_Login user_login_info)
+        public ApiResult Authorize([FromBody]User_Login user_login_info)
         {
-            ApiBaseResult result = new ApiBaseResult();
-
             string UserID = "";
             string UserPSd = "";
             string YiBanID = "";
@@ -52,10 +50,7 @@ namespace qingjia_MVC.Controllers
 
             if (user_login_info == null)
             {
-                //参数错误
-                result.result = "error";
-                result.messages = "未接收到合法参数！";
-                return result;
+                return Error("未接收到合法参数！");
             }
             else
             {
@@ -67,29 +62,23 @@ namespace qingjia_MVC.Controllers
                     YiBanID = user_login_info.YiBanID;
                     if (UserID == null || UserPSd == null || YiBanID == null)
                     {
-                        result.result = "error";
-                        result.messages = "参数格式错误或缺少参数！";
-                        return result;
+                        return Error("参数格式错误或缺少参数！");
                     }
                 }
                 catch
                 {
-                    result.result = "error";
-                    result.messages = "参数格式错误或缺少参数！";
-                    return result;
+                    return Error("参数格式错误或缺少参数！");
                 }
             }
 
             #endregion
 
             #region 账号绑定
-
             var accountList = from T_Account in db.T_Account where (T_Account.YiBanID == YiBanID) select T_Account;
             if (accountList.Any())
             {
                 //此账号已绑定
-                result.result = "error";
-                result.messages = "此账号已绑定！";
+                return Error("此账号已绑定！");
             }
             else
             {
@@ -108,34 +97,32 @@ namespace qingjia_MVC.Controllers
 
                         AccessToken authorizeModel = new AccessToken();
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
+                        return Success("绑定成功！", authorizeModel);
                     }
                     else
                     {
                         //用户密码错误
-                        result.result = "error";
-                        result.messages = "账号密码错误！";
+                        return Error("账号密码错误！");
                     }
                 }
                 else
                 {
                     //此用户ID不存在
-                    result.result = "error";
-                    result.messages = "此用户ID不存在！";
+                    return Error("此用户ID不存在！");
                 }
             }
-
             #endregion
-
-            return result;
         }
 
+        /// <summary>
+        /// POST
+        /// 用于微信端口验证
+        /// </summary>
+        /// <param name="user_login_info"></param>
+        /// <returns></returns>
         [HttpPost, Route("authorize_wechat")]
-        public ApiBaseResult Authorize_WeChat([FromBody]User_Login_WeChat user_login_info)
+        public ApiResult Authorize([FromBody]User_Login_WeChat user_login_info)
         {
-            ApiBaseResult result = new ApiBaseResult();
-
             string UserID = "";
             string UserPSd = "";
             string OpenID = "";
@@ -145,9 +132,7 @@ namespace qingjia_MVC.Controllers
             if (user_login_info == null)
             {
                 //参数错误
-                result.result = "error";
-                result.messages = "未接收到合法参数！";
-                return result;
+                return Error("未接收到合法参数！");
             }
             else
             {
@@ -159,19 +144,14 @@ namespace qingjia_MVC.Controllers
                     OpenID = user_login_info.OpenID;
                     if (UserID == null || UserPSd == null || OpenID == null)
                     {
-                        result.result = "error";
-                        result.messages = "参数格式错误或缺少参数！";
-                        return result;
+                        return Error("参数格式错误或缺少参数！");
                     }
                 }
                 catch
                 {
-                    result.result = "error";
-                    result.messages = "参数格式错误或缺少参数！";
-                    return result;
+                    return Error("参数格式错误或缺少参数！");
                 }
             }
-
             #endregion
 
             #region 账号绑定
@@ -180,8 +160,7 @@ namespace qingjia_MVC.Controllers
             if (accountList.Any())
             {
                 //此账号已绑定
-                result.result = "error";
-                result.messages = "此账号已绑定！";
+                return Error("此账号已绑定！");
             }
             else
             {
@@ -200,43 +179,34 @@ namespace qingjia_MVC.Controllers
 
                         AccessToken authorizeModel = new AccessToken();
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
+                        return Success("绑定成功！", authorizeModel);
                     }
                     else
                     {
                         //用户密码错误
-                        result.result = "error";
-                        result.messages = "账号密码错误！";
+                        return Error("账号密码错误！");
                     }
                 }
                 else
                 {
                     //此用户ID不存在
-                    result.result = "error";
-                    result.messages = "此用户ID不存在！";
+                    return Error("此用户ID不存在！");
                 }
             }
-
             #endregion
-
-            return result;
         }
 
         /// <summary>
-        /// GET YiBanID 验证
-        /// 
+        /// GET 
+        /// YiBanID 验证
         /// 获取AccessToken
         /// </summary>
         /// <param name="YiBanID"></param>
         /// <returns></returns>
         [HttpGet, Route("access_token")]
-        public ApiBaseResult Access_Token(string YiBanID)
+        public ApiResult Access_Token_YiBan(string YiBanID)
         {
             //存在问题：Access_Token会被访问两次，未找到原因
-
-            ApiBaseResult result = new ApiBaseResult();
-
             var userList = from T_Account in db.T_Account where (T_Account.YiBanID == YiBanID) select T_Account;
             if (userList.Any())
             {
@@ -249,10 +219,8 @@ namespace qingjia_MVC.Controllers
                         AccessToken authorizeModel = new AccessToken();
                         string access_token = userList.ToList().First().ID + "_" + userList.ToList().First().YB_AccessToken;
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
-
                         WriteLog("Old access_token", access_token);
+                        return Success("获取令牌成功！", authorizeModel);
                     }
                     else
                     {
@@ -269,10 +237,8 @@ namespace qingjia_MVC.Controllers
 
                         AccessToken authorizeModel = new AccessToken();
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
-
                         WriteLog("New access_token", access_token);
+                        return Success("获取令牌成功！", authorizeModel);
                     }
                 }
                 else
@@ -290,34 +256,27 @@ namespace qingjia_MVC.Controllers
 
                     AccessToken authorizeModel = new AccessToken();
                     authorizeModel.access_token = access_token;
-                    result.result = "success";
-                    result.data = authorizeModel;
-
                     WriteLog("New access_token", access_token);
+                    return Success("获取令牌成功！", authorizeModel);
                 }
             }
             else
             {
                 //尚未绑定YiBanID
-                result.result = "error";
-                result.messages = "尚未绑定账号的易班ID，通过Authorize接口实现易班账号绑定。";
+                return Error("尚未绑定账号的易班ID，通过authorize接口实现易班账号绑定，接口地址：api/oauth/authorize");
             }
-            return result;
         }
 
         /// <summary>
-        /// GET OpenID 验证
-        /// 
+        /// GET 
+        /// 微信 OpenID 验证
         /// </summary>
         /// <param name="OpenID"></param>
         /// <returns></returns>
         [HttpGet, Route("access_token_wechat")]
-        public ApiBaseResult Access_Token_WeChat(string OpenID)
+        public ApiResult Access_Token_WeChat(string OpenID)
         {
             //存在问题：Access_Token会被访问两次，未找到原因
-
-            ApiBaseResult result = new ApiBaseResult();
-
             var userList = from T_Account in db.T_Account where (T_Account.Wechat == OpenID) select T_Account;
             if (userList.Any())
             {
@@ -331,10 +290,8 @@ namespace qingjia_MVC.Controllers
                         AccessToken authorizeModel = new AccessToken();
                         string access_token = userList.ToList().First().ID + "_" + userList.ToList().First().YB_AccessToken;
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
-
                         WriteLog("Old access_token", access_token);
+                        return Success("获取令牌成功！", authorizeModel);
                     }
                     else
                     {
@@ -351,10 +308,8 @@ namespace qingjia_MVC.Controllers
 
                         AccessToken authorizeModel = new AccessToken();
                         authorizeModel.access_token = access_token;
-                        result.result = "success";
-                        result.data = authorizeModel;
-
                         WriteLog("New access_token", access_token);
+                        return Success("获取令牌成功！", authorizeModel);
                     }
                 }
                 else
@@ -372,21 +327,22 @@ namespace qingjia_MVC.Controllers
 
                     AccessToken authorizeModel = new AccessToken();
                     authorizeModel.access_token = access_token;
-                    result.result = "success";
-                    result.data = authorizeModel;
-
                     WriteLog("New access_token", access_token);
+                    return Success("获取令牌成功！", authorizeModel);
                 }
             }
             else
             {
                 //尚未绑定YiBanID
-                result.result = "error";
-                result.messages = "尚未绑定账号的易班ID，通过Authorize接口实现易班账号绑定。";
+                return Error("尚未绑定账号的易班ID，通过authorize_wechat接口实现易班账号绑定，接口地址：api/oauth/authorize_wechat");
             }
-            return result;
         }
 
+        /// <summary>
+        /// 记录日志
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         private void WriteLog(string name, string value)
         {
             try

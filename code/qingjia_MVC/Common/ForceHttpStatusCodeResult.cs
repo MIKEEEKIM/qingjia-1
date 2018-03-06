@@ -1,5 +1,6 @@
 ﻿namespace qingjia_MVC.Common
 {
+    //强制返回404错误
     public static class ForceHttpStatusCodeResult
     {
         public const string ForceHttpUnauthorizedHeaderName = "ForceHttpUnauthorizedHeader";

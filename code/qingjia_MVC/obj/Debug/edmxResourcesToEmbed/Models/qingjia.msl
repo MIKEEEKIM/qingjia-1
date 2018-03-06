@@ -97,6 +97,7 @@
           <ScalarProperty Name="AutoAudit" ColumnName="AutoAudit" />
           <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
           <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -355,6 +356,7 @@
     <EntitySetMapping Name="vw_ClassBatch">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
         <MappingFragment StoreEntitySet="vw_ClassBatch">
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ClassName" ColumnName="ClassName" />
           <ScalarProperty Name="Batch" ColumnName="Batch" />
@@ -507,6 +509,7 @@
     <EntitySetMapping Name="vw_Student">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
         <MappingFragment StoreEntitySet="vw_Student">
+          <ScalarProperty Name="MonitorName" ColumnName="MonitorName" />
           <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
           <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
           <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
@@ -545,5 +548,24 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
+    <EntitySetMapping Name="vw_Class">
+      <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Class">
+        <MappingFragment StoreEntitySet="vw_Class">
+          <ScalarProperty Name="TeahcerTel" ColumnName="TeahcerTel" />
+          <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+          <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
+          <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
+          <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+          <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+          <ScalarProperty Name="Batch" ColumnName="Batch" />
+          <ScalarProperty Name="MonitorID" ColumnName="MonitorID" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

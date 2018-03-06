@@ -7,17 +7,5 @@
         public int count { get; set; }
         public string leaveTypeDescription { get; set; }
         public string enableMessage { get; set; }
-
-        //public LeaveTypes()
-        //{
-        //}
-
-        //public LeaveTypes(string _leaveTypeID, string _leaveTypeName, string _leaveTypeDescription, string _enableMessage)
-        //{
-        //    leaveTypeID = _leaveTypeID;
-        //    leaveTypeName = _leaveTypeName;
-        //    leaveTypeDescription = _leaveTypeDescription;
-        //    enableMessage = _enableMessage;
-        //}
     }
 }

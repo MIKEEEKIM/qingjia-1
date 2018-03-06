@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="imaw_qingjia_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="imaw_qingjia_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_Account">
           <Key>
             <PropertyRef Name="ID" />
@@ -340,16 +340,40 @@
           <Property Name="Remark" Type="nchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Class”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_Class">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClassName" />
+            <PropertyRef Name="Grade" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Grade" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Total" Type="int" />
+          <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+          <Property Name="MonitorID" Type="varchar" MaxLength="64" />
+          <Property Name="Batch" Type="uniqueidentifier" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="64" />
+          <Property Name="ST_Tel" Type="varchar" MaxLength="64" />
+          <Property Name="ST_Email" Type="varchar" MaxLength="64" />
+          <Property Name="ST_QQ" Type="varchar" MaxLength="64" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+          <Property Name="TeahcerTel" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_ClassBatch">
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="ClassName" />
+            <PropertyRef Name="Grade" />
             <PropertyRef Name="Batch" />
             <PropertyRef Name="Datetime" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ClassName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Grade" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Batch" Type="int" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="TeacherID" Type="varchar" MaxLength="64" />
@@ -564,6 +588,7 @@
           <Property Name="ST_Class" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ST_Grade" Type="nchar" MaxLength="10" />
           <Property Name="MonitorID" Type="varchar" MaxLength="64" />
+          <Property Name="MonitorName" Type="nvarchar" MaxLength="64" />
           <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
           <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
         </EntityType>
@@ -647,10 +672,28 @@
     [T_Role].[XML] AS [XML]
     FROM [dbo].[T_Role] AS [T_Role]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Class" EntityType="Self.vw_Class" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Class].[ID] AS [ID], 
+    [vw_Class].[ClassName] AS [ClassName], 
+    [vw_Class].[Grade] AS [Grade], 
+    [vw_Class].[Total] AS [Total], 
+    [vw_Class].[TeacherID] AS [TeacherID], 
+    [vw_Class].[MonitorID] AS [MonitorID], 
+    [vw_Class].[Batch] AS [Batch], 
+    [vw_Class].[ST_Name] AS [ST_Name], 
+    [vw_Class].[ST_Tel] AS [ST_Tel], 
+    [vw_Class].[ST_Email] AS [ST_Email], 
+    [vw_Class].[ST_QQ] AS [ST_QQ], 
+    [vw_Class].[TeacherName] AS [TeacherName], 
+    [vw_Class].[TeahcerTel] AS [TeahcerTel]
+    FROM [dbo].[vw_Class] AS [vw_Class]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_ClassBatch" EntityType="Self.vw_ClassBatch" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_ClassBatch].[ID] AS [ID], 
     [vw_ClassBatch].[ClassName] AS [ClassName], 
+    [vw_ClassBatch].[Grade] AS [Grade], 
     [vw_ClassBatch].[Batch] AS [Batch], 
     [vw_ClassBatch].[Datetime] AS [Datetime], 
     [vw_ClassBatch].[TeacherID] AS [TeacherID], 
@@ -805,6 +848,7 @@
     [vw_Student].[ST_Class] AS [ST_Class], 
     [vw_Student].[ST_Grade] AS [ST_Grade], 
     [vw_Student].[MonitorID] AS [MonitorID], 
+    [vw_Student].[MonitorName] AS [MonitorName], 
     [vw_Student].[ST_Teacher] AS [ST_Teacher], 
     [vw_Student].[ST_TeacherID] AS [ST_TeacherID]
     FROM [dbo].[vw_Student] AS [vw_Student]</DefiningQuery>
@@ -832,8 +876,7 @@
             <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="imaw_qingjia_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1177,6 +1220,7 @@
             <PropertyRef Name="ClassName" />
             <PropertyRef Name="Batch" />
             <PropertyRef Name="Datetime" />
+            <PropertyRef Name="Grade" />
           </Key>
           <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1184,6 +1228,7 @@
           <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_LeaveIntership">
           <Key>
@@ -1384,6 +1429,7 @@
           <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_TeacherLeaveType">
           <Key>
@@ -1466,9 +1512,30 @@
             <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
           </AssociationSet>
           <FunctionImport Name="sp_getNightNameList" ReturnType="Collection(String)">
-            <Parameter Name="TeacherID" Mode="In" Type="String" />
+          <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vw_Class" EntityType="imaw_qingjia_newModel.vw_Class" />
         </EntityContainer>
+        <EntityType Name="vw_Class">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClassName" />
+            <PropertyRef Name="Grade" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Batch" Type="Guid" />
+          <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1830,6 +1897,7 @@
           <EntitySetMapping Name="vw_ClassBatch">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
               <MappingFragment StoreEntitySet="vw_ClassBatch">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="Batch" ColumnName="Batch" />
@@ -1982,6 +2050,7 @@
           <EntitySetMapping Name="vw_Student">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
               <MappingFragment StoreEntitySet="vw_Student">
+                <ScalarProperty Name="MonitorName" ColumnName="MonitorName" />
                 <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
                 <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
                 <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
@@ -2020,6 +2089,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
+          <EntitySetMapping Name="vw_Class">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Class">
+              <MappingFragment StoreEntitySet="vw_Class">
+                <ScalarProperty Name="TeahcerTel" ColumnName="TeahcerTel" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
+                <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
+                <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="MonitorID" ColumnName="MonitorID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

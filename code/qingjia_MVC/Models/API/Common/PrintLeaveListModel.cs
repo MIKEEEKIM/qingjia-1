@@ -52,9 +52,9 @@ namespace qingjia_MVC.Models.API.Common
             {
                 Lesson = "第五大节";
             }
-            LeaveTypeID = _LL.LeaveType.ToString();
+            LeaveTypeID = _LL.LeaveType.ToString().Trim();
             LeaveTypeName = _LL.LeaveTypeName;
-            LeaveTypeChildrenID = _LL.LeaveTypeChildrenID.ToString();
+            LeaveTypeChildrenID = _LL.LeaveTypeChildrenID.ToString().Trim();
             LeaveTypeChildrenName = "";
             if (LeaveTypeChildrenID == "1")
             {
@@ -75,11 +75,11 @@ namespace qingjia_MVC.Models.API.Common
             ST_Name = _LL.ST_Name;
             StudentID = _LL.StudentID;
             ST_Tel = _LL.ST_Tel;
-            ST_TeacherName = _LL.ST_Teacher;
-            Reason = _LL.Reason;
-            ST_Dor = _LL.ST_Dor;
-            ST_ContactName = _LL.ST_ContactOne;
-            ST_ContactName = _LL.ST_OneTel;
+            ST_TeacherName = (_LL.ST_Teacher == null) ? "" : _LL.ST_Teacher.ToString().Trim();
+            Reason = (_LL.Reason == null) ? "" : _LL.Reason.ToString().Trim();
+            ST_Dor = (_LL.ST_Dor == null) ? "" : _LL.ST_Dor.ToString().Trim();
+            ST_ContactName = (_LL.ST_ContactOne == null) ? "" : _LL.ST_ContactOne.ToString().Trim();
+            ST_ContactTel = (_LL.ST_OneTel == null) ? "" : _LL.ST_OneTel.ToString().Trim();
         }
     }
 }

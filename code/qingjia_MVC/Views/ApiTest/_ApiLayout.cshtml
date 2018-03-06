@@ -23,6 +23,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("登录API", "Api_Login", "ApiTest", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("学生数据接口", "Api_Student", "ApiTest", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("辅导员数据接口", "Api_Teacher", "ApiTest", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("系统设置", "Api_Setting", "ApiTest", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("审批API", "Api_Audit", "ApiTest", new { area = "" }, null)</li>
                     

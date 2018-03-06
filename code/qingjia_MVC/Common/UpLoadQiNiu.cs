@@ -123,6 +123,12 @@ namespace qingjia_MVC.Common
         /// <returns></returns>
         public static string UpLoadData(byte[] data, string LV_NUM)
         {
+            //此处data为空 说明申城请假条存在错误
+            if (data == null)
+            {
+                return null;
+            }
+
             LV_NUM += ".jpg"; //保存格式
             string result_string = _QiNiuUrl + LV_NUM;
 
@@ -149,7 +155,7 @@ namespace qingjia_MVC.Common
             FormUploader fu = new FormUploader();
             HttpResult result = fu.UploadData(data, saveKey, token);
 
-            if (result.Code == 200)
+            if (result.Code == 200 || result.Code == 614)
             {
                 return result_string;
             }

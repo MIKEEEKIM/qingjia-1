@@ -1,6 +1,7 @@
 ﻿using qingjia_MVC.Common;
 using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
+using qingjia_MVC.Models.API.AddressList;
 using qingjia_MVC.Models.API.Common;
 using System;
 using System.Collections.Generic;
@@ -33,16 +34,16 @@ namespace qingjia_MVC.Controllers.API
             #endregion
 
             #region 测试状态模拟登陆
-            AccountInfo accountInfo = new AccountInfo();
-            accountInfo.access_token = "11";
-            accountInfo.userID = "1214001";
-            accountInfo.userName = "王健铭";
-            accountInfo.userRoleID = "3";
-            accountInfo.userRoleName = "辅导员";
-            accountInfo.Grade = "2014";
-            accountInfo.permissionList = null;
+            //AccountInfo accountInfo = new AccountInfo();
+            //accountInfo.access_token = "11";
+            //accountInfo.userID = "1214001";
+            //accountInfo.userName = "王健铭";
+            //accountInfo.userRoleID = "3";
+            //accountInfo.userRoleName = "辅导员";
+            //accountInfo.Grade = "2014";
+            //accountInfo.permissionList = null;
 
-            HttpRuntime.Cache.Insert(accountInfo.access_token, accountInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
+            //HttpRuntime.Cache.Insert(accountInfo.access_token, accountInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
             #endregion
         }
 
@@ -186,28 +187,29 @@ namespace qingjia_MVC.Controllers.API
                 AccountInfo userInfo = (AccountInfo)HttpRuntime.Cache.Get(access_token);
                 if (HttpRuntime.Cache.Get(access_token) != null)
                 {
-                    List<string> permissionList = userInfo.permissionList;
-                    if (permissionList.IndexOf(path) == -1)
-                    {
-                        Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
-                        throw new Exception("该账户缺少权限，接口名称：" + rolePermission[path].ToString());
-                    }
-                    else
-                    {
-                        //返回null 代表令牌验证成功
-                        return null;
-                    }
+                    return null;
+                    //List<string> permissionList = userInfo.permissionList;
+                    //if (permissionList.IndexOf(path) == -1)
+                    //{
+                    //    Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
+                    //    throw new Exception("该账户缺少权限，接口名称：" + rolePermission[path].ToString());
+                    //}
+                    //else
+                    //{
+                    //    //返回null 代表令牌验证成功
+                    //    return null;
+                    //}
                 }
                 else
                 {
-                    throw new Exception("AccessToken错误，尚未授权或授权已过期");
+                    throw new Exception("令牌错误，尚未授权或授权已过期");
                 }
             }
             catch (Exception e)
             {
                 //强制返回401错误
                 ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
-                result.status = "error";
+                result.status = "401";
                 result.messages = e.Message;
                 return result;
             }
@@ -343,6 +345,28 @@ namespace qingjia_MVC.Controllers.API
                 return null;
             }
             #endregion
+        }
+
+        /// <summary>
+        /// 根据账户信息获取辅导员信息
+        /// </summary>
+        /// <param name="accountInfo"></param>
+        /// <returns></returns>
+        public static string GetTeacherID(AccountInfo accountInfo)
+        {
+            if (accountInfo.userRoleID == "1")
+            {
+                return (db.vw_Student.Where(c => c.ST_Num == accountInfo.userID).Select(c => c.ST_TeacherID).ToList().First()).ToString().Trim();
+            }
+            else if (accountInfo.userRoleID == "2")
+            {
+                return (db.vw_Class.Where(c => c.ID == accountInfo.userID).Select(c => c.TeacherID).ToList().First()).ToString().Trim();
+            }
+            else if (accountInfo.userRoleID == "3")
+            {
+                return accountInfo.userID;
+            }
+            return null;
         }
         #endregion
 
@@ -508,7 +532,7 @@ namespace qingjia_MVC.Controllers.API
 
         #region 数据模型转换
         /// <summary>
-        /// 此处方法用于 数据库视图转换成 用户使用数据
+        /// 此处方法用于 数据库视图转换成 用户使用数据 -- 请假记录
         /// </summary>
         /// <param name="_model_list"></param>
         /// <returns></returns>
@@ -547,13 +571,13 @@ namespace qingjia_MVC.Controllers.API
                     model.leaveStateCode = "4";
                 }
                 model.rejectReason = item.RejectReason;
-                model.leaveTypeID = item.LeaveType.ToString();
+                model.leaveTypeID = item.LeaveType.ToString().Trim();
                 model.leaveTypeName = "Error";
                 if (item.LeaveType.Trim() == "1" || item.LeaveType.Trim() == "2" || item.LeaveType.Trim() == "3" || item.LeaveType.Trim() == "4")
                 {
                     model.leaveTypeName = item.LeaveTypeName;
                 }
-                if (item.LeaveType.Trim() == "5" || item.LeaveType.Trim() == "6" || item.LeaveType.Trim() == "7")
+                if (item.LeaveType.Trim() == "5" || item.LeaveType.Trim() == "6" || item.LeaveType.Trim() == "7" || item.LeaveType.Trim() == "8")
                 {
                     if (item.LeaveTypeChildrenID.Trim() == "1")
                     {
@@ -571,7 +595,7 @@ namespace qingjia_MVC.Controllers.API
                 model.leaveTime = ((DateTime)item.LeaveTime).ToString("yyyy/MM/dd HH:mm:ss");
                 model.backTime = ((DateTime)item.BackTime).ToString("yyyy/MM/dd HH:mm:ss");
                 model.leaveWay = item.LeaveWay;
-                model.backWay = item.BackWay;   
+                model.backWay = item.BackWay;
                 model.address = item.Address;
                 model.lesson = "";
                 if (item.Lesson != null && item.Lesson.ToString().Trim() == "1")
@@ -608,11 +632,76 @@ namespace qingjia_MVC.Controllers.API
                 model.pic_one = item.Pic_One;
                 model.pic_two = item.Pic_Two;
                 model.pic_three = item.Pic_Three;
+                //根据 实际需求情况 判断是否需要打印请假条
+                model.isPrint = IsPrint(item.LeaveType.ToString().Trim()) ? 1 : 0;
                 #endregion
 
                 model_list.Add(model);
             }
             return model_list;
+        }
+
+        /// <summary>
+        /// 此处方法用于 数据库视图转换成 用户使用数据 -- 学生通讯录
+        /// </summary>
+        /// <param name="_model_list"></param>
+        /// <param name="RoleID"></param>
+        /// <returns></returns>
+        public static List<StudentListModel> TransformStudentList(List<vw_Student> _model_list, string RoleID)
+        {
+            List<StudentListModel> model_list = new List<StudentListModel>();
+
+            foreach (var item in _model_list)
+            {
+                StudentListModel model = new StudentListModel();
+
+                model.StudentID = (item.ST_Num == null) ? "" : item.ST_Num.ToString().Trim();
+                model.Name = (item.ST_Name == null) ? "" : item.ST_Name.ToString().Trim();
+                model.Email = (item.ST_Email == null) ? "" : item.ST_Email.ToString().Trim();
+                model.QQ = (item.ST_QQ == null) ? "" : item.ST_QQ.ToString().Trim();
+                model.Tel = (item.ST_Tel == null) ? "" : item.ST_Tel.ToString().Trim();
+                model.ContactName = (item.ContactOne == null) ? "" : item.ContactOne.ToString().Trim();
+                model.ContactTel = (item.OneTel == null) ? "" : item.OneTel.ToString().Trim();
+                model.Sex = (item.ST_Sex == null) ? "" : item.ST_Sex.ToString().Trim();
+                model.Dor = (item.ST_Dor == null) ? "" : item.ST_Dor.ToString().Trim();
+                model.ClassName = (item.ST_Class == null) ? "" : item.ST_Class.ToString().Trim();
+                model.Grade = (item.ST_Grade == null) ? "" : item.ST_Grade.ToString().Trim();
+                model.TeacherID = (item.ST_TeacherID == null) ? "" : item.ST_TeacherID.ToString().Trim();
+                model.TeacherName = (item.ST_Teacher == null) ? "" : item.ST_Teacher.ToString().Trim();
+                model.MonitorID = (item.MonitorID == null) ? "" : item.MonitorID.ToString().Trim();
+                model.MonitorName = (item.MonitorName == null) ? "未设置" : item.MonitorName.ToString().Trim();
+
+                if (RoleID == "1")
+                {
+                    model.ContactName = null;
+                    model.ContactTel = null;
+                    model.MonitorID = null;
+                    model.MonitorName = null;
+                }
+
+                model_list.Add(model);
+            }
+            return model_list;
+        }
+        #endregion
+
+        #region 判断是否需要打印请假条
+        /// <summary>
+        /// 判断是否需要打印请假条
+        /// </summary>
+        /// <param name="leaveTypeID"></param>
+        /// <returns></returns>
+        public static bool IsPrint(string leaveTypeID)
+        {
+            //leaveTypeID 对应 数据库中 T_LeaveType 中的 ID  根据实际需求情况 打印请假条的请假类型为 短期请假、长期请假、节假日请假、上课请假备案
+            if (leaveTypeID == "1" || leaveTypeID == "2" || leaveTypeID == "4" || leaveTypeID == "8")
+            {
+                return true;//打印请假条
+            }
+            else
+            {
+                return false;//不打印请假条
+            }
         }
         #endregion
     }

@@ -5,10 +5,6 @@ using qingjia_MVC.Models.API.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Http;
 
 namespace qingjia_MVC.Controllers.API
@@ -325,36 +321,31 @@ namespace qingjia_MVC.Controllers.API
         #region 其他方法
 
         /// <summary>
-        /// 
+        /// 通过API接口 下载图片
         /// </summary>
         /// <param name="LV_NUM"></param>
         /// <returns></returns>
         [HttpGet, Route("downloadpic")]
         public IHttpActionResult DownLoadPic(string LV_NUM)
         {
-            var browser = string.Empty;
-            if (HttpContext.Current.Request.UserAgent != null)
-            {
-                browser = HttpContext.Current.Request.UserAgent.ToUpper();
-            }
-            //string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "res\\images\\qingjia", "测试图片.jpg");
-            HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-            //FileStream fileStream = File.OpenRead(filePath);
-            byte[] fileStream = Print.Print_Form(LV_NUM);
-            //httpResponseMessage.Content = new StreamContent(fileStream);
-            httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = LV_NUM + ".jpg"
-                //FileName = browser.Contains("FIREFOX") ? Path.GetFileName(filePath) : HttpUtility.UrlEncode(Path.GetFileName(filePath))
-                //FileName = HttpUtility.UrlEncode(Path.GetFileName(filePath))
-            };
-            return ResponseMessage(httpResponseMessage);
+            return null;//此接口暂时关闭
+
+
+            //var browser = string.Empty;
+            //if (HttpContext.Current.Request.UserAgent != null)
+            //{
+            //    browser = HttpContext.Current.Request.UserAgent.ToUpper();
+            //}
+            //HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+            //byte[] fileStream = Print.Print_Form(LV_NUM);
+            //httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            //httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = LV_NUM + ".jpg" };
+            //return ResponseMessage(httpResponseMessage);
         }
 
         //是否可以请假 存在bug
 
-        #region 学生请假操作 此处缺少发短信功能
+        #region 学生请假操作 此处不需要短信通知
 
         #region 请假类型合法性检查
         private T_TeacherLeaveType IsLeaveTypeExist(string studentID, int leaveTypeID)
@@ -426,7 +417,7 @@ namespace qingjia_MVC.Controllers.API
         #endregion
 
         /// <summary>
-        /// 
+        /// 离校请假 短期请假 长期请假 节假日请假
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -520,10 +511,7 @@ namespace qingjia_MVC.Controllers.API
 
                     if (Leave(model) == 1)
                     {
-                        if ()
-                        {
-
-                        }
+                        return Success("申请请加成功，请及时联系辅导员审批。");
                     }
                     else
                     {
@@ -543,7 +531,7 @@ namespace qingjia_MVC.Controllers.API
         }
 
         /// <summary>
-        /// 
+        /// 特殊请假  包括 晚点名请假、早晚自习请假
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -580,7 +568,11 @@ namespace qingjia_MVC.Controllers.API
 
                     if (Leave(model) == 1)
                     {
-
+                        return Success("申请请加成功，请及时联系辅导员审批。");
+                    }
+                    else
+                    {
+                        return Error("保存至数据库失败！");
                     }
                 }
                 else
@@ -595,7 +587,7 @@ namespace qingjia_MVC.Controllers.API
         }
 
         /// <summary>
-        /// 
+        /// 上课请假备案
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -657,7 +649,11 @@ namespace qingjia_MVC.Controllers.API
 
                     if (Leave(model) == 1)
                     {
-
+                        return Success("申请请加成功，请及时联系辅导员审批。");
+                    }
+                    else
+                    {
+                        return Error("保存至数据库失败！");
                     }
                 }
                 else
@@ -672,7 +668,7 @@ namespace qingjia_MVC.Controllers.API
         }
 
         /// <summary>
-        /// 
+        /// 保存请假记录到数据库表格，返回值为插入请假记录成功条数
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -705,11 +701,13 @@ namespace qingjia_MVC.Controllers.API
             db.T_New_LeaveList.Add(model);
             if (db.SaveChanges() == 1)
             {
-                return Success("请假成功，请联系辅导员审批");
+                //return Success("请假成功，请联系辅导员审批");
+                return 1;
             }
             else
             {
-                return SystemError();
+                //return SystemError();
+                return 0;
             }
         }
         #endregion
