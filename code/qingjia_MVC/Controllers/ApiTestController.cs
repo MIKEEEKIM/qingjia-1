@@ -58,5 +58,12 @@ namespace qingjia_MVC.Controllers
 
             return View();
         }
+
+        public ActionResult Api_WebSocket()
+        {
+            ViewBag.Title = "Api_WebSocket";
+
+            return View();
+        }
     }
 }

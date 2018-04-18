@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <title></title>
+    <script>
+        var ws;
+        $().ready(function () {
+            $('#conn').click(function () {
+                //ws = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/Handler1.ashx?user=' + $("#user").val());
+                ws = new WebSocket('ws:localhost:12516/WSHandler.ashx?user=' + $("#user").val());
+                //var host = 'ws://192.168.85.128:8085/api/WSChat?user='+$("#user").val();
+                //var host = "ws://192.168.85.128:8085/api/WSChat";
+                //webSocket = new WebSocket(host);
+
+                $('#msg').append('<p>正在连接</p>');
+
+                ws.onopen = function () {
+                    $('#msg').append('<p>已经连接</p>');
+                }
+                ws.onmessage = function (evt) {
+                    $('#msg').append('<p>' + evt.data + '</p>');
+                    console.log(evt);
+                }
+                ws.onerror = function (evt) {
+                    $('#msg').append('<p>' + JSON.stringify(evt) + '</p>');
+                    console.log(evt);
+                }
+                ws.onclose = function () {
+                    $('#msg').append('<p>已经关闭</p>');
+                }
+            });
+
+            $('#close').click(function () {
+                ws.close();
+            });
+
+            $('#send').click(function () {
+                if (ws.readyState == WebSocket.OPEN) {
+                    ws.send($("#to").val() + "|" + $('#content').val());
+                }
+                else {
+                    $('#tips').text('连接已经关闭');
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <input id="user" type="text" />
+        <input id="conn" type="button" value="连接" />
+        <input id="close" type="button" value="关闭" /><br />
+        <span id="tips"></span>
+        <input id="content" type="text" />
+        <input id="send" type="button" value="发送" /><br />
+        <input id="to" type="text" />目的用户
+        <div id="msg">
+        </div>
+    </div>
+</body>
+</html>

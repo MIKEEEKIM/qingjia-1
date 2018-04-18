@@ -33,11 +33,6 @@ namespace qingjia_MVC.Controllers.API.Audit
         #endregion
 
         //此模块包含 获取请假记录数据、审批通过、审批驳回、多条件查询接口
-        //[HttpOptions,Route("post")]
-        //public ApiResult Options()
-        //{
-        //    return null; // HTTP 200 response with empty body
-        //}
 
         /// <summary>
         /// Get 令牌、请假类型ID
@@ -549,7 +544,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                             //发送短信 go 代表同意请假
                             SendMsg(LL, "go");
 
-                            //Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            //此处仅接收的方法仅支持一个参数
+                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            MsgThread.Start("");
 
                             return Success("已同意请假！");
                             #endregion
@@ -779,7 +776,7 @@ namespace qingjia_MVC.Controllers.API.Audit
             }
         }
 
-        private void SendAsync(object data_1, object data_2)
+        private void SendAsync(object data_1)
         {
 
         }
