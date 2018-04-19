@@ -541,12 +541,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                             //保存至数据库
                             db.SaveChanges();
 
-                            //发送短信 go 代表同意请假
-                            SendMsg(LL, "go");
-
-                            //此处仅接收的方法仅支持一个参数
+                            //创建线程执行短信操作
                             Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
-                            MsgThread.Start("");
+                            MsgThread.Start(CreatMessage(LL, "go"));
 
                             return Success("已同意请假！");
                             #endregion
@@ -610,9 +607,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                             //保存至数据库
                             db.SaveChanges();
 
-                            //发送短信 go 代表同意请假  利用线程短信
-                            SendMsg(LL, "back");
-                            //Thread sendMsg = new Thread(new ThreadStart(SendMsg));
+                            //创建线程执行短信操作
+                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            MsgThread.Start(CreatMessage(LL, "back"));
 
                             return Success("已同意销假！");
                             #endregion
@@ -677,8 +674,9 @@ namespace qingjia_MVC.Controllers.API.Audit
                             //保存至数据库
                             db.SaveChanges();
 
-                            //发送短信 go 代表同意请假
-                            SendMsg(LL, "failed");
+                            //创建线程执行短信操作
+                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            MsgThread.Start(CreatMessage(LL, "failed"));
 
                             return Success("已驳回请假！");
                             #endregion
@@ -763,22 +761,42 @@ namespace qingjia_MVC.Controllers.API.Audit
 
         #region 发送短信
         /// <summary>
-        /// 发送通知短信
+        /// 判断是否发送短信 创建短信模板
         /// </summary>
         /// <param name="_LL"></param>
         /// <param name="messageType"></param>
-        private void SendMsg(vw_New_LeaveList _LL, string messageType)
+        private MessageModel CreatMessage(vw_New_LeaveList _LL, string messageType)
         {
             var _enableMessage = from vw_TeacherLeaveType in db.vw_TeacherLeaveType where (vw_TeacherLeaveType.LeaveTypeID.ToString() == _LL.LeaveType && vw_TeacherLeaveType.TeacherID == _LL.ST_TeacherID) select vw_TeacherLeaveType.EnableMessage;
             if (_enableMessage.Any() && _enableMessage.ToList().First() != 0)
             {
-                SendSms.sendSms(new MessageModel(_LL, messageType));
+                return new MessageModel(_LL, messageType);
+            }
+            else
+            {
+                return null;
             }
         }
 
-        private void SendAsync(object data_1)
+        /// <summary>
+        /// 执行发送短信操作 输出短信发送日志
+        /// </summary>
+        /// <param name="_message"></param>
+        private void SendAsync(object _message)
         {
-
+            try
+            {
+                if (_message != null)
+                {
+                    //发送短信
+                    MessageModel message = (MessageModel)_message;
+                    SendSms.sendSms(message);
+                }
+            }
+            catch
+            {
+                //短信发送失败时记录发送失败日志
+            }
         }
         #endregion
     }
