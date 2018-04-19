@@ -72,6 +72,23 @@ namespace qingjia_MVC.Controllers.API
         }
 
         /// <summary>
+        /// 出现未知程序错误、联系管理员  输出错误日志
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        public static ApiResult SystemError(Exception ex)
+        {
+            OutputLog.WriteLog("访问API接口 " + HttpContext.Current.Request.Path);
+            OutputLog.WriteLog("报错内容： " + ex.ToString());
+
+            ApiResult result = new ApiResult();
+            result.status = "error";
+            result.messages = "操作失败、出现未知程序错误、请联系管理员！";
+            result.fieldErrors = null;
+            return result;
+        }
+
+        /// <summary>
         /// 令牌过期是返回错误
         /// </summary>
         /// <returns></returns>

@@ -107,9 +107,9 @@ namespace qingjia_MVC.Controllers.API.User
                     return Error("此用户ID不存在！");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
             #endregion
         }
