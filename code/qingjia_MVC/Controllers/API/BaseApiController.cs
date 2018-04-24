@@ -650,7 +650,7 @@ namespace qingjia_MVC.Controllers.API
                 model.pic_two = item.Pic_Two;
                 model.pic_three = item.Pic_Three;
                 //根据 实际需求情况 判断是否需要打印请假条
-                model.isPrint = IsPrint(item.LeaveType.ToString().Trim()) ? 1 : 0;
+                model.isPrint = IsPrint(item.LeaveType.ToString().Trim(), model.leaveStateCode) ? 1 : 0;
                 #endregion
 
                 model_list.Add(model);
@@ -720,6 +720,32 @@ namespace qingjia_MVC.Controllers.API
                 return false;//不打印请假条
             }
         }
+
+        /// <summary>
+        /// 判断是否需要打印请假条
+        /// </summary>
+        /// <param name="leaveTypeID"></param>
+        /// <returns></returns>
+        public static bool IsPrint(string leaveTypeID, string stateLeave)
+        {
+            //leaveTypeID 对应 数据库中 T_LeaveType 中的 ID  根据实际需求情况 打印请假条的请假类型为 短期请假、长期请假、节假日请假、上课请假备案
+            if (leaveTypeID == "1" || leaveTypeID == "2" || leaveTypeID == "4" || leaveTypeID == "8")
+            {
+                if (stateLeave == "2" || stateLeave == "3")
+                {
+                    return true;//打印请假条
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;//不打印请假条
+            }
+        }
         #endregion
+        
     }
 }

@@ -509,6 +509,7 @@
     <EntitySetMapping Name="vw_Student">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
         <MappingFragment StoreEntitySet="vw_Student">
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
           <ScalarProperty Name="MonitorName" ColumnName="MonitorName" />
           <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
           <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />

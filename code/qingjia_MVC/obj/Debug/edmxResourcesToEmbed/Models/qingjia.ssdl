@@ -586,6 +586,7 @@
     <Property Name="MonitorName" Type="nvarchar" MaxLength="64" />
     <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="ClassID" Type="varchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -845,7 +846,8 @@
     [vw_Student].[MonitorID] AS [MonitorID], 
     [vw_Student].[MonitorName] AS [MonitorName], 
     [vw_Student].[ST_Teacher] AS [ST_Teacher], 
-    [vw_Student].[ST_TeacherID] AS [ST_TeacherID]
+    [vw_Student].[ST_TeacherID] AS [ST_TeacherID], 
+    [vw_Student].[ClassID] AS [ClassID]
     FROM [dbo].[vw_Student] AS [vw_Student]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" store:Type="Views" store:Schema="dbo">

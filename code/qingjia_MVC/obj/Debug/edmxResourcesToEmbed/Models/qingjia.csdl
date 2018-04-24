@@ -550,6 +550,7 @@
     <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ClassID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_TeacherLeaveType">
     <Key>

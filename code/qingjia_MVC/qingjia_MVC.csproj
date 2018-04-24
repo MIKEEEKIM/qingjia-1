@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -291,6 +292,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AccessToken.cs" />
     <Compile Include="Models\API\AccountInfo.cs" />
+    <Compile Include="Models\API\AddressList\StudentAddressInfo.cs" />
     <Compile Include="Models\API\AddressList\StudentListModel.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Audit\AuditReject.cs" />

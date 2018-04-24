@@ -33,5 +33,6 @@ namespace qingjia_MVC.Models
         public string ST_Teacher { get; set; }
         public string ST_TeacherID { get; set; }
         public string MonitorName { get; set; }
+        public string ClassID { get; set; }
     }
 }

@@ -1,0 +1,129 @@
+DateTime:2018/4/24 14:26:56      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 14:26:56      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 19
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String studentID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 174
+
+DateTime:2018/4/24 14:27:00      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 14:27:00      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 19
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String studentID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 174
+
+DateTime:2018/4/24 14:29:49      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 14:29:49      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 31
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String studentID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 174
+
+DateTime:2018/4/24 14:32:00      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 14:32:00      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 31
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String studentID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 174
+
+DateTime:2018/4/24 14:33:07      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 14:33:07      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 31
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String studentID) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 174
+
+DateTime:2018/4/24 15:35:11      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 15:35:11      Url:/api/addresslist/get    Message:报错内容： System.Data.Entity.Core.EntityException: 基础提供程序在 Open 上失败。 ---> System.InvalidOperationException: 连接未关闭。 连接的当前状态为正在连接。
+   在 System.Data.ProviderBase.DbConnectionClosedConnecting.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<Open>b__36(DbConnection t, DbConnectionInterceptionContext c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.Open(DbConnection connection, DbInterceptionContext interceptionContext)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.<Open>b__2()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   在 System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   在 System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   在 System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   在 System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.<GetElementFunction>b__3[TResult](IEnumerable`1 sequence)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   在 System.Data.Entity.Internal.Linq.DbQueryProvider.Execute[TResult](Expression expression)
+   在 System.Linq.Queryable.Count[TSource](IQueryable`1 source)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 472
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 71
+
+DateTime:2018/4/24 15:37:54      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 15:37:54      Url:/api/addresslist/get    Message:报错内容： System.Data.Entity.Core.EntityException: 基础提供程序在 Open 上失败。 ---> System.InvalidOperationException: 连接未关闭。 连接的当前状态为正在连接。
+   在 System.Data.ProviderBase.DbConnectionClosedConnecting.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<Open>b__36(DbConnection t, DbConnectionInterceptionContext c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.Open(DbConnection connection, DbInterceptionContext interceptionContext)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.<Open>b__2()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   在 System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   在 System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   在 System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   在 System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.<GetElementFunction>b__3[TResult](IEnumerable`1 sequence)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   在 System.Data.Entity.Internal.Linq.DbQueryProvider.Execute[TResult](Expression expression)
+   在 System.Linq.Queryable.Count[TSource](IQueryable`1 source)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 472
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 71
+
+DateTime:2018/4/24 15:47:17      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/4/24 15:47:17      Url:/api/addresslist/get    Message:报错内容： System.Data.Entity.Core.EntityException: 基础提供程序在 Open 上失败。 ---> System.InvalidOperationException: 连接未关闭。 连接的当前状态为正在连接。
+   在 System.Data.ProviderBase.DbConnectionClosedConnecting.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<Open>b__36(DbConnection t, DbConnectionInterceptionContext c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.Open(DbConnection connection, DbInterceptionContext interceptionContext)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.<Open>b__2()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   在 System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   在 System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   在 System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   在 System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   在 System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   在 System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.<GetElementFunction>b__3[TResult](IEnumerable`1 sequence)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   在 System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   在 System.Data.Entity.Internal.Linq.DbQueryProvider.Execute[TResult](Expression expression)
+   在 System.Linq.Queryable.Count[TSource](IQueryable`1 source)
+   在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 472
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 71
+
