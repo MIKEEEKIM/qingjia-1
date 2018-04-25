@@ -53,8 +53,17 @@ namespace qingjia_MVC.Areas.UserInfo.Controllers
             }
             else
             {
-                ViewBag.Relation = modelStudent.ContactOne.ToString().Substring(0, 2);
-                ViewBag.RelationName = modelStudent.ContactOne.ToString().Substring(3, modelStudent.ContactOne.ToString().Length - 3);
+                try
+                {
+                    ViewBag.Relation = modelStudent.ContactOne.ToString().Substring(0, 2);
+                    ViewBag.RelationName = modelStudent.ContactOne.ToString().Substring(3, modelStudent.ContactOne.ToString().Length - 3);
+                }
+                catch
+                {
+                    //ViewBag.Relation = modelStudent.ContactOne.ToString().Substring(0, 2);
+                    //ViewBag.RelationName = modelStudent.ContactOne.ToString().Substring(3, modelStudent.ContactOne.ToString().Length - 3);
+                }
+                
             }
             ViewBag.RelaTIonTel = modelStudent.OneTel.ToString();
             ViewBag.RelaTIonTel = ((modelStudent.OneTel == "") || (modelStudent.OneTel == null)) ? "" : modelStudent.OneTel.ToString();
