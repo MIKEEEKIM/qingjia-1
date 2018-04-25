@@ -1,4 +1,4 @@
-DateTime:2018/4/24 14:26:56      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+﻿DateTime:2018/4/24 14:26:56      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
 
 DateTime:2018/4/24 14:26:56      Url:/api/addresslist/get    Message:报错内容： System.NullReferenceException: 未将对象引用设置到对象的实例。
    在 qingjia_MVC.Models.API.AddressList.StudentAddressInfo..ctor(vw_Student studentModel) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Models\API\AddressList\StudentAddressInfo.cs:行号 19

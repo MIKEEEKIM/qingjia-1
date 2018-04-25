@@ -140,6 +140,11 @@ namespace qingjia_MVC.Controllers.API.Setting
         #endregion
 
         #region 设置班级负责人 -- 班长
+        /// <summary>
+        /// 获取班级信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
         [HttpGet, Route("getclassinfo")]
         public ApiResult GetClassInfo(string access_token)
         {
@@ -171,6 +176,11 @@ namespace qingjia_MVC.Controllers.API.Setting
             #endregion
         }
 
+        /// <summary>
+        /// 设置班级信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost, Route("setclassinfo")]
         public ApiResult SetClassInfo([FromBody] SetClassInfo model)
         {
@@ -372,6 +382,58 @@ namespace qingjia_MVC.Controllers.API.Setting
         }
 
         /// <summary>
+        /// 获取某一节假日信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="holidayID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("getholidayinfo")]
+        public ApiResult GetHolidayInfo(string access_token, string holidayID)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo != null)
+                {
+                    T_Holiday holiday = db.T_Holiday.Find(holidayID);
+                    if (holiday != null && holiday.TeacherID == accountInfo.userID)
+                    {
+                        IQueryable<vw_New_LeaveList> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)));
+
+                        SelectCondition conditionsModel = new SelectCondition();
+                        conditionsModel.sortField = "SubmitTime";
+                        conditionsModel.sortDirection = "DESC";
+                        DataList dtSource = GetList(conditionsModel, _LL);
+                        dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+                        return Success("获取成功", dtSource);
+                    }
+                    else
+                    {
+                        return Error("您的列表中不存在此条记录！");
+                    }
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
         /// 删除（结束）节假日信息
         /// </summary>
         /// <param name="access_token"></param>
@@ -401,10 +463,10 @@ namespace qingjia_MVC.Controllers.API.Setting
                         //列表中删除 此条记录
                         holiday.IsDelete = 1;
                         //清空所有请假
-                        IQueryable<T_New_LeaveList> _
+                        //IQueryable<T_New_LeaveList> _LL = db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0");
                         db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0").Update(q => new T_New_LeaveList() { StateBack = "1" });
                         int n = db.SaveChanges();
-                        return Success("删除成功！");
+                        return Success("删除成功！修改了" + n + "条数据！");
                     }
                     else
                     {
@@ -413,7 +475,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                 }
                 else
                 {
-                    return SystemError();
+                    return Error();
                 }
             }
             catch (Exception ex)
@@ -421,7 +483,6 @@ namespace qingjia_MVC.Controllers.API.Setting
                 return SystemError(ex);
             }
             #endregion
-            return null;
         }
 
         /// <summary>
