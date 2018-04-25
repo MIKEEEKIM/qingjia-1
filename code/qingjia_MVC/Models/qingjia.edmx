@@ -91,6 +91,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
           <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
@@ -974,6 +975,7 @@
           <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SubmitTime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="T_Info">
           <Key>
@@ -1635,6 +1637,7 @@
           <EntitySetMapping Name="T_Holiday">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
               <MappingFragment StoreEntitySet="T_Holiday">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />

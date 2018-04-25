@@ -336,6 +336,11 @@ namespace qingjia_MVC.Controllers.API.Setting
         #endregion
 
         #region 节假日设置
+        /// <summary>
+        /// 获取节假日信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
         [HttpGet, Route("getholidayinfo")]
         public ApiResult GetHolidayInfo(string access_token)
         {
@@ -366,6 +371,64 @@ namespace qingjia_MVC.Controllers.API.Setting
             #endregion
         }
 
+        /// <summary>
+        /// 删除（结束）节假日信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="holidayID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("deleteholidayinfo")]
+        public ApiResult DeleteHolidayInfo(string access_token, string holidayID)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                //删除某次节假日信息、所有待销假全部转为已销假
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo != null)
+                {
+                    T_Holiday holiday = db.T_Holiday.Find(holidayID);
+                    if (holiday != null && holiday.TeacherID == accountInfo.userID)
+                    {
+                        //列表中删除 此条记录
+                        holiday.IsDelete = 1;
+                        //清空所有请假
+                        IQueryable<T_New_LeaveList> _
+                        db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0").Update(q => new T_New_LeaveList() { StateBack = "1" });
+                        int n = db.SaveChanges();
+                        return Success("删除成功！");
+                    }
+                    else
+                    {
+                        return Error("您的列表中不存在此条记录！");
+                    }
+                }
+                else
+                {
+                    return SystemError();
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+            return null;
+        }
+
+        /// <summary>
+        /// 设置节假日信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost, Route("setholidayinfo")]
         public ApiResult SetHolidayInfo([FromBody]SetHolidayInfo model)
         {
@@ -398,6 +461,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                 db.T_Holiday.Where(q => q.TeacherID == accountInfo.userID).Update(q => new T_Holiday() { IsDelete = 1 });
 
                 T_Holiday holidayModel = new T_Holiday();
+                holidayModel.Name = model.name.ToString().Trim();
                 holidayModel.StartTime = _startTime;
                 holidayModel.EndTime = _endTime;
                 holidayModel.SubmitTime = DateTime.Now;
@@ -408,9 +472,9 @@ namespace qingjia_MVC.Controllers.API.Setting
                 db.SaveChanges();
                 return Success("保存成功");
             }
-            catch
+            catch (Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
             #endregion
         }

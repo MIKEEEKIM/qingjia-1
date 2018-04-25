@@ -91,6 +91,7 @@
     <EntitySetMapping Name="T_Holiday">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
         <MappingFragment StoreEntitySet="T_Holiday">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="EndTime" ColumnName="EndTime" />

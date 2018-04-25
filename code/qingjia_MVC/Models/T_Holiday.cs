@@ -21,5 +21,6 @@ namespace qingjia_MVC.Models
         public string TeacherID { get; set; }
         public Nullable<System.DateTime> SubmitTime { get; set; }
         public Nullable<int> IsDelete { get; set; }
+        public string Name { get; set; }
     }
 }

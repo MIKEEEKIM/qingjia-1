@@ -92,6 +92,7 @@
     <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SubmitTime" Type="DateTime" Precision="3" />
     <Property Name="IsDelete" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="T_Info">
     <Key>
