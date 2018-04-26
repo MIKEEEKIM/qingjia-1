@@ -91,6 +91,7 @@
     <EntitySetMapping Name="T_Holiday">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
         <MappingFragment StoreEntitySet="T_Holiday">
+          <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
@@ -566,6 +567,20 @@
           <ScalarProperty Name="Grade" ColumnName="Grade" />
           <ScalarProperty Name="ClassName" ColumnName="ClassName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_Holiday">
+      <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
+        <MappingFragment StoreEntitySet="vw_Holiday">
+          <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

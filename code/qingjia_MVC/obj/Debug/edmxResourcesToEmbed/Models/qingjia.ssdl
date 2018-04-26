@@ -89,6 +89,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
+    <Property Name="DeadLine" Type="datetime" />
     <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
     <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
     <Property Name="SubmitTime" Type="datetime" />
@@ -374,6 +375,21 @@
     <Property Name="Datetime" Type="datetime" Nullable="false" />
     <Property Name="TeacherID" Type="varchar" MaxLength="64" />
     <Property Name="Location" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_Holiday">
+    <Key>
+      <PropertyRef Name="HolidayID" />
+    </Key>
+    <Property Name="HolidayID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="DeadLine" Type="datetime" />
+    <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDelete" Type="int" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -696,6 +712,18 @@
     [vw_ClassBatch].[TeacherID] AS [TeacherID], 
     [vw_ClassBatch].[Location] AS [Location]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_Holiday].[HolidayID] AS [HolidayID], 
+    [vw_Holiday].[Name] AS [Name], 
+    [vw_Holiday].[StartTime] AS [StartTime], 
+    [vw_Holiday].[EndTime] AS [EndTime], 
+    [vw_Holiday].[DeadLine] AS [DeadLine], 
+    [vw_Holiday].[TeacherID] AS [TeacherID], 
+    [vw_Holiday].[IsDelete] AS [IsDelete], 
+    [vw_Holiday].[TeacherName] AS [TeacherName]
+    FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

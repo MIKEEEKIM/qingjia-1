@@ -94,6 +94,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
+          <Property Name="DeadLine" Type="datetime" />
           <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
           <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
           <Property Name="SubmitTime" Type="datetime" />
@@ -379,6 +380,21 @@
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="TeacherID" Type="varchar" MaxLength="64" />
           <Property Name="Location" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_Holiday">
+          <Key>
+            <PropertyRef Name="HolidayID" />
+          </Key>
+          <Property Name="HolidayID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="DeadLine" Type="datetime" />
+          <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDelete" Type="int" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -702,6 +718,18 @@
     [vw_ClassBatch].[Location] AS [Location]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Holiday].[HolidayID] AS [HolidayID], 
+    [vw_Holiday].[Name] AS [Name], 
+    [vw_Holiday].[StartTime] AS [StartTime], 
+    [vw_Holiday].[EndTime] AS [EndTime], 
+    [vw_Holiday].[DeadLine] AS [DeadLine], 
+    [vw_Holiday].[TeacherID] AS [TeacherID], 
+    [vw_Holiday].[IsDelete] AS [IsDelete], 
+    [vw_Holiday].[TeacherName] AS [TeacherName]
+    FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_LeaveIntership].[ID] AS [ID], 
@@ -976,6 +1004,7 @@
           <Property Name="SubmitTime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="T_Info">
           <Key>
@@ -1520,6 +1549,7 @@
           <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_Class" EntityType="imaw_qingjia_newModel.vw_Class" />
+          <EntitySet Name="vw_Holiday" EntityType="imaw_qingjia_newModel.vw_Holiday" />
         </EntityContainer>
         <EntityType Name="vw_Class">
           <Key>
@@ -1540,6 +1570,19 @@
           <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Holiday">
+          <Key>
+            <PropertyRef Name="HolidayID" />
+          </Key>
+          <Property Name="HolidayID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
+          <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Int32" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1637,6 +1680,7 @@
           <EntitySetMapping Name="T_Holiday">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
               <MappingFragment StoreEntitySet="T_Holiday">
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
@@ -2112,6 +2156,20 @@
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Holiday">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
+              <MappingFragment StoreEntitySet="vw_Holiday">
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

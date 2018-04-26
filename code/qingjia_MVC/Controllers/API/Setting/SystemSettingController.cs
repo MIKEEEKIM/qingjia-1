@@ -347,7 +347,7 @@ namespace qingjia_MVC.Controllers.API.Setting
 
         #region 节假日设置
         /// <summary>
-        /// 获取节假日信息
+        /// 获取节假日信息 辅导员
         /// </summary>
         /// <param name="access_token"></param>
         /// <returns></returns>
@@ -370,13 +370,40 @@ namespace qingjia_MVC.Controllers.API.Setting
                 {
                     return Error("此接口仅限辅导员使用");
                 }
-                T_Holiday holidayModel = db.T_Holiday.Where(c => c.TeacherID == accountInfo.userID && c.IsDelete == 0).ToList().First();
-
-                return Success("获取数据成功", holidayModel);
+                IQueryable<T_Holiday> holidayModelList = db.T_Holiday.Where(c => c.TeacherID == accountInfo.userID);
+                if (holidayModelList.Any())
+                {
+                    DataList dtSource = new DataList();
+                    List<HolidayInfo> data = new List<HolidayInfo>();
+                    foreach (var item in holidayModelList)
+                    {
+                        HolidayInfo model = new HolidayInfo
+                        {
+                            ID = item.ID.ToString().Trim(),
+                            Name = item.Name.ToString().Trim(),
+                            StartTime = ((DateTime)item.StartTime).ToString("yyyy/MM/dd HH:mm:ss"),
+                            EndTime = ((DateTime)item.EndTime).ToString("yyyy/MM/dd HH:mm:ss"),
+                            SubmitTime = ((DateTime)item.SubmitTime).ToString("yyyy/MM/dd HH:mm:ss"),
+                            DeadLine = ((DateTime)item.DeadLine).ToString("yyyy/MM/dd HH:mm:ss"),
+                            TeacherID = accountInfo.userID,
+                            TeacherName = accountInfo.userName,
+                            AutoAudit = item.AutoAudit.ToString().Trim() == "1" ? "自动" : "手动",
+                            IsDelete = item.IsDelete.ToString().Trim()
+                        };
+                        data.Add(model);
+                    }
+                    dtSource.total = holidayModelList.ToList().Count;
+                    dtSource.list = data;
+                    return Success("获取成功", dtSource);
+                }
+                else
+                {
+                    return Success("没有节假日记录！");
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
             #endregion
         }

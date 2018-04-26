@@ -12,16 +12,15 @@ namespace qingjia_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Holiday
+    public partial class vw_Holiday
     {
-        public int ID { get; set; }
+        public int HolidayID { get; set; }
+        public string Name { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
-        public string AutoAudit { get; set; }
-        public string TeacherID { get; set; }
-        public Nullable<System.DateTime> SubmitTime { get; set; }
-        public Nullable<int> IsDelete { get; set; }
-        public string Name { get; set; }
         public Nullable<System.DateTime> DeadLine { get; set; }
+        public string TeacherID { get; set; }
+        public Nullable<int> IsDelete { get; set; }
+        public string TeacherName { get; set; }
     }
 }

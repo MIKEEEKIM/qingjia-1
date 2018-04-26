@@ -93,6 +93,7 @@
     <Property Name="SubmitTime" Type="DateTime" Precision="3" />
     <Property Name="IsDelete" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="T_Info">
     <Key>
@@ -637,6 +638,7 @@
       <Parameter Name="TeacherID" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="vw_Class" EntityType="imaw_qingjia_newModel.vw_Class" />
+    <EntitySet Name="vw_Holiday" EntityType="imaw_qingjia_newModel.vw_Holiday" />
   </EntityContainer>
   <EntityType Name="vw_Class">
     <Key>
@@ -657,5 +659,18 @@
     <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_Holiday">
+    <Key>
+      <PropertyRef Name="HolidayID" />
+    </Key>
+    <Property Name="HolidayID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
+    <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelete" Type="Int32" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

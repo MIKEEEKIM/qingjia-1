@@ -127,3 +127,9 @@ DateTime:2018/4/24 15:47:17      Url:/api/addresslist/get    Message:报错内�
    在 qingjia_MVC.Controllers.API.BaseApiController.GetList[T](SelectCondition model, IQueryable`1 returnList) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\BaseApiController.cs:行号 472
    在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 71
 
+DateTime:2018/4/25 17:01:57      Url:/api/system/getholidayinfo    Message:访问API接口 /api/system/getholidayinfo
+
+DateTime:2018/4/25 17:01:57      Url:/api/system/getholidayinfo    Message:报错内容： System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 qingjia_MVC.Controllers.API.Setting.SystemSettingController.GetHolidayInfo(String access_token) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\Setting\SystemSettingController.cs:行号 373
+

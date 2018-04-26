@@ -40,6 +40,7 @@
         <AssociationConnector Association="imaw_qingjia_newModel.FK_T_TeacherLeaveType_T_LeaveType" ManuallyRouted="false" />
         <AssociationConnector Association="imaw_qingjia_newModel.FK_T_TeacherLeaveType_T_Teacher" ManuallyRouted="false" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_Class" Width="1.5" PointX="11.375" PointY="16.75" />
+        <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_Holiday" Width="1.5" PointX="0.75" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
