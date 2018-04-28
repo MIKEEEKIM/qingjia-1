@@ -261,6 +261,8 @@
     <Property Name="MessageType" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="timeString" Type="datetime" Nullable="false" />
+    <Property Name="result" Type="nchar" MaxLength="1" />
+    <Property Name="reason" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="T_Statistic">
     <Key>

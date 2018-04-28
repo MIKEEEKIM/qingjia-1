@@ -370,7 +370,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                 {
                     return Error("此接口仅限辅导员使用");
                 }
-                IQueryable<T_Holiday> holidayModelList = db.T_Holiday.Where(c => c.TeacherID == accountInfo.userID).OrderByDescending(q=>q.SubmitTime);
+                IQueryable<T_Holiday> holidayModelList = db.T_Holiday.Where(c => c.TeacherID == accountInfo.userID).OrderByDescending(q => q.SubmitTime);
                 if (holidayModelList.Any())
                 {
                     DataList dtSource = new DataList();
@@ -487,13 +487,27 @@ namespace qingjia_MVC.Controllers.API.Setting
                     T_Holiday holiday = db.T_Holiday.Find(holidayID);
                     if (holiday != null && holiday.TeacherID == accountInfo.userID)
                     {
+                        int a = 0;//未销假请假记录
+
                         //列表中删除 此条记录
                         holiday.IsDelete = 1;
                         //清空所有请假
-                        //IQueryable<T_New_LeaveList> _LL = db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0");
-                        db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0").Update(q => new T_New_LeaveList() { StateBack = "1" });
-                        int n = db.SaveChanges();
-                        return Success("删除成功！修改了" + n + "条数据！");
+                        IQueryable<T_New_LeaveList> _LL = db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0");
+                        if (_LL.Any())
+                        {
+                            a = _LL.Count();
+                            foreach (var item in _LL)
+                            {
+                                T_New_LeaveList _ll_model = db.T_New_LeaveList.Find(item.ID);
+                                _ll_model.StateBack = "1";
+                            }
+                            db.SaveChanges();
+                            return Success("删除成功！在此期间的" + a + "条节假日请假记录已销假！");
+                        }
+                        else
+                        {
+                            return Success("删除成功！");
+                        }
                     }
                     else
                     {
@@ -547,7 +561,14 @@ namespace qingjia_MVC.Controllers.API.Setting
                 DateTime _startTime = Convert.ToDateTime(startTime);
                 DateTime _endTime = Convert.ToDateTime(endTime);
                 DateTime _deadLine = Convert.ToDateTime(deadLine);
-                
+
+                //检查是否与之前的节假日信息时间上有重叠
+                IQueryable<T_Holiday> _holidayInfo = db.T_Holiday.Where(q => q.TeacherID == accountInfo.userID && ((_startTime >= q.StartTime && _startTime <= q.EndTime) || (_endTime >= q.StartTime && _endTime <= q.EndTime) || (_startTime <= q.StartTime && _endTime >= q.EndTime)));
+                if (_holidayInfo.Any())
+                {
+                    return Error("节假日时间与其他节假日记录有重叠，请重新输入！");
+                }
+
                 IQueryable<T_Holiday> holidayInfo = db.T_Holiday.Where(q => q.TeacherID == accountInfo.userID && q.IsDelete == 0);
                 if (holidayInfo.Any())
                 {
@@ -570,26 +591,82 @@ namespace qingjia_MVC.Controllers.API.Setting
                 db.T_Holiday.Add(holidayModel);
                 db.SaveChanges();
                 return Success("保存成功");
-                //int n = db.SaveChanges();
-                //if (n == 1 || n == 0)
-                //{
-                //    T_Holiday holidayModel = new T_Holiday();
-                //    holidayModel.Name = model.name.ToString().Trim();
-                //    holidayModel.StartTime = _startTime;
-                //    holidayModel.EndTime = _endTime;
-                //    holidayModel.DeadLine = _deadLine;
-                //    holidayModel.SubmitTime = DateTime.Now;
-                //    holidayModel.AutoAudit = model.autoaudit.ToString().Trim();
-                //    holidayModel.TeacherID = accountInfo.userID;
-                //    holidayModel.IsDelete = 0;
-                //    db.T_Holiday.Add(holidayModel);
-                //    db.SaveChanges();
-                //    return Success("保存成功");
-                //}
-                //else
-                //{
-                //    return Error("123");
-                //}
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 修改节假日信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, Route("modifyholidayinfo")]
+        public ApiResult ModifyHolidayInfo([FromBody]ModifyHolidayInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                if (accountInfo.userRoleID != "3")
+                {
+                    return Error("此接口仅限辅导员使用");
+                }
+                if (model.autoaudit != 0 && model.autoaudit != 1)
+                {
+                    return Error("autoaudit参数值错误。");
+                }
+
+                string startTime = model.startdate + " " + model.starttime;
+                string endTime = model.enddate + " " + model.endtime;
+                string deadLine = model.deadlinedate + " " + model.deadlinetime;
+                DateTime _startTime = Convert.ToDateTime(startTime);
+                DateTime _endTime = Convert.ToDateTime(endTime);
+                DateTime _deadLine = Convert.ToDateTime(deadLine);
+
+                //检查是否与之前的节假日信息时间上有重叠
+                IQueryable<T_Holiday> _holidayInfo = db.T_Holiday.Where(q => q.TeacherID == accountInfo.userID && ((_startTime >= q.StartTime && _startTime <= q.EndTime) || (_endTime >= q.StartTime && _endTime <= q.EndTime) || (_startTime <= q.StartTime && _endTime >= q.EndTime)) && q.IsDelete == 1);
+                if (_holidayInfo.Any())
+                {
+                    return Error("节假日时间与其他节假日记录有重叠，修改失败！");
+                }
+
+                T_Holiday holidayModel = db.T_Holiday.Find(model.holidayID);
+                if (holidayModel != null)
+                {
+                    if (holidayModel.IsDelete == 0)
+                    {
+                        holidayModel.Name = model.name.ToString().Trim();
+                        holidayModel.StartTime = _startTime;
+                        holidayModel.EndTime = _endTime;
+                        holidayModel.DeadLine = _deadLine;
+                        holidayModel.SubmitTime = DateTime.Now;
+                        holidayModel.AutoAudit = model.autoaudit.ToString().Trim();
+                        holidayModel.TeacherID = accountInfo.userID;
+                        holidayModel.IsDelete = 0;
+                        db.SaveChanges();
+                        return Success("修改成功");
+                    }
+                    else
+                    {
+                        return Error("已结束的节假日信息不能修改！");
+                    }
+                }
+                else
+                {
+                    return Error("此记录不存在！");
+                }
             }
             catch (Exception ex)
             {

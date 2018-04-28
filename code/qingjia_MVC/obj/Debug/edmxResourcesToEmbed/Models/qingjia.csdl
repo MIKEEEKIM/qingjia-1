@@ -241,6 +241,8 @@
     <Property Name="MessageType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="timeString" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="result" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="reason" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="T_Statistic">
     <Key>

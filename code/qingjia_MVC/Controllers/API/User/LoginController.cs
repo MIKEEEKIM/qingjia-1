@@ -141,6 +141,8 @@ namespace qingjia_MVC.Controllers.API.User
         [HttpGet, Route("forgetpsd")]
         public ApiResult ForgetPassWord(string id)
         {
+            string tel = "15307179930";
+
             try
             {
                 T_Account accountModel = db.T_Account.Where(c => c.ID.ToString().Trim() == id.ToString().Trim()).ToList().First();
@@ -149,29 +151,30 @@ namespace qingjia_MVC.Controllers.API.User
                     if (accountModel.RoleID.ToString().Trim() == "1")
                     {
                         T_Student studentModel = db.T_Student.Where(c => c.ID.ToString().Trim() == id.ToString().Trim()).ToList().First();
+
                         //发送验证码短信
-                        return Success("验证码短信发送至");
+
+
+
+                        return Success("验证码短信发送至" + tel);
                     }
                     if (accountModel.RoleID.ToString().Trim() == "2")
                     {
-
+                        return Error("暂不支持班级账号");
                     }
                     if (accountModel.RoleID.ToString().Trim() == "3")
                     {
-
+                        return Error("暂不支持辅导员账号");
                     }
                 }
                 else
                 {
                     return Error("此账号不存在，请重新输入！");
                 }
-
-
-                return null;
             }
-            catch
+            catch (Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
         }
 

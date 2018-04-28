@@ -266,6 +266,8 @@
           <Property Name="MessageType" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="timeString" Type="datetime" Nullable="false" />
+          <Property Name="result" Type="nchar" MaxLength="1" />
+          <Property Name="reason" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="T_Statistic">
           <Key>
@@ -1152,6 +1154,8 @@
           <Property Name="MessageType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="timeString" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="result" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="reason" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="T_Statistic">
           <Key>
@@ -1839,6 +1843,8 @@
           <EntitySetMapping Name="T_SendList">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_SendList">
               <MappingFragment StoreEntitySet="T_SendList">
+                <ScalarProperty Name="reason" ColumnName="reason" />
+                <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="LV_Num" ColumnName="LV_Num" />
                 <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
                 <ScalarProperty Name="MessageType" ColumnName="MessageType" />

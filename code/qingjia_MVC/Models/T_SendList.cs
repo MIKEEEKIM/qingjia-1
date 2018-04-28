@@ -19,5 +19,7 @@ namespace qingjia_MVC.Models
         public string MessageType { get; set; }
         public string ST_Tel { get; set; }
         public System.DateTime timeString { get; set; }
+        public string result { get; set; }
+        public string reason { get; set; }
     }
 }

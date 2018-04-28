@@ -256,6 +256,7 @@
     <Compile Include="Areas\UserInfo\UserInfoAreaRegistration.cs" />
     <Compile Include="Areas\Vacation\Controllers\VacationController.cs" />
     <Compile Include="Areas\Vacation\VacationAreaRegistration.cs" />
+    <Compile Include="Common\ALiYunShortMessage.cs" />
     <Compile Include="Common\ApiBaseResult.cs" />
     <Compile Include="Common\ForceHttpStatusCodeResult.cs" />
     <Compile Include="Common\OutputLog.cs" />
@@ -304,6 +305,7 @@
     <Compile Include="Models\API\NightInfo.cs" />
     <Compile Include="Models\API\SelectCondition.cs" />
     <Compile Include="Models\API\Setting\HolidayInfo.cs" />
+    <Compile Include="Models\API\Setting\ModifyHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetClassInfo.cs" />
     <Compile Include="Models\API\Setting\SetHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetLeaveType.cs" />
