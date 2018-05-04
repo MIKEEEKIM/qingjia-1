@@ -165,9 +165,16 @@ namespace qingjia_MVC.Controllers.API.Setting
                     return Error("此接口仅限辅导员使用");
                 }
 
-                var classInfoList = db.vw_Class.Where(c => c.TeacherID == accountInfo.userID).OrderBy(c => c.ST_Name).ToList();
-
-                return Success("获取成功！", classInfoList);
+                //db = new Entities();
+                IQueryable<vw_Class> classList = db.vw_Class.Where(c => c.TeacherID == accountInfo.userID).OrderBy(c => c.ClassName);
+                if (classList.Any())
+                {
+                    return Success("获取成功！", classList);
+                }
+                else
+                {
+                    return Error("尚未绑定班级！");
+                }
             }
             catch
             {
@@ -221,6 +228,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                     }
                 }
                 int count = db.SaveChanges();
+                //db.Dispose();
                 return Success("成功修改" + count + "条记录");
             }
             catch
@@ -294,6 +302,8 @@ namespace qingjia_MVC.Controllers.API.Setting
                         DateTime time = Convert.ToDateTime(_time);
                         batchMode.Datetime = time;
                         batchMode.Location = item.location;
+                        batchMode.AutoUpdateTime = item.AutoUpdateTime.ToString();
+                        batchMode.AutoUpdateTimeSpan = item.AutoUpdateTimeSpan;
                         foreach (var _item in item.classID)
                         {
                             T_Class classModel = db.T_Class.Where(c => c.ID == _item && c.TeacherID == accountInfo.userID && c.Grade == accountInfo.Grade).ToList().First();
@@ -309,11 +319,15 @@ namespace qingjia_MVC.Controllers.API.Setting
                     }
                     else
                     {
-                        batchMode = new T_Batch();
-                        batchMode.ID = Guid.NewGuid();
-                        batchMode.Batch = item.batchID;
-                        batchMode.TeacherID = accountInfo.userID;
-                        batchMode.Location = item.location;
+                        batchMode = new T_Batch
+                        {
+                            ID = Guid.NewGuid(),
+                            Batch = item.batchID,
+                            TeacherID = accountInfo.userID,
+                            Location = item.location,
+                            AutoUpdateTime = item.AutoUpdateTime.ToString(),
+                            AutoUpdateTimeSpan = item.AutoUpdateTimeSpan
+                        };
                         string _time = item.date + " " + item.time;
                         DateTime time = Convert.ToDateTime(_time);
                         batchMode.Datetime = time;
@@ -387,7 +401,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                             DeadLine = ((DateTime)item.DeadLine).ToString("yyyy/MM/dd HH:mm:ss"),
                             TeacherID = accountInfo.userID,
                             TeacherName = accountInfo.userName,
-                            AutoAudit = item.AutoAudit.ToString().Trim() == "1" ? "自动" : "手动",
+                            AutoAudit = item.AutoAudit.ToString().Trim(),
                             IsDelete = item.IsDelete.ToString().Trim()
                         };
                         data.Add(model);
@@ -431,17 +445,48 @@ namespace qingjia_MVC.Controllers.API.Setting
                 AccountInfo accountInfo = GetAccountInfo(access_token);
                 if (accountInfo != null)
                 {
-                    T_Holiday holiday = db.T_Holiday.Find(holidayID);
+                    int id = Convert.ToInt32(holidayID);
+                    T_Holiday holiday = db.T_Holiday.Find(id);
                     if (holiday != null && holiday.TeacherID == accountInfo.userID)
                     {
-                        IQueryable<vw_New_LeaveList> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)));
 
-                        SelectCondition conditionsModel = new SelectCondition();
-                        conditionsModel.sortField = "SubmitTime";
-                        conditionsModel.sortDirection = "DESC";
-                        DataList dtSource = GetList(conditionsModel, _LL);
-                        dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
-                        return Success("获取成功", dtSource);
+                        IQueryable<IGrouping<string, vw_New_LeaveList>> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).OrderByDescending(q => q.SubmitTime).GroupBy(q => q.ST_Class);
+
+                        //待审核
+                        int a = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "0" && q.StateBack.ToString().Trim() == "0").ToList().Count();
+
+                        //待销假
+                        int b = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "0").ToList().Count();
+
+                        //已销假
+                        int c = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "1").ToList().Count();
+
+                        //已驳回
+                        int d = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "2" && q.StateBack.ToString().Trim() == "1").ToList().Count();
+
+                        HolidayLeaveListInfo data = new HolidayLeaveListInfo();
+                        Dictionary<string, DataList> _ll_info_groupbyclass = new Dictionary<string, DataList>();
+                        Dictionary<string, int> _ll_info_status = new Dictionary<string, int>();
+
+                        _ll_info_status.Add("待审核", a);
+                        _ll_info_status.Add("待销假", b);
+                        _ll_info_status.Add("已销假", c);
+                        _ll_info_status.Add("已驳回", d);
+
+                        foreach (var item in _LL)
+                        {
+                            SelectCondition conditionsModel = new SelectCondition();
+                            conditionsModel.sortField = "SubmitTime";
+                            conditionsModel.sortDirection = "DESC";
+                            DataList dtSource = GetList(conditionsModel, item.AsQueryable());
+                            dtSource.list = TransformLL((List<vw_New_LeaveList>)dtSource.list);
+
+                            _ll_info_groupbyclass.Add(item.Key, dtSource);
+                        }
+
+                        data.ll_info_groupbyclass = _ll_info_groupbyclass;
+                        data.ll_info_status = _ll_info_status;
+                        return Success("获取成功", data);
                     }
                     else
                     {
@@ -484,28 +529,46 @@ namespace qingjia_MVC.Controllers.API.Setting
                 AccountInfo accountInfo = GetAccountInfo(access_token);
                 if (accountInfo != null)
                 {
-                    T_Holiday holiday = db.T_Holiday.Find(holidayID);
+
+                    T_Holiday holiday = db.T_Holiday.Find(Convert.ToInt32(holidayID));
                     if (holiday != null && holiday.TeacherID == accountInfo.userID)
                     {
                         int a = 0;//未销假请假记录
+                        int b = 0;//待审核请假记录
 
                         //列表中删除 此条记录
                         holiday.IsDelete = 1;
                         //清空所有请假
-                        IQueryable<T_New_LeaveList> _LL = db.T_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.Teacher.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0");
-                        if (_LL.Any())
+                        IQueryable<vw_New_LeaveList> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime)) && q.StateBack.ToString().Trim() == "0");
+                        IQueryable<vw_New_LeaveList> __LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime)) && q.StateLeave.ToString().Trim() == "0");
+
+                        if (_LL.Any() || __LL.Any())
                         {
-                            a = _LL.Count();
-                            foreach (var item in _LL)
+                            if (_LL.Any())
                             {
-                                T_New_LeaveList _ll_model = db.T_New_LeaveList.Find(item.ID);
-                                _ll_model.StateBack = "1";
+                                a = _LL.Count();
+                                foreach (var item in _LL)
+                                {
+                                    T_New_LeaveList _ll_model = db.T_New_LeaveList.Find(item.ID);
+                                    _ll_model.StateBack = "1";
+                                }
+                            }
+                            if (__LL.Any())
+                            {
+                                b = __LL.Count();
+                                foreach (var item in __LL)
+                                {
+                                    T_New_LeaveList _ll_model = db.T_New_LeaveList.Find(item.ID);
+                                    _ll_model.StateLeave = "1";
+                                    _ll_model.StateBack = "1";
+                                }
                             }
                             db.SaveChanges();
-                            return Success("删除成功！在此期间的" + a + "条节假日请假记录已销假！");
+                            return Success("删除成功！在此期间的" + (a + b) + "条节假日请假记录已销假！");
                         }
                         else
                         {
+                            db.SaveChanges();
                             return Success("删除成功！");
                         }
                     }
@@ -579,6 +642,7 @@ namespace qingjia_MVC.Controllers.API.Setting
                     }
                     db.SaveChanges();
                 }
+
                 T_Holiday holidayModel = new T_Holiday();
                 holidayModel.Name = model.name.ToString().Trim();
                 holidayModel.StartTime = _startTime;
@@ -642,7 +706,8 @@ namespace qingjia_MVC.Controllers.API.Setting
                     return Error("节假日时间与其他节假日记录有重叠，修改失败！");
                 }
 
-                T_Holiday holidayModel = db.T_Holiday.Find(model.holidayID);
+
+                T_Holiday holidayModel = db.T_Holiday.Find(Convert.ToInt32(model.holidayID));
                 if (holidayModel != null)
                 {
                     if (holidayModel.IsDelete == 0)

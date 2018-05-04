@@ -14,5 +14,7 @@ namespace qingjia_MVC.Models.API.Setting
         public string time { get; set; }
         public string location { get; set; }
         public List<string> classID { get; set; }
+        public int AutoUpdateTime { get; set; }
+        public int AutoUpdateTimeSpan { get; set; }
     }
 }

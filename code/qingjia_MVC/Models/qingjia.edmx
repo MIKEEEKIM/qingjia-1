@@ -32,38 +32,8 @@
           <Property Name="TeacherID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="Location" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="T_BatchLeave">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="TypeID" Type="nchar" MaxLength="10" />
-          <Property Name="TypeChildID" Type="nchar" MaxLength="10" />
-          <Property Name="Reason" Type="varchar" MaxLength="100" />
-          <Property Name="SubmitTime" Type="datetime" />
-          <Property Name="StateLeave" Type="nchar" MaxLength="10" />
-          <Property Name="StateBack" Type="nchar" MaxLength="10" />
-          <Property Name="TimeLeave" Type="datetime" />
-          <Property Name="TimeBack" Type="datetime" />
-          <Property Name="AuditTeacherID" Type="varchar" MaxLength="20" />
-          <Property Name="Notes" Type="varchar" MaxLength="100" />
-          <Property Name="StudentsID" Type="varchar" MaxLength="800" />
-          <Property Name="LeaveInfo" Type="varchar" MaxLength="800" />
-        </EntityType>
-        <EntityType Name="T_ChangeBatch">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="StudentID" Type="varchar" MaxLength="64" />
-          <Property Name="Batch" Type="int" />
-          <Property Name="Datetime" Type="datetime" />
-          <Property Name="TeacherID" Type="varchar" MaxLength="64" />
-          <Property Name="Reason" Type="varchar" MaxLength="225" />
-          <Property Name="SubmitTime" Type="datetime" />
-          <Property Name="AuditState" Type="nchar" MaxLength="10" />
-          <Property Name="AuditTeacherID" Type="varchar" MaxLength="64" />
+          <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+          <Property Name="AutoUpdateTimeSpan" Type="int" />
         </EntityType>
         <EntityType Name="T_Class">
           <Key>
@@ -229,16 +199,6 @@
           <Property Name="IsDelete" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia_new.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="T_NightNameList">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="T_Role">
           <Key>
@@ -267,7 +227,7 @@
           <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="timeString" Type="datetime" Nullable="false" />
           <Property Name="result" Type="nchar" MaxLength="1" />
-          <Property Name="reason" Type="nchar" MaxLength="10" />
+          <Property Name="reason" Type="nchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="T_Statistic">
           <Key>
@@ -372,16 +332,19 @@
             <PropertyRef Name="ID" />
             <PropertyRef Name="ClassName" />
             <PropertyRef Name="Grade" />
-            <PropertyRef Name="Batch" />
-            <PropertyRef Name="Datetime" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ClassName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Grade" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Batch" Type="int" Nullable="false" />
-          <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="Batch" Type="int" />
+          <Property Name="Datetime" Type="datetime" />
           <Property Name="TeacherID" Type="varchar" MaxLength="64" />
           <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+          <Property Name="AutoUpdateTimeSpan" Type="int" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+          <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+          <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -659,8 +622,6 @@
         <EntityContainer Name="imaw_qingjia_newModelStoreContainer">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Batch" EntityType="Self.T_Batch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_ChangeBatch" EntityType="Self.T_ChangeBatch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Class" EntityType="Self.T_Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Deadline" EntityType="Self.T_Deadline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Holiday" EntityType="Self.T_Holiday" Schema="dbo" store:Type="Tables" />
@@ -679,12 +640,6 @@
           <EntitySet Name="T_TeacherLeaveType" EntityType="Self.T_TeacherLeaveType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Type" EntityType="Self.T_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Vacation" EntityType="Self.T_Vacation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_NightNameList" EntityType="Self.T_NightNameList" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [T_NightNameList].[ID] AS [ID], 
-    [T_NightNameList].[State] AS [State]
-    FROM [dbo].[T_NightNameList] AS [T_NightNameList]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="T_Role" EntityType="Self.T_Role" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [T_Role].[ID] AS [ID], 
@@ -717,7 +672,12 @@
     [vw_ClassBatch].[Batch] AS [Batch], 
     [vw_ClassBatch].[Datetime] AS [Datetime], 
     [vw_ClassBatch].[TeacherID] AS [TeacherID], 
-    [vw_ClassBatch].[Location] AS [Location]
+    [vw_ClassBatch].[Location] AS [Location], 
+    [vw_ClassBatch].[AutoUpdateTime] AS [AutoUpdateTime], 
+    [vw_ClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
+    [vw_ClassBatch].[TeacherName] AS [TeacherName], 
+    [vw_ClassBatch].[TeacherTel] AS [TeacherTel], 
+    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
@@ -940,38 +900,8 @@
           <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="T_BatchLeave">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TypeID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="TypeChildID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
-          <Property Name="StateLeave" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="StateBack" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="TimeLeave" Type="DateTime" Precision="3" />
-          <Property Name="TimeBack" Type="DateTime" Precision="3" />
-          <Property Name="AuditTeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StudentsID" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
-          <Property Name="LeaveInfo" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="T_ChangeBatch">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Batch" Type="Int32" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Reason" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
-          <Property Name="AuditState" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AuditTeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="AutoUpdateTimeSpan" Type="Int32" />
         </EntityType>
         <EntityType Name="T_Class">
           <Key>
@@ -999,14 +929,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
           <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SubmitTime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Int32" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DeadLine" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="T_Info">
           <Key>
@@ -1155,7 +1085,7 @@
           <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="timeString" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="result" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="reason" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="reason" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="T_Statistic">
           <Key>
@@ -1234,14 +1164,6 @@
           <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="T_NightNameList">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="T_Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -1251,21 +1173,57 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="XML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="vw_ClassBatch">
+        <EntityType Name="vw_Class">
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="ClassName" />
-            <PropertyRef Name="Batch" />
-            <PropertyRef Name="Datetime" />
             <PropertyRef Name="Grade" />
           </Key>
           <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Batch" Type="Int32" Nullable="false" />
-          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Batch" Type="Guid" />
+          <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_ClassBatch">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClassName" />
+            <PropertyRef Name="Grade" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Batch" Type="Int32" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
           <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="AutoUpdateTimeSpan" Type="Int32" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Holiday">
+          <Key>
+            <PropertyRef Name="HolidayID" />
+          </Key>
+          <Property Name="HolidayID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
+          <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Int32" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_LeaveIntership">
           <Key>
@@ -1464,9 +1422,9 @@
           <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ST_Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ClassID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vw_TeacherLeaveType">
@@ -1511,8 +1469,6 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" />
           <EntitySet Name="T_Batch" EntityType="Self.T_Batch" />
-          <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" />
-          <EntitySet Name="T_ChangeBatch" EntityType="Self.T_ChangeBatch" />
           <EntitySet Name="T_Class" EntityType="Self.T_Class" />
           <EntitySet Name="T_Deadline" EntityType="Self.T_Deadline" />
           <EntitySet Name="T_Holiday" EntityType="Self.T_Holiday" />
@@ -1531,9 +1487,10 @@
           <EntitySet Name="T_TeacherLeaveType" EntityType="Self.T_TeacherLeaveType" />
           <EntitySet Name="T_Type" EntityType="Self.T_Type" />
           <EntitySet Name="T_Vacation" EntityType="Self.T_Vacation" />
-          <EntitySet Name="T_NightNameList" EntityType="Self.T_NightNameList" />
           <EntitySet Name="T_Role" EntityType="Self.T_Role" />
+          <EntitySet Name="vw_Class" EntityType="Self.vw_Class" />
           <EntitySet Name="vw_ClassBatch" EntityType="Self.vw_ClassBatch" />
+          <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" />
           <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" />
           <EntitySet Name="vw_LeaveList" EntityType="Self.vw_LeaveList" />
           <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" />
@@ -1549,45 +1506,10 @@
             <End Role="T_Teacher" EntitySet="T_Teacher" />
             <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
           </AssociationSet>
-          <FunctionImport Name="sp_getNightNameList" ReturnType="Collection(String)">
+          <FunctionImport Name="sp_getNightNameList">
           <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vw_Class" EntityType="imaw_qingjia_newModel.vw_Class" />
-          <EntitySet Name="vw_Holiday" EntityType="imaw_qingjia_newModel.vw_Holiday" />
         </EntityContainer>
-        <EntityType Name="vw_Class">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="ClassName" />
-            <PropertyRef Name="Grade" />
-          </Key>
-          <Property Name="ID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Grade" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Total" Type="Int32" />
-          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Batch" Type="Guid" />
-          <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vw_Holiday">
-          <Key>
-            <PropertyRef Name="HolidayID" />
-          </Key>
-          <Property Name="HolidayID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StartTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="DeadLine" Type="DateTime" Precision="3" />
-          <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsDelete" Type="Int32" />
-          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1616,45 +1538,13 @@
           <EntitySetMapping Name="T_Batch">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Batch">
               <MappingFragment StoreEntitySet="T_Batch">
+                <ScalarProperty Name="AutoUpdateTimeSpan" ColumnName="AutoUpdateTimeSpan" />
+                <ScalarProperty Name="AutoUpdateTime" ColumnName="AutoUpdateTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Batch" ColumnName="Batch" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="Datetime" ColumnName="Datetime" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_BatchLeave">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_BatchLeave">
-              <MappingFragment StoreEntitySet="T_BatchLeave">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-                <ScalarProperty Name="TypeChildID" ColumnName="TypeChildID" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="StateLeave" ColumnName="StateLeave" />
-                <ScalarProperty Name="StateBack" ColumnName="StateBack" />
-                <ScalarProperty Name="TimeLeave" ColumnName="TimeLeave" />
-                <ScalarProperty Name="TimeBack" ColumnName="TimeBack" />
-                <ScalarProperty Name="AuditTeacherID" ColumnName="AuditTeacherID" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="StudentsID" ColumnName="StudentsID" />
-                <ScalarProperty Name="LeaveInfo" ColumnName="LeaveInfo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_ChangeBatch">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_ChangeBatch">
-              <MappingFragment StoreEntitySet="T_ChangeBatch">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="Batch" ColumnName="Batch" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
-                <ScalarProperty Name="AuditTeacherID" ColumnName="AuditTeacherID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1684,11 +1574,11 @@
           <EntitySetMapping Name="T_Holiday">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Holiday">
               <MappingFragment StoreEntitySet="T_Holiday">
-                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
                 <ScalarProperty Name="AutoAudit" ColumnName="AutoAudit" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
@@ -1933,14 +1823,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_NightNameList">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_NightNameList">
-              <MappingFragment StoreEntitySet="T_NightNameList">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="State" ColumnName="State" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_Role">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_Role">
               <MappingFragment StoreEntitySet="T_Role">
@@ -1950,16 +1832,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_Class">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Class">
+              <MappingFragment StoreEntitySet="vw_Class">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="MonitorID" ColumnName="MonitorID" />
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
+                <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
+                <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="TeahcerTel" ColumnName="TeahcerTel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_ClassBatch">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
               <MappingFragment StoreEntitySet="vw_ClassBatch">
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
+                <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="AutoUpdateTimeSpan" ColumnName="AutoUpdateTimeSpan" />
+                <ScalarProperty Name="AutoUpdateTime" ColumnName="AutoUpdateTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="Batch" ColumnName="Batch" />
                 <ScalarProperty Name="Datetime" ColumnName="Datetime" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Holiday">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
+              <MappingFragment StoreEntitySet="vw_Holiday">
+                <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2106,8 +2026,6 @@
           <EntitySetMapping Name="vw_Student">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
               <MappingFragment StoreEntitySet="vw_Student">
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="MonitorName" ColumnName="MonitorName" />
                 <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
                 <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
                 <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
@@ -2124,8 +2042,10 @@
                 <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
                 <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
                 <ScalarProperty Name="MonitorID" ColumnName="MonitorID" />
+                <ScalarProperty Name="MonitorName" ColumnName="MonitorName" />
                 <ScalarProperty Name="ST_Teacher" ColumnName="ST_Teacher" />
                 <ScalarProperty Name="ST_TeacherID" ColumnName="ST_TeacherID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2146,39 +2066,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
-          <EntitySetMapping Name="vw_Class">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Class">
-              <MappingFragment StoreEntitySet="vw_Class">
-                <ScalarProperty Name="TeahcerTel" ColumnName="TeahcerTel" />
-                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
-                <ScalarProperty Name="ST_QQ" ColumnName="ST_QQ" />
-                <ScalarProperty Name="ST_Email" ColumnName="ST_Email" />
-                <ScalarProperty Name="ST_Tel" ColumnName="ST_Tel" />
-                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
-                <ScalarProperty Name="Batch" ColumnName="Batch" />
-                <ScalarProperty Name="MonitorID" ColumnName="MonitorID" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Holiday">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
-              <MappingFragment StoreEntitySet="vw_Holiday">
-                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

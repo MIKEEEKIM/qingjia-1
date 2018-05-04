@@ -16,6 +16,11 @@ namespace qingjia_MVC.Controllers.API.User
     [RoutePrefix("api/user")]
     public class LoginController : BaseApiController
     {
+        /// <summary>
+        /// 登录账号
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost, Route("login")]
         public ApiResult Login([FromBody]LoginModel model)
         {
@@ -114,6 +119,11 @@ namespace qingjia_MVC.Controllers.API.User
             #endregion
         }
 
+        /// <summary>
+        /// 退出登录
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
         [HttpGet, Route("logout")]
         public ApiResult Logout(string access_token)
         {
@@ -176,6 +186,8 @@ namespace qingjia_MVC.Controllers.API.User
             {
                 return SystemError(ex);
             }
+
+            return null;
         }
 
         [HttpGet, Route("forgetpsd")]

@@ -30,9 +30,9 @@ namespace qingjia_MVC.Models
         public string ST_Class { get; set; }
         public string ST_Grade { get; set; }
         public string MonitorID { get; set; }
+        public string MonitorName { get; set; }
         public string ST_Teacher { get; set; }
         public string ST_TeacherID { get; set; }
-        public string MonitorName { get; set; }
         public string ClassID { get; set; }
     }
 }

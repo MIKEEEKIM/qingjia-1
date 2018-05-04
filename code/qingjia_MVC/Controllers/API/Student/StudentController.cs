@@ -80,7 +80,7 @@ namespace qingjia_MVC.Controllers.API
                 if (batchModel != null && weeklyMeetingDeadLine != null)
                 {
                     returnStudentModel.weeklyMeetingInfo.deadLine = weeklyMeetingDeadLine.Time.ToString("yyyy/MM/dd HH:mm:ss");
-                    returnStudentModel.weeklyMeetingInfo.time = batchModel.Datetime.ToString("yyyy/MM/dd HH:mm:ss");
+                    returnStudentModel.weeklyMeetingInfo.time = ((DateTime)batchModel.Datetime).ToString("yyyy/MM/dd HH:mm:ss");
                     returnStudentModel.weeklyMeetingInfo.location = batchModel.Location.ToString().Trim();
                 }
                 if (holidayDeadLine != null && holidayModel != null)

@@ -15,13 +15,13 @@ namespace qingjia_MVC.Models
     public partial class T_Holiday
     {
         public int ID { get; set; }
+        public string Name { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTime> DeadLine { get; set; }
         public string AutoAudit { get; set; }
         public string TeacherID { get; set; }
         public Nullable<System.DateTime> SubmitTime { get; set; }
         public Nullable<int> IsDelete { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> DeadLine { get; set; }
     }
 }

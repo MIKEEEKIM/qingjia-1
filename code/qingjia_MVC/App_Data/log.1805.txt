@@ -1,0 +1,33 @@
+DateTime:2018/5/2 10:17:28      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/5/2 10:17:28      Url:/api/addresslist/get    Message:报错内容： System.InvalidOperationException: 正在创建模型，此时不可使用上下文。如果在 OnModelCreating 方法内使用上下文或如果多个线程同时访问同一上下文实例，可能引发此异常。请注意不保证 DbContext 的实例成员和相关类是线程安全的。
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   在 System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   在 System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 54
+
+DateTime:2018/5/2 10:17:30      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/5/2 10:17:30      Url:/api/addresslist/get    Message:报错内容： System.InvalidOperationException: 正在创建模型，此时不可使用上下文。如果在 OnModelCreating 方法内使用上下文或如果多个线程同时访问同一上下文实例，可能引发此异常。请注意不保证 DbContext 的实例成员和相关类是线程安全的。
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   在 System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   在 System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 54
+
+DateTime:2018/5/2 10:22:12      Url:/api/addresslist/get    Message:访问API接口 /api/addresslist/get
+
+DateTime:2018/5/2 10:22:12      Url:/api/addresslist/get    Message:报错内容： System.InvalidOperationException: 正在创建模型，此时不可使用上下文。如果在 OnModelCreating 方法内使用上下文或如果多个线程同时访问同一上下文实例，可能引发此异常。请注意不保证 DbContext 的实例成员和相关类是线程安全的。
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   在 System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   在 System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   在 qingjia_MVC.Controllers.API.AddressList.AddressListController.Get(String access_token, String classID, Int32 page, Int32 pageSize) 位置 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\Controllers\API\AddressList\AddressListController.cs:行号 54
+

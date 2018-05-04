@@ -16,10 +16,15 @@ namespace qingjia_MVC.Models
     {
         public string ID { get; set; }
         public string ClassName { get; set; }
-        public int Batch { get; set; }
-        public System.DateTime Datetime { get; set; }
+        public string Grade { get; set; }
+        public Nullable<int> Batch { get; set; }
+        public Nullable<System.DateTime> Datetime { get; set; }
         public string TeacherID { get; set; }
         public string Location { get; set; }
-        public string Grade { get; set; }
+        public string AutoUpdateTime { get; set; }
+        public Nullable<int> AutoUpdateTimeSpan { get; set; }
+        public string TeacherName { get; set; }
+        public string TeacherTel { get; set; }
+        public string TeacherEmail { get; set; }
     }
 }

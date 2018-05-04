@@ -81,6 +81,6 @@ C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\System.Web.Http.Co
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\zh-Hans\System.Web.Http.resources.dll
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
-C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.csprojResolveAssemblyReference.cache
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.csproj.CoreCompileInputs.cache
 C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.csproj.CopyComplete
+C:\Users\Wong Jianming\Desktop\qingjia-1\code\qingjia_MVC\obj\Debug\qingjia_MVC.csprojResolveAssemblyReference.cache

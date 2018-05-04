@@ -19,5 +19,7 @@ namespace qingjia_MVC.Models
         public string TeacherID { get; set; }
         public System.DateTime Datetime { get; set; }
         public string Location { get; set; }
+        public string AutoUpdateTime { get; set; }
+        public Nullable<int> AutoUpdateTimeSpan { get; set; }
     }
 }

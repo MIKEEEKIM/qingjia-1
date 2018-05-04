@@ -236,9 +236,6 @@
     <Compile Include="Areas\AddressList\AddressListAreaRegistration.cs" />
     <Compile Include="Areas\AddressList\Controllers\ClassAddressController.cs" />
     <Compile Include="Areas\AddressList\Controllers\GradeAddressController.cs" />
-    <Compile Include="Areas\CallName\CallNameAreaRegistration.cs" />
-    <Compile Include="Areas\CallName\Controllers\NameForCController.cs" />
-    <Compile Include="Areas\CallName\Controllers\NameForTController.cs" />
     <Compile Include="Areas\Leave\Controllers\AuditFormController.cs" />
     <Compile Include="Areas\Leave\Controllers\LeaveFormController.cs" />
     <Compile Include="Areas\Leave\Controllers\LeaveListController.cs" />
@@ -305,6 +302,7 @@
     <Compile Include="Models\API\NightInfo.cs" />
     <Compile Include="Models\API\SelectCondition.cs" />
     <Compile Include="Models\API\Setting\HolidayInfo.cs" />
+    <Compile Include="Models\API\Setting\HolidayLeaveListInfo.cs" />
     <Compile Include="Models\API\Setting\ModifyHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetClassInfo.cs" />
     <Compile Include="Models\API\Setting\SetHolidayInfo.cs" />
@@ -343,12 +341,6 @@
     <Compile Include="Models\T_Batch.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\T_BatchLeave.cs">
-      <DependentUpon>qingjia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\T_ChangeBatch.cs">
-      <DependentUpon>qingjia.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\T_Class.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
@@ -377,9 +369,6 @@
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_New_LeaveList.cs">
-      <DependentUpon>qingjia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\T_NightNameList.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Role.cs">
@@ -2553,7 +2542,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Vacation\Views\web.config" />
     <Content Include="Areas\AddressList\Views\web.config" />
-    <Content Include="Areas\CallName\Views\web.config" />
     <Content Include="Areas\Message\Views\web.config" />
     <Content Include="Areas\System\Views\web.config" />
     <Content Include="res\images\logo\logo.psd" />
@@ -2564,9 +2552,6 @@
     <Content Include="Areas\AddressList\Views\ClassAddress\Index.cshtml" />
     <Content Include="Areas\AddressList\Views\GradeAddress\Index.cshtml" />
     <Content Include="Areas\AddressList\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\CallName\Views\NameForC\Index.cshtml" />
-    <Content Include="Areas\CallName\Views\NameForT\Index.cshtml" />
-    <Content Include="Areas\CallName\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Message\Views\DeadlineMessage\Index.cshtml" />
     <Content Include="Areas\Message\Views\DeleteMessage\Index.cshtml" />
     <Content Include="Areas\Message\Views\NightMessage\Index.cshtml" />
@@ -2659,8 +2644,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AddressList\Models\" />
     <Folder Include="Areas\AddressList\Views\Shared\" />
-    <Folder Include="Areas\CallName\Models\" />
-    <Folder Include="Areas\CallName\Views\Shared\" />
     <Folder Include="Areas\Leave\Models\" />
     <Folder Include="Areas\Leave\Views\Shared\" />
     <Folder Include="Areas\Message\Models\" />

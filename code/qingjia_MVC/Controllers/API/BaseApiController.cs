@@ -20,6 +20,9 @@ namespace qingjia_MVC.Controllers.API
         /// </summary>
         public BaseApiController()
         {
+            //新建数据库实例
+            db = new Entities();
+
             #region 系统沉睡0.5秒
             //测试状态 沉睡0.5秒
             if (ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
