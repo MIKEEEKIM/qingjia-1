@@ -158,6 +158,19 @@
           <Property Name="Name" Type="varchar" MaxLength="20" />
           <Property Name="Description" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="T_LoginInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="nchar" MaxLength="20" />
+          <Property Name="userName" Type="nchar" MaxLength="20" />
+          <Property Name="roleID" Type="int" />
+          <Property Name="roleName" Type="nchar" MaxLength="10" />
+          <Property Name="grade" Type="nchar" MaxLength="10" />
+          <Property Name="loginPort" Type="int" />
+          <Property Name="loginTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="T_Menu">
           <Key>
             <PropertyRef Name="ID" />
@@ -630,6 +643,7 @@
           <EntitySet Name="T_LeaveIntership" EntityType="Self.T_LeaveIntership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_LoginInfo" EntityType="Self.T_LoginInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Menu" EntityType="Self.T_Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_New_LeaveList" EntityType="Self.T_New_LeaveList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" Schema="dbo" store:Type="Tables" />
@@ -1509,7 +1523,21 @@
           <FunctionImport Name="sp_getNightNameList">
           <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="T_LoginInfo" EntityType="imaw_qingjia_newModel.T_LoginInfo" />
         </EntityContainer>
+        <EntityType Name="T_LoginInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="userName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="roleID" Type="Int32" />
+          <Property Name="roleName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="loginPort" Type="Int32" />
+          <Property Name="loginTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2066,6 +2094,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
+          <EntitySetMapping Name="T_LoginInfo">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_LoginInfo">
+              <MappingFragment StoreEntitySet="T_LoginInfo">
+                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+                <ScalarProperty Name="loginPort" ColumnName="loginPort" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

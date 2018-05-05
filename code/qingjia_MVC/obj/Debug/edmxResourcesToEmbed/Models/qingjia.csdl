@@ -636,5 +636,19 @@
     <FunctionImport Name="sp_getNightNameList">
       <Parameter Name="TeacherID" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="T_LoginInfo" EntityType="imaw_qingjia_newModel.T_LoginInfo" />
   </EntityContainer>
+  <EntityType Name="T_LoginInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="userName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="roleID" Type="Int32" />
+    <Property Name="roleName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="loginPort" Type="Int32" />
+    <Property Name="loginTime" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

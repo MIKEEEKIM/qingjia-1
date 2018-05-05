@@ -551,5 +551,19 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_getNightNameList" FunctionName="imaw_qingjia_newModel.Store.sp_getNightNameList" />
+    <EntitySetMapping Name="T_LoginInfo">
+      <EntityTypeMapping TypeName="imaw_qingjia_newModel.T_LoginInfo">
+        <MappingFragment StoreEntitySet="T_LoginInfo">
+          <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+          <ScalarProperty Name="loginPort" ColumnName="loginPort" />
+          <ScalarProperty Name="grade" ColumnName="grade" />
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+          <ScalarProperty Name="roleID" ColumnName="roleID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

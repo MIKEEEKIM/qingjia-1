@@ -267,7 +267,6 @@
     <Compile Include="Controllers\API\AddressList\AddressListController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\Common\PrintPic.cs" />
-    <Compile Include="Controllers\API\LeaveList\LeaveListController.cs" />
     <Compile Include="Controllers\API\Student\LeaveListController.cs" />
     <Compile Include="Controllers\API\User\LoginController.cs" />
     <Compile Include="Controllers\API\User\OauthController.cs" />
@@ -275,6 +274,7 @@
     <Compile Include="Controllers\ApiTestController.cs" />
     <Compile Include="Controllers\API\Audit\AuditLeaveController.cs" />
     <Compile Include="Controllers\API\Setting\SystemSettingController.cs" />
+    <Compile Include="Controllers\API\User\Teacher.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -318,6 +318,8 @@
     <Compile Include="Models\API\User\LoginModel.cs" />
     <Compile Include="Models\API\User\LoginStateModel.cs" />
     <Compile Include="Models\API\User\ReturnUserModel.cs" />
+    <Compile Include="Models\API\User\TeacherLeaveListPending.cs" />
+    <Compile Include="Models\API\User\TeacherStudentLeave.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\qingjia.Context.cs">
@@ -363,6 +365,9 @@
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_LeaveType.cs">
+      <DependentUpon>qingjia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\T_LoginInfo.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Menu.cs">

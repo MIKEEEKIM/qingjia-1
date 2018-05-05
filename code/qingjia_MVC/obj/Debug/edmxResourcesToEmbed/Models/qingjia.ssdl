@@ -153,6 +153,19 @@
     <Property Name="Name" Type="varchar" MaxLength="20" />
     <Property Name="Description" Type="varchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="T_LoginInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="nchar" MaxLength="20" />
+    <Property Name="userName" Type="nchar" MaxLength="20" />
+    <Property Name="roleID" Type="int" />
+    <Property Name="roleName" Type="nchar" MaxLength="10" />
+    <Property Name="grade" Type="nchar" MaxLength="10" />
+    <Property Name="loginPort" Type="int" />
+    <Property Name="loginTime" Type="datetime" />
+  </EntityType>
   <EntityType Name="T_Menu">
     <Key>
       <PropertyRef Name="ID" />
@@ -625,6 +638,7 @@
     <EntitySet Name="T_LeaveIntership" EntityType="Self.T_LeaveIntership" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_LoginInfo" EntityType="Self.T_LoginInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Menu" EntityType="Self.T_Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_New_LeaveList" EntityType="Self.T_New_LeaveList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" Schema="dbo" store:Type="Tables" />
