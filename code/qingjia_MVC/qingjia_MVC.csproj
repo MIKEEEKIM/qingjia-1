@@ -319,6 +319,7 @@
     <Compile Include="Models\API\User\LoginStateModel.cs" />
     <Compile Include="Models\API\User\ReturnUserModel.cs" />
     <Compile Include="Models\API\User\TeacherLeaveListPending.cs" />
+    <Compile Include="Models\API\User\TeacherLeaveListStatistic.cs" />
     <Compile Include="Models\API\User\TeacherStudentLeave.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

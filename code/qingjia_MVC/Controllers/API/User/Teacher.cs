@@ -166,6 +166,10 @@ namespace qingjia_MVC.Controllers.API.User
                 IQueryable<vw_New_LeaveList> leavelist = db.vw_New_LeaveList.Where(q => q.ST_Grade == accountinfo.Grade).OrderByDescending(q => q.SubmitTime);
                 if (leavelist.Any())
                 {
+                    TeacherLeaveListStatistic data = new TeacherLeaveListStatistic();
+                    Dictionary<string, int> _statisticByLeavetype = new Dictionary<string, int>();
+                    Dictionary<string, int> _statisticByClass = new Dictionary<string, int>();
+
                     int a = 0;  //短期请假
                     int b = 0;  //长期请假
                     int c = 0;  //实习请假
@@ -184,11 +188,37 @@ namespace qingjia_MVC.Controllers.API.User
                     g = leavelist.Where(q => q.LeaveType.Trim() == "7").Count();
                     h = leavelist.Where(q => q.LeaveType.Trim() == "8").Count();
 
+                    _statisticByLeavetype.Add("短期请假", a);
+                    _statisticByLeavetype.Add("长期请假", b);
+                    _statisticByLeavetype.Add("实习请假", c);
+                    _statisticByLeavetype.Add("节假日请假", d);
+                    _statisticByLeavetype.Add("晚点名请假", e);
+                    _statisticByLeavetype.Add("早自习请假", f);
+                    _statisticByLeavetype.Add("晚自习请假", g);
+                    _statisticByLeavetype.Add("上课请假备案", h);
+
                     //按班级统计数据
+                    IQueryable<vw_Class> classList = db.vw_Class.Where(q => q.TeacherID.ToString().Trim() == accountinfo.userID && q.Grade.Trim() == accountinfo.Grade).OrderBy(q => q.ClassName);
+                    if (classList.Any())
+                    {
+                        foreach (var item in classList)
+                        {
+                            int _num = leavelist.Where(q => q.ST_Class.ToString().Trim() == item.ClassName.ToString().Trim()).Count();
+                            _statisticByClass.Add(item.ClassName.ToString().Trim(), _num);
+                        }
+                        data.statisticByLeavetype = _statisticByLeavetype;
+                        data.statisticByClass = _statisticByClass;
+                        return Success("获取成功", data);
+                    }
+                    else
+                    {
+                        data.statisticByLeavetype = _statisticByLeavetype;
+                        return Success("获取成功", data);
+                    }
                 }
                 else
                 {
-
+                    return Success("获取成功");
                 }
             }
             catch (Exception ex)
@@ -196,7 +226,6 @@ namespace qingjia_MVC.Controllers.API.User
                 return SystemError(ex);
             }
             #endregion
-            return null;
         }
     }
 }
