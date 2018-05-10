@@ -26,5 +26,6 @@ namespace qingjia_MVC.Models
         public string TeacherName { get; set; }
         public string TeacherTel { get; set; }
         public string TeacherEmail { get; set; }
+        public Nullable<System.DateTime> DeadLine { get; set; }
     }
 }

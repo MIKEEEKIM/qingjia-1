@@ -5,6 +5,7 @@ namespace qingjia_MVC.Models.API.Setting
     public class SetWeeklyMeetingInfo
     {
         public string access_token { get; set; }
+        public string deadline { get; set; }
         public List<BatchModel> batchInfo { get; set; }
     }
     public class BatchModel

@@ -339,6 +339,7 @@
     <EntitySetMapping Name="vw_ClassBatch">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
         <MappingFragment StoreEntitySet="vw_ClassBatch">
+          <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
           <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
           <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
           <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
@@ -357,6 +358,7 @@
     <EntitySetMapping Name="vw_Holiday">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
         <MappingFragment StoreEntitySet="vw_Holiday">
+          <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
           <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />

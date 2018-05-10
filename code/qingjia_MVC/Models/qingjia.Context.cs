@@ -20,6 +20,7 @@ namespace qingjia_MVC.Models
         public Entities()
             : base("name=Entities")
         {
+            this.Database.Initialize(false);
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

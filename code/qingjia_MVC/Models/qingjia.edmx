@@ -358,6 +358,7 @@
           <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
           <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
           <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
+          <Property Name="DeadLine" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -373,6 +374,7 @@
           <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDelete" Type="int" />
           <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SubmitTime" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -691,7 +693,8 @@
     [vw_ClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
     [vw_ClassBatch].[TeacherName] AS [TeacherName], 
     [vw_ClassBatch].[TeacherTel] AS [TeacherTel], 
-    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail]
+    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail], 
+    [vw_ClassBatch].[DeadLine] AS [DeadLine]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
@@ -703,7 +706,8 @@
     [vw_Holiday].[DeadLine] AS [DeadLine], 
     [vw_Holiday].[TeacherID] AS [TeacherID], 
     [vw_Holiday].[IsDelete] AS [IsDelete], 
-    [vw_Holiday].[TeacherName] AS [TeacherName]
+    [vw_Holiday].[TeacherName] AS [TeacherName], 
+    [vw_Holiday].[SubmitTime] AS [SubmitTime]
     FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">
@@ -1225,6 +1229,7 @@
           <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="vw_Holiday">
           <Key>
@@ -1238,6 +1243,7 @@
           <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Int32" />
           <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="vw_LeaveIntership">
           <Key>
@@ -1882,6 +1888,7 @@
           <EntitySetMapping Name="vw_ClassBatch">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_ClassBatch">
               <MappingFragment StoreEntitySet="vw_ClassBatch">
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
                 <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
                 <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
@@ -1900,6 +1907,7 @@
           <EntitySetMapping Name="vw_Holiday">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
               <MappingFragment StoreEntitySet="vw_Holiday">
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />

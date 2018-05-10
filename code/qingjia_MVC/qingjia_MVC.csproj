@@ -274,7 +274,7 @@
     <Compile Include="Controllers\ApiTestController.cs" />
     <Compile Include="Controllers\API\Audit\AuditLeaveController.cs" />
     <Compile Include="Controllers\API\Setting\SystemSettingController.cs" />
-    <Compile Include="Controllers\API\User\Teacher.cs" />
+    <Compile Include="Controllers\API\User\TeacherController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -304,9 +304,12 @@
     <Compile Include="Models\API\Setting\HolidayInfo.cs" />
     <Compile Include="Models\API\Setting\HolidayLeaveListInfo.cs" />
     <Compile Include="Models\API\Setting\ModifyHolidayInfo.cs" />
+    <Compile Include="Models\API\Setting\PassWord.cs" />
     <Compile Include="Models\API\Setting\SetClassInfo.cs" />
     <Compile Include="Models\API\Setting\SetHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetLeaveType.cs" />
+    <Compile Include="Models\API\Setting\SetStudentInfo.cs" />
+    <Compile Include="Models\API\Setting\SetTeacherInfo.cs" />
     <Compile Include="Models\API\Setting\SetWeeklyMeetingInfo.cs" />
     <Compile Include="Models\API\Student\ChangeInfo.cs" />
     <Compile Include="Models\API\Student\ChangePassword.cs" />
@@ -320,6 +323,7 @@
     <Compile Include="Models\API\User\ReturnUserModel.cs" />
     <Compile Include="Models\API\User\TeacherLeaveListPending.cs" />
     <Compile Include="Models\API\User\TeacherLeaveListStatistic.cs" />
+    <Compile Include="Models\API\User\TeacherMeetingHolidayInfo.cs" />
     <Compile Include="Models\API\User\TeacherStudentLeave.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

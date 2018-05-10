@@ -67,10 +67,12 @@ namespace qingjia_MVC.Controllers.API
         /// <returns></returns>
         public static ApiResult SystemError()
         {
-            ApiResult result = new ApiResult();
-            result.status = "error";
-            result.messages = "操作失败、出现未知程序错误、请联系管理员！";
-            result.fieldErrors = null;
+            ApiResult result = new ApiResult
+            {
+                status = "error",
+                messages = "操作失败、出现未知程序错误、请联系管理员！",
+                fieldErrors = null
+            };
             return result;
         }
 
@@ -84,10 +86,12 @@ namespace qingjia_MVC.Controllers.API
             OutputLog.WriteLog("访问API接口 " + HttpContext.Current.Request.Path);
             OutputLog.WriteLog("报错内容： " + ex.ToString());
 
-            ApiResult result = new ApiResult();
-            result.status = "error";
-            result.messages = "操作失败、出现未知程序错误、请联系管理员！";
-            result.fieldErrors = null;
+            ApiResult result = new ApiResult
+            {
+                status = "error",
+                messages = "操作失败、出现未知程序错误、请联系管理员！",
+                fieldErrors = null
+            };
             return result;
         }
 

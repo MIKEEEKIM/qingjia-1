@@ -338,6 +338,7 @@
     <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="vw_Holiday">
     <Key>
@@ -351,6 +352,7 @@
     <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsDelete" Type="Int32" />
     <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="vw_LeaveIntership">
     <Key>

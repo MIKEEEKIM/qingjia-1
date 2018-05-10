@@ -214,9 +214,9 @@ namespace qingjia_MVC.Controllers.API
                     return Error("原密码错误！");
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
             #endregion
         }

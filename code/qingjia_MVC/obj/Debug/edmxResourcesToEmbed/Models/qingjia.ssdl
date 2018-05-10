@@ -353,6 +353,7 @@
     <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
     <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
     <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
+    <Property Name="DeadLine" Type="datetime" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -368,6 +369,7 @@
     <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
     <Property Name="IsDelete" Type="int" />
     <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="SubmitTime" Type="datetime" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -686,7 +688,8 @@
     [vw_ClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
     [vw_ClassBatch].[TeacherName] AS [TeacherName], 
     [vw_ClassBatch].[TeacherTel] AS [TeacherTel], 
-    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail]
+    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail], 
+    [vw_ClassBatch].[DeadLine] AS [DeadLine]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
@@ -698,7 +701,8 @@
     [vw_Holiday].[DeadLine] AS [DeadLine], 
     [vw_Holiday].[TeacherID] AS [TeacherID], 
     [vw_Holiday].[IsDelete] AS [IsDelete], 
-    [vw_Holiday].[TeacherName] AS [TeacherName]
+    [vw_Holiday].[TeacherName] AS [TeacherName], 
+    [vw_Holiday].[SubmitTime] AS [SubmitTime]
     FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">

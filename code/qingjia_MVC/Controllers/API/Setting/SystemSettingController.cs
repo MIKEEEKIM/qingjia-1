@@ -293,6 +293,12 @@ namespace qingjia_MVC.Controllers.API.Setting
                 {
                     return Error("此接口仅限辅导员使用");
                 }
+                if (model.deadline != "" && model.deadline != null)
+                {
+                    T_Deadline _deadLine = db.T_Deadline.Where(q => q.TeacherID.Trim() == accountInfo.userID && q.TypeID == 2).ToList().First();
+                    DateTime dl = Convert.ToDateTime(model.deadline);
+                    _deadLine.Time = dl;
+                }
                 foreach (var item in model.batchInfo)
                 {
                     T_Batch batchMode = db.T_Batch.Where(c => c.Batch == item.batchID && c.TeacherID == accountInfo.userID).ToList().First();
@@ -894,6 +900,236 @@ namespace qingjia_MVC.Controllers.API.Setting
             {
                 return SystemError();
             }
+        }
+        #endregion
+
+        #region 个人信息修改、密码修改
+        /// <summary>
+        /// 获取账户信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet, Route("getuserinfo")]
+        public ApiResult GetUserInfo(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo.userRoleID == "1")//学生
+                {
+                    vw_Student model = db.vw_Student.Where(q => q.ST_Num.Trim() == accountInfo.userID).ToList().First();
+                    if (model != null)
+                    {
+                        return Success("获取成功", model);
+                    }
+                    else
+                    {
+                        return Error("不包含此账号学生个人信息，请联系系统维护人员！");
+                    }
+                }
+                else if (accountInfo.userRoleID == "3")//辅导员
+                {
+                    T_Teacher model = db.T_Teacher.Where(q => q.ID.Trim() == accountInfo.userID).ToList().First();
+                    if (model != null)
+                    {
+                        return Success("获取成功", model);
+                    }
+                    else
+                    {
+                        return Error("不包含此账号辅导员个人信息，请联系系统维护人员！");
+                    }
+                }
+                else
+                {
+                    return Error("班级账号不能修改个人信息！");
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 学生修改个人信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, Route("setuserinfo")]
+        public ApiResult SetUserInfo([FromBody]SetStudentInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token, model.studentID);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                T_Student studentModel = db.T_Student.Find(model.studentID);
+                if (studentModel == null)
+                {
+                    return Error("数据库修改失败，请联系管理员！");
+                }
+                studentModel.Tel = model.tel.Trim();
+                studentModel.Email = model.Email.Trim();
+                studentModel.QQ = model.qq.Trim();
+                studentModel.Room = model.dor.Trim();
+                studentModel.Sex = model.sex.Trim();
+                studentModel.ContactOne = model.contactRelation + "-" + model.contactName.Trim();
+                studentModel.OneTel = model.contactTel.Trim();
+
+                db.SaveChanges();
+                return Success("修改成功！");
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 辅导员修改个人信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, Route("setuserinfo")]
+        public ApiResult SetUserInfo([FromBody]SetTeacherInfo model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token, model.teacherID);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                T_Teacher teacherModel = db.T_Teacher.Find(model.teacherID);
+                if (teacherModel == null)
+                {
+                    return Error("数据库修改失败，请联系管理员！");
+                }
+                teacherModel.Name = model.teacherName;
+                teacherModel.Tel = model.teacherTel.Trim();
+                teacherModel.Email = model.teacherEmail.Trim();
+
+                db.SaveChanges();
+                return Success("修改成功！");
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 修改个人账户密码
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, Route("password")]
+        public ApiResult SetPassWord([FromBody]PassWord model)
+        {
+            #region 令牌验证
+            result = Check(model.access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                if (model == null)
+                {
+                    return Error("参数格式错误或缺少参数！");
+                }
+                if (model.old_psd == "" || model.old_psd == null || model.new_psd == "" || model.new_psd == null)
+                {
+                    return Error("参数格式错误或缺少参数！");
+                }
+                if (model.new_psd.Length <= 6)
+                {
+                    return Error("新密码必须大于6位！");
+                }
+
+                AccountInfo accountInfo = GetAccountInfo(model.access_token);
+                if (db.T_Account.Where(c => c.ID == accountInfo.userID && c.Psd == PsdEncryption.Encryption(model.old_psd)).Any())
+                {
+                    db.T_Account.Where(c => c.ID == accountInfo.userID).Update(c => new T_Account() { Psd = PsdEncryption.Encryption(model.new_psd) });
+                    db.SaveChanges();
+
+                    return Success("修改密码成功！");
+                }
+                else
+                {
+                    return Error("原密码错误！");
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 初始化学生账号密码
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="studentID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("initialpwd")]
+        public ApiResult InitialPassWord(string access_token, string studentID)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (db.vw_Student.Where(q => q.ST_TeacherID.Trim() == accountInfo.userID && q.ST_Num.Trim() == studentID).ToList().Any())
+                {
+                    T_Account accountModel = db.T_Account.Find(studentID);
+                    accountModel.Psd = PsdEncryption.Encryption(studentID.Substring(studentID.Length - 6, 6));
+                    db.SaveChanges();
+
+                    return Success("密码初始化成功！初始化密码为学号后六位，请尽快修改！");
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+            return null;
         }
         #endregion
     }
