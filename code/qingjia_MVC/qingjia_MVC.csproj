@@ -305,12 +305,14 @@
     <Compile Include="Models\API\Setting\HolidayLeaveListInfo.cs" />
     <Compile Include="Models\API\Setting\ModifyHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\PassWord.cs" />
+    <Compile Include="Models\API\Setting\ReturnLeaveTypeList.cs" />
     <Compile Include="Models\API\Setting\SetClassInfo.cs" />
     <Compile Include="Models\API\Setting\SetHolidayInfo.cs" />
     <Compile Include="Models\API\Setting\SetLeaveType.cs" />
     <Compile Include="Models\API\Setting\SetStudentInfo.cs" />
     <Compile Include="Models\API\Setting\SetTeacherInfo.cs" />
     <Compile Include="Models\API\Setting\SetWeeklyMeetingInfo.cs" />
+    <Compile Include="Models\API\Setting\TeacherInfo.cs" />
     <Compile Include="Models\API\Student\ChangeInfo.cs" />
     <Compile Include="Models\API\Student\ChangePassword.cs" />
     <Compile Include="Models\API\Student\LeaveClassModel.cs" />

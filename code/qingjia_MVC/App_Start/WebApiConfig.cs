@@ -10,6 +10,8 @@ namespace qingjia_MVC
         {
             config.MapHttpAttributeRoutes();
 
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
             // 跨域配置
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
@@ -19,7 +21,7 @@ namespace qingjia_MVC
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("datatype", "json", "application/json"));
         }

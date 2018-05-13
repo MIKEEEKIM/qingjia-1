@@ -285,22 +285,30 @@ namespace qingjia_MVC.Controllers.API
                 AccountInfo userInfo = (AccountInfo)HttpRuntime.Cache.Get(access_token);
                 if (userInfo != null)
                 {
-                    List<string> permissionList = userInfo.permissionList;
-                    if (permissionList.IndexOf(path) == -1)
+                    //List<string> permissionList = userInfo.permissionList;
+                    //if (permissionList.IndexOf(path) == -1)
+                    //{
+                    //    Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
+                    //    throw new Exception("该账户缺少权限，权限名称：" + rolePermission[path].ToString());
+                    //}
+                    //else
+                    //{
+                    //    if (AccountID == userInfo.userID)
+                    //    {
+                    //        return null;
+                    //    }
+                    //    else
+                    //    {
+                    //        throw new Exception("AccessToken错误，此接口不能修改他人账户");
+                    //    }
+                    //}
+                    if (AccountID == userInfo.userID)
                     {
-                        Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
-                        throw new Exception("该账户缺少权限，权限名称：" + rolePermission[path].ToString());
+                        return null;
                     }
                     else
                     {
-                        if (AccountID == userInfo.userID)
-                        {
-                            return null;
-                        }
-                        else
-                        {
-                            throw new Exception("AccessToken错误，此接口不能修改他人账户");
-                        }
+                        throw new Exception("AccessToken错误，此接口不能修改他人账户");
                     }
                 }
                 else

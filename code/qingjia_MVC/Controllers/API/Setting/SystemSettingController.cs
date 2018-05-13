@@ -70,14 +70,26 @@ namespace qingjia_MVC.Controllers.API.Setting
             try
             {
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                IQueryable<T_LeaveType> leaveList = db.T_LeaveType;
-                SelectCondition conditionsModel = new SelectCondition();
-                conditionsModel.conditions = null;
-                return Success("获取成功", GetList(conditionsModel, leaveList));
+                List<T_LeaveType> leaveList = db.T_LeaveType.OrderBy(q => q.ID).ToList();
+                List<ReturnLeaveTypeList> data = new List<ReturnLeaveTypeList>();
+                if (leaveList.Any())
+                {
+                    foreach (var item in leaveList)
+                    {
+                        ReturnLeaveTypeList _item = new ReturnLeaveTypeList
+                        {
+                            id = item.ID.ToString().Trim(),
+                            name = item.Name.ToString().Trim(),
+                            description = item.Description == null ? "" : item.Description.ToString().Trim()
+                        };
+                        data.Add(_item);
+                    }
+                }
+                return Success("获取成功", data);
             }
-            catch
+            catch(Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
             #endregion
         }
@@ -118,7 +130,8 @@ namespace qingjia_MVC.Controllers.API.Setting
                 foreach (string _item in model.leaveTypeIdList)
                 {
                     int itemID = Convert.ToInt32(model.leaveTypeIdList[i].ToString().Trim());
-                    int itemEnableMessage = Convert.ToInt32(model.enableMessage[i].ToString().Trim());
+                    //int itemEnableMessage = Convert.ToInt32(model.enableMessage[i].ToString().Trim());
+                    int itemEnableMessage = model.enableMessage[i] == "true" ? 1 : 0;
                     if (db.T_LeaveType.Find(itemID) != null)
                     {
                         list.Add(new T_TeacherLeaveType() { LeaveTypeID = itemID, TeacherID = accountInfo.userID, EnableMessage = itemEnableMessage, IsDelete = 0 });
@@ -903,13 +916,13 @@ namespace qingjia_MVC.Controllers.API.Setting
         }
         #endregion
 
-        #region 个人信息修改、密码修改
+        #region 个人信息修改、密码修改、初始化学生密码
         /// <summary>
         /// 获取账户信息
         /// </summary>
         /// <param name="access_token"></param>
         /// <returns></returns>
-        [HttpGet, Route("getuserinfo")]
+        [HttpGet, Route("userinfo")]
         public ApiResult GetUserInfo(string access_token)
         {
             #region 令牌验证
@@ -941,7 +954,15 @@ namespace qingjia_MVC.Controllers.API.Setting
                     T_Teacher model = db.T_Teacher.Where(q => q.ID.Trim() == accountInfo.userID).ToList().First();
                     if (model != null)
                     {
-                        return Success("获取成功", model);
+                        TeacherInfo data = new TeacherInfo
+                        {
+                            teacherID = model.ID.ToString().Trim(),
+                            teacherName = model.Name.ToString().Trim(),
+                            grade = model.Grade.ToString().Trim(),
+                            teacherTel = model.Tel.ToString().Trim(),
+                            teacherEmail = model.Email.ToString().Trim()
+                        };
+                        return Success("获取成功", data);
                     }
                     else
                     {
@@ -965,7 +986,7 @@ namespace qingjia_MVC.Controllers.API.Setting
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, Route("setuserinfo")]
+        [HttpPost, Route("setstudentinfo")]
         public ApiResult SetUserInfo([FromBody]SetStudentInfo model)
         {
             #region 令牌验证
@@ -1008,7 +1029,7 @@ namespace qingjia_MVC.Controllers.API.Setting
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, Route("setuserinfo")]
+        [HttpPost, Route("setteacherinfo")]
         public ApiResult SetUserInfo([FromBody]SetTeacherInfo model)
         {
             #region 令牌验证
@@ -1069,13 +1090,14 @@ namespace qingjia_MVC.Controllers.API.Setting
                 {
                     return Error("参数格式错误或缺少参数！");
                 }
-                if (model.new_psd.Length <= 6)
+                if (model.new_psd.Length < 6)
                 {
-                    return Error("新密码必须大于6位！");
+                    return Error("新密码必须大于等于6位！");
                 }
 
                 AccountInfo accountInfo = GetAccountInfo(model.access_token);
-                if (db.T_Account.Where(c => c.ID == accountInfo.userID && c.Psd == PsdEncryption.Encryption(model.old_psd)).Any())
+                string encryptionString = PsdEncryption.Encryption(model.old_psd);
+                if (db.T_Account.Where(c => c.ID == accountInfo.userID && c.Psd == encryptionString).Any())
                 {
                     db.T_Account.Where(c => c.ID == accountInfo.userID).Update(c => new T_Account() { Psd = PsdEncryption.Encryption(model.new_psd) });
                     db.SaveChanges();
@@ -1118,10 +1140,16 @@ namespace qingjia_MVC.Controllers.API.Setting
                 if (db.vw_Student.Where(q => q.ST_TeacherID.Trim() == accountInfo.userID && q.ST_Num.Trim() == studentID).ToList().Any())
                 {
                     T_Account accountModel = db.T_Account.Find(studentID);
-                    accountModel.Psd = PsdEncryption.Encryption(studentID.Substring(studentID.Length - 6, 6));
+                    string _psd = studentID.Substring(studentID.Length - 6, 6);
+                    string psd = PsdEncryption.Encryption(_psd);
+                    accountModel.Psd = psd;
                     db.SaveChanges();
 
                     return Success("密码初始化成功！初始化密码为学号后六位，请尽快修改！");
+                }
+                else
+                {
+                    return Error("数据错误");
                 }
             }
             catch (Exception ex)
@@ -1129,7 +1157,6 @@ namespace qingjia_MVC.Controllers.API.Setting
                 return SystemError(ex);
             }
             #endregion
-            return null;
         }
         #endregion
     }
