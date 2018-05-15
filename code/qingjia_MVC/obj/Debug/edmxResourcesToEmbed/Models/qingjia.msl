@@ -495,21 +495,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vw_StudenBatch">
-      <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_StudenBatch">
-        <MappingFragment StoreEntitySet="vw_StudenBatch">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-          <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
-          <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-          <ScalarProperty Name="AuditState" ColumnName="AuditState" />
-          <ScalarProperty Name="Batch" ColumnName="Batch" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vw_Student">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
         <MappingFragment StoreEntitySet="vw_Student">
@@ -564,6 +549,26 @@
           <ScalarProperty Name="userName" ColumnName="userName" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_StudentClassBatch">
+      <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_StudentClassBatch">
+        <MappingFragment StoreEntitySet="vw_StudentClassBatch">
+          <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
+          <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
+          <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
+          <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+          <ScalarProperty Name="AutoUpdateTimeSpan" ColumnName="AutoUpdateTimeSpan" />
+          <ScalarProperty Name="AutoUpdateTime" ColumnName="AutoUpdateTime" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="Batch" ColumnName="Batch" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+          <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

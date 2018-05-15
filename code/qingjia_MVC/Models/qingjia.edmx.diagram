@@ -33,12 +33,12 @@
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_LeaveList" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_New_LeaveList" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_NightNameList" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_StudenBatch" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_Student" Width="1.5" PointX="2.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_TeacherLeaveType" Width="1.5" PointX="16.75" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="imaw_qingjia_newModel.FK_T_TeacherLeaveType_T_LeaveType" ManuallyRouted="false" />
         <AssociationConnector Association="imaw_qingjia_newModel.FK_T_TeacherLeaveType_T_Teacher" ManuallyRouted="false" />
         <EntityTypeShape EntityType="imaw_qingjia_newModel.T_LoginInfo" Width="1.5" PointX="5.375" PointY="16.75" />
+        <EntityTypeShape EntityType="imaw_qingjia_newModel.vw_StudentClassBatch" Width="1.5" PointX="7.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

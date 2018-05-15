@@ -12,16 +12,21 @@ namespace qingjia_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_StudenBatch
+    public partial class vw_StudentClassBatch
     {
-        public string ID { get; set; }
-        public string StudentID { get; set; }
+        public string ST_Num { get; set; }
         public string ST_Name { get; set; }
-        public string ST_Class { get; set; }
-        public Nullable<System.DateTime> Datetime { get; set; }
-        public string Reason { get; set; }
-        public string TeacherID { get; set; }
-        public string AuditState { get; set; }
+        public string ClassName { get; set; }
+        public string Grade { get; set; }
         public Nullable<int> Batch { get; set; }
+        public Nullable<System.DateTime> Datetime { get; set; }
+        public string TeacherID { get; set; }
+        public string Location { get; set; }
+        public string AutoUpdateTime { get; set; }
+        public Nullable<int> AutoUpdateTimeSpan { get; set; }
+        public string TeacherName { get; set; }
+        public string TeacherTel { get; set; }
+        public string TeacherEmail { get; set; }
+        public Nullable<System.DateTime> DeadLine { get; set; }
     }
 }

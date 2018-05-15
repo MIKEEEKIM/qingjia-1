@@ -512,20 +512,6 @@
     <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
-  <EntityType Name="vw_StudenBatch">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-    <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="Datetime" Type="DateTime" Precision="3" />
-    <Property Name="Reason" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="AuditState" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Batch" Type="Int32" />
-  </EntityType>
   <EntityType Name="vw_Student">
     <Key>
       <PropertyRef Name="ST_Num" />
@@ -624,7 +610,6 @@
     <EntitySet Name="vw_LeaveList" EntityType="Self.vw_LeaveList" />
     <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" />
     <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" />
-    <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" />
     <EntitySet Name="vw_Student" EntityType="Self.vw_Student" />
     <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" />
     <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">
@@ -639,6 +624,7 @@
       <Parameter Name="TeacherID" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="T_LoginInfo" EntityType="imaw_qingjia_newModel.T_LoginInfo" />
+    <EntitySet Name="vw_StudentClassBatch" EntityType="imaw_qingjia_newModel.vw_StudentClassBatch" />
   </EntityContainer>
   <EntityType Name="T_LoginInfo">
     <Key>
@@ -652,5 +638,25 @@
     <Property Name="grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="loginPort" Type="Int32" />
     <Property Name="loginTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_StudentClassBatch">
+    <Key>
+      <PropertyRef Name="ST_Num" />
+      <PropertyRef Name="ST_Name" />
+    </Key>
+    <Property Name="ST_Num" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Batch" Type="Int32" />
+    <Property Name="Datetime" Type="DateTime" Precision="3" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="AutoUpdateTimeSpan" Type="Int32" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

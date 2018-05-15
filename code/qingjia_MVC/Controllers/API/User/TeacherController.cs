@@ -273,29 +273,15 @@ namespace qingjia_MVC.Controllers.API.User
             try
             {
                 AccountInfo accountInfo = GetAccountInfo(access_token);
-                TeacherMeetingHolidayInfo data = new TeacherMeetingHolidayInfo();
-                List<vw_ClassBatch> list = db.vw_ClassBatch.Where(q => q.TeacherID.Trim() == accountInfo.userID).OrderBy(q => q.Batch).ToList();
-                if (list.Any())
+                if (accountInfo.userRoleID == "3")
                 {
-                    vw_ClassBatch model = list.First();
-                    data.meetingSetted = true;
-                    data.meetingDate = ((DateTime)model.Datetime).ToString("yyyy-MM-dd");
-                    data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
-                    if (model.DeadLine > DateTime.Now)
-                    {
-                        data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
-                        TimeSpan ts = (DateTime)model.DeadLine - DateTime.Now;
-                        data.meetingPercentage = 100 - (int)Math.Round(100 * ts.TotalSeconds / (double)(model.AutoUpdateTimeSpan * 3600 * 24));
-                    }
-                    else
-                    {
-                        data.meetingDeadline = "请假已截止";
-                        data.meetingPercentage = 100;
-                    }
-                    data.meetingLocation = model.Location;
-                    data.meetingTimeSpan = model.AutoUpdateTimeSpan + "天";
+                    return Success("获取成功", Get_MeetingInfoTeacherID(accountInfo.userID));
                 }
-                return Success("获取成功", data);
+                if (accountInfo.userRoleID == "1")
+                {
+                    return Success("获取成功", Get_MeetingInfoStudentID(accountInfo.userID));
+                }
+                return Error("此数据接口不支持班级账号！");
             }
             catch (Exception ex)
             {
@@ -324,8 +310,99 @@ namespace qingjia_MVC.Controllers.API.User
             try
             {
                 AccountInfo accountInfo = GetAccountInfo(access_token);
+                if (accountInfo.userRoleID == "3")
+                {
+                    return Success("获取成功", Get_HolidayInfo(accountInfo.userID));
+                }
+                if (accountInfo.userRoleID == "1")
+                {
+                    vw_Student studentModel = db.vw_Student.Where(q => q.ST_Num.Trim() == accountInfo.userID).ToList().First();
+                    return Success("获取成功", Get_HolidayInfo(studentModel.ST_TeacherID.Trim()));
+                }
+                return Error("此数据接口不支持班级账号！");
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        private TeacherMeetingHolidayInfo Get_MeetingInfoTeacherID(string teacherID)
+        {
+            try
+            {
                 TeacherMeetingHolidayInfo data = new TeacherMeetingHolidayInfo();
-                List<vw_Holiday> holidayInfoList = db.vw_Holiday.Where(q => q.TeacherID.Trim() == accountInfo.userID && q.IsDelete == 0).ToList();
+                List<vw_ClassBatch> list = db.vw_ClassBatch.Where(q => q.TeacherID.Trim() == teacherID).OrderBy(q => q.Batch).ToList();
+                if (list.Any())
+                {
+                    vw_ClassBatch model = list.First();
+                    data.meetingSetted = true;
+                    data.meetingDate = ((DateTime)model.Datetime).ToString("yyyy-MM-dd");
+                    data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
+                    if (model.DeadLine > DateTime.Now)
+                    {
+                        data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
+                        TimeSpan ts = (DateTime)model.DeadLine - DateTime.Now;
+                        data.meetingPercentage = 100 - (int)Math.Round(100 * ts.TotalSeconds / (double)(model.AutoUpdateTimeSpan * 3600 * 24));
+                    }
+                    else
+                    {
+                        data.meetingDeadline = "请假已截止";
+                        data.meetingPercentage = 100;
+                    }
+                    data.meetingLocation = model.Location;
+                    data.meetingTimeSpan = model.AutoUpdateTimeSpan + "天";
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private TeacherMeetingHolidayInfo Get_MeetingInfoStudentID(string studentID)
+        {
+            try
+            {
+                TeacherMeetingHolidayInfo data = new TeacherMeetingHolidayInfo();
+                List<vw_StudentClassBatch> list = db.vw_StudentClassBatch.Where(q => q.ST_Num.Trim() == studentID).OrderBy(q => q.Batch).ToList();
+
+                if (list.Any())
+                {
+                    vw_StudentClassBatch model = list.First();
+                    data.meetingSetted = true;
+                    data.meetingDate = ((DateTime)model.Datetime).ToString("yyyy-MM-dd HH:mm:ss");
+                    data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
+                    if (model.DeadLine > DateTime.Now)
+                    {
+                        data.meetingDeadline = ((DateTime)model.DeadLine).ToString("yyyy-MM-dd HH:mm:ss");
+                        TimeSpan ts = (DateTime)model.DeadLine - DateTime.Now;
+                        data.meetingPercentage = 100 - (int)Math.Round(100 * ts.TotalSeconds / (double)(model.AutoUpdateTimeSpan * 3600 * 24));
+                    }
+                    else
+                    {
+                        data.meetingDeadline = "请假已截止";
+                        data.meetingPercentage = 100;
+                    }
+                    data.meetingLocation = model.Location;
+                    data.meetingTimeSpan = model.AutoUpdateTimeSpan + "天";
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private TeacherMeetingHolidayInfo Get_HolidayInfo(string teacherID)
+        {
+            try
+            {
+                TeacherMeetingHolidayInfo data = new TeacherMeetingHolidayInfo();
+                List<vw_Holiday> holidayInfoList = db.vw_Holiday.Where(q => q.TeacherID.Trim() == teacherID && q.IsDelete == 0).ToList();
                 if (holidayInfoList.Any())
                 {
                     vw_Holiday model = holidayInfoList.First();
@@ -347,13 +424,12 @@ namespace qingjia_MVC.Controllers.API.User
                     data.holidayStartDate = ((DateTime)model.StartTime).ToString("yyyy-MM-dd");
                     data.holidayEndDate = ((DateTime)model.EndTime).ToString("yyyy-MM-dd");
                 }
-                return Success("获取成功", data);
+                return data;
             }
             catch (Exception ex)
             {
-                return SystemError(ex);
+                throw ex;
             }
-            #endregion
         }
     }
 }

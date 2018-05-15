@@ -3,6 +3,7 @@ using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.User;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
@@ -72,23 +73,30 @@ namespace qingjia_MVC.Controllers.API.User
                         if (accountModel.RoleID.ToString().Trim() == "1")
                         {
                             vw_Student studentModel = db.vw_Student.Where(c => c.ST_Num == accountModel.ID).ToList().First();
-                            data.UserName = studentModel.ST_Name;
+                            data.UserName = studentModel.ST_Name.Trim();
                             accountInfo.userRoleName = "学生";
                             accountInfo.Grade = studentModel.ST_Grade.ToString().Trim();
+                            List<Dictionary<string, string>> leaveTypeSetting = GetLeaveTypeSetting(studentModel.ST_TeacherID.ToString().Trim());
+                            accountInfo.leaveTypeList = leaveTypeSetting[0];
+                            accountInfo.enableMessageLeaveList = leaveTypeSetting[1];
                         }
                         if (accountModel.RoleID.ToString().Trim() == "2")
                         {
                             T_Class classModel = db.T_Class.Where(c => c.ID == accountModel.ID).ToList().First();
-                            data.UserName = classModel.ClassName;
+                            data.UserName = classModel.ClassName.Trim();
                             accountInfo.userRoleName = "班级账号";
                             accountInfo.Grade = classModel.Grade.ToString().Trim();
                         }
                         if (accountModel.RoleID.ToString().Trim() == "3")
                         {
                             T_Teacher teacherModel = db.T_Teacher.Where(c => c.ID == accountModel.ID).ToList().First();
-                            data.UserName = teacherModel.Name;
+                            data.UserName = teacherModel.Name.Trim();
                             accountInfo.userRoleName = "辅导员";
                             accountInfo.Grade = teacherModel.Grade.ToString().Trim();
+
+                            List<Dictionary<string, string>> leaveTypeSetting = GetLeaveTypeSetting(teacherModel.ID.ToString().Trim());
+                            accountInfo.leaveTypeList = leaveTypeSetting[0];
+                            accountInfo.enableMessageLeaveList = leaveTypeSetting[1];
                         }
 
                         accountInfo.access_token = data.access_token;
@@ -146,7 +154,7 @@ namespace qingjia_MVC.Controllers.API.User
                 return SystemError();
             }
         }
-
+        
         #region 忘记密码 尚未完成
         [HttpGet, Route("forgetpsd")]
         public ApiResult ForgetPassWord(string id)
@@ -195,6 +203,31 @@ namespace qingjia_MVC.Controllers.API.User
         {
 
             return null;
+        }
+        #endregion
+
+        #region 获取开启的请假类型和短息服务信息
+        private List<Dictionary<string, string>> GetLeaveTypeSetting(string teacherID)
+        {
+            List<Dictionary<string, string>> returnData = new List<Dictionary<string, string>>();
+            Dictionary<string, string> leaveTypeList = new Dictionary<string, string>();
+            Dictionary<string, string> enableMessageList = new Dictionary<string, string>();
+
+            IQueryable<vw_TeacherLeaveType> leaveTypeSettings = db.vw_TeacherLeaveType.Where(q => q.IsDelete == 0 && q.TeacherID.Trim() == teacherID).OrderBy(q => q.LeaveTypeID);
+            if (leaveTypeSettings.Any())
+            {
+                foreach (var item in leaveTypeSettings)
+                {
+                    leaveTypeList.Add(item.LeaveTypeID.ToString().Trim(), item.LeaveTypeName);
+                    if (item.EnableMessage == 1)
+                    {
+                        enableMessageList.Add(item.LeaveTypeID.ToString().Trim(), item.LeaveTypeName);
+                    }
+                }
+            }
+            returnData.Add(leaveTypeList);
+            returnData.Add(enableMessageList);
+            return returnData;
         }
         #endregion
     }

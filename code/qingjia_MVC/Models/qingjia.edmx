@@ -543,22 +543,6 @@
           <Property Name="Datetime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="vw_StudenBatch">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="StudentID" Type="varchar" MaxLength="64" />
-          <Property Name="ST_Name" Type="nvarchar" MaxLength="64" />
-          <Property Name="ST_Class" Type="varchar" MaxLength="64" />
-          <Property Name="Datetime" Type="datetime" />
-          <Property Name="Reason" Type="varchar" MaxLength="225" />
-          <Property Name="TeacherID" Type="varchar" MaxLength="64" />
-          <Property Name="AuditState" Type="nchar" MaxLength="10" />
-          <Property Name="Batch" Type="int" />
-        </EntityType>
-        <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_Student">
           <Key>
@@ -589,6 +573,28 @@
           <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
           <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
           <Property Name="ClassID" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_StudentClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_StudentClassBatch">
+          <Key>
+            <PropertyRef Name="ST_Num" />
+            <PropertyRef Name="ST_Name" />
+          </Key>
+          <Property Name="ST_Num" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="64" />
+          <Property Name="Grade" Type="nchar" MaxLength="10" />
+          <Property Name="Batch" Type="int" />
+          <Property Name="Datetime" Type="datetime" />
+          <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+          <Property Name="AutoUpdateTimeSpan" Type="int" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+          <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+          <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
+          <Property Name="DeadLine" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -827,19 +833,6 @@
     [vw_NightNameList].[Datetime] AS [Datetime]
     FROM [dbo].[vw_NightNameList] AS [vw_NightNameList]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_StudenBatch].[ID] AS [ID], 
-    [vw_StudenBatch].[StudentID] AS [StudentID], 
-    [vw_StudenBatch].[ST_Name] AS [ST_Name], 
-    [vw_StudenBatch].[ST_Class] AS [ST_Class], 
-    [vw_StudenBatch].[Datetime] AS [Datetime], 
-    [vw_StudenBatch].[Reason] AS [Reason], 
-    [vw_StudenBatch].[TeacherID] AS [TeacherID], 
-    [vw_StudenBatch].[AuditState] AS [AuditState], 
-    [vw_StudenBatch].[Batch] AS [Batch]
-    FROM [dbo].[vw_StudenBatch] AS [vw_StudenBatch]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vw_Student" EntityType="Self.vw_Student" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Student].[ST_Num] AS [ST_Num], 
@@ -863,6 +856,24 @@
     [vw_Student].[ST_TeacherID] AS [ST_TeacherID], 
     [vw_Student].[ClassID] AS [ClassID]
     FROM [dbo].[vw_Student] AS [vw_Student]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_StudentClassBatch" EntityType="Self.vw_StudentClassBatch" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_StudentClassBatch].[ST_Num] AS [ST_Num], 
+    [vw_StudentClassBatch].[ST_Name] AS [ST_Name], 
+    [vw_StudentClassBatch].[ClassName] AS [ClassName], 
+    [vw_StudentClassBatch].[Grade] AS [Grade], 
+    [vw_StudentClassBatch].[Batch] AS [Batch], 
+    [vw_StudentClassBatch].[Datetime] AS [Datetime], 
+    [vw_StudentClassBatch].[TeacherID] AS [TeacherID], 
+    [vw_StudentClassBatch].[Location] AS [Location], 
+    [vw_StudentClassBatch].[AutoUpdateTime] AS [AutoUpdateTime], 
+    [vw_StudentClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
+    [vw_StudentClassBatch].[TeacherName] AS [TeacherName], 
+    [vw_StudentClassBatch].[TeacherTel] AS [TeacherTel], 
+    [vw_StudentClassBatch].[TeacherEmail] AS [TeacherEmail], 
+    [vw_StudentClassBatch].[DeadLine] AS [DeadLine]
+    FROM [dbo].[vw_StudentClassBatch] AS [vw_StudentClassBatch]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1403,20 +1414,6 @@
           <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="vw_StudenBatch">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <Property Name="Reason" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AuditState" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Batch" Type="Int32" />
-        </EntityType>
         <EntityType Name="vw_Student">
           <Key>
             <PropertyRef Name="ST_Num" />
@@ -1515,7 +1512,6 @@
           <EntitySet Name="vw_LeaveList" EntityType="Self.vw_LeaveList" />
           <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" />
           <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" />
-          <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" />
           <EntitySet Name="vw_Student" EntityType="Self.vw_Student" />
           <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" />
           <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">
@@ -1530,6 +1526,7 @@
           <Parameter Name="TeacherID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="T_LoginInfo" EntityType="imaw_qingjia_newModel.T_LoginInfo" />
+          <EntitySet Name="vw_StudentClassBatch" EntityType="imaw_qingjia_newModel.vw_StudentClassBatch" />
         </EntityContainer>
         <EntityType Name="T_LoginInfo">
           <Key>
@@ -1543,6 +1540,26 @@
           <Property Name="grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="loginPort" Type="Int32" />
           <Property Name="loginTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_StudentClassBatch">
+          <Key>
+            <PropertyRef Name="ST_Num" />
+            <PropertyRef Name="ST_Name" />
+          </Key>
+          <Property Name="ST_Num" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Batch" Type="Int32" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="AutoUpdateTimeSpan" Type="Int32" />
+          <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DeadLine" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2044,21 +2061,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_StudenBatch">
-            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_StudenBatch">
-              <MappingFragment StoreEntitySet="vw_StudenBatch">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
-                <ScalarProperty Name="ST_Class" ColumnName="ST_Class" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
-                <ScalarProperty Name="Batch" ColumnName="Batch" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vw_Student">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Student">
               <MappingFragment StoreEntitySet="vw_Student">
@@ -2113,6 +2115,26 @@
                 <ScalarProperty Name="userName" ColumnName="userName" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_StudentClassBatch">
+            <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_StudentClassBatch">
+              <MappingFragment StoreEntitySet="vw_StudentClassBatch">
+                <ScalarProperty Name="DeadLine" ColumnName="DeadLine" />
+                <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
+                <ScalarProperty Name="TeacherTel" ColumnName="TeacherTel" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="AutoUpdateTimeSpan" ColumnName="AutoUpdateTimeSpan" />
+                <ScalarProperty Name="AutoUpdateTime" ColumnName="AutoUpdateTime" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_Num" ColumnName="ST_Num" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

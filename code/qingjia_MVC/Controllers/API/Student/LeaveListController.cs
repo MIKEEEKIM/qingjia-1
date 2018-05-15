@@ -373,7 +373,7 @@ namespace qingjia_MVC.Controllers.API
         /// <returns></returns>
         private bool DuplicateCheck(string studentID, DateTime start, DateTime end)
         {
-            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID.Trim() && c.IsDelete == 0 && c.StateBack.Trim() == "0" && (c.LeaveType.Trim() == "1" || c.LeaveType.Trim() == "2" || c.LeaveType.Trim() == "4") && ((c.LeaveTime >= start && c.BackTime <= end) || (c.LeaveTime > start && c.LeaveTime < end) || (c.BackTime > start && c.BackTime < end))).ToList().First() == null)
+            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID.Trim() && c.IsDelete == 0 && c.StateBack.Trim() == "0" && (c.LeaveType.Trim() == "1" || c.LeaveType.Trim() == "2" || c.LeaveType.Trim() == "4") && ((c.LeaveTime >= start && c.BackTime <= end) || (c.LeaveTime > start && c.LeaveTime < end) || (c.BackTime > start && c.BackTime < end))).Any())
             {
                 return true;
             }
@@ -392,7 +392,7 @@ namespace qingjia_MVC.Controllers.API
         /// <returns></returns>
         private bool DuplicateCheck(string studentID, string leaveTypeID, DateTime date)
         {
-            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID && (c.LeaveType.Trim() == "5" || c.LeaveType.Trim() == "6") && c.IsDelete == 0 && c.StateBack.Trim() == "0" && ((DateTime)c.LeaveTime).ToString("yyyy/MM/dd") == date.ToString("yyyy/MM/dd") && c.LeaveType.Trim() == leaveTypeID.Trim()).ToList().First() == null)
+            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID && (c.LeaveType.Trim() == "5" || c.LeaveType.Trim() == "6" || c.LeaveType.Trim() == "7") && c.IsDelete == 0 && c.StateBack.Trim() == "0" && c.LeaveTime == date && c.LeaveType.Trim() == leaveTypeID.Trim()).Any())
             {
                 return true;
             }
@@ -408,7 +408,7 @@ namespace qingjia_MVC.Controllers.API
         /// <returns></returns>
         private bool DuplicateCheck(string studentID, DateTime date, string lesson)
         {
-            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID && c.LeaveType.Trim() == "7" && c.IsDelete == 0 && c.StateBack.Trim() == "0" && c.LeaveTime == date && c.Lesson.Trim() == lesson).ToList().First() == null)
+            if (db.T_New_LeaveList.Where(c => c.StudentID.Trim() == studentID && c.LeaveType.Trim() == "8" && c.IsDelete == 0 && c.StateBack.Trim() == "0" && c.LeaveTime == date && c.Lesson.Trim() == lesson).Any())
             {
                 return true;
             }
@@ -441,7 +441,7 @@ namespace qingjia_MVC.Controllers.API
                     {
                         return Error("开始时间不能小于结束时间");
                     }
-                    if (!DuplicateCheck(accountInfo.userID, leaveTime, backTime))
+                    if (DuplicateCheck(accountInfo.userID, leaveTime, backTime))
                     {
                         return Error("请假时间与已有请假记录存在重叠！请重新输入。");
                     }
@@ -524,9 +524,9 @@ namespace qingjia_MVC.Controllers.API
                 }
                 #endregion
             }
-            catch
+            catch(Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
         }
 
@@ -547,7 +547,7 @@ namespace qingjia_MVC.Controllers.API
 
                     string leaveTimeString = data.leave_date + " " + "00:00:00";
                     DateTime leaveTime = Convert.ToDateTime(leaveTimeString);
-                    if (!DuplicateCheck(accountInfo.userID, data.leaveTypeID, leaveTime))
+                    if (DuplicateCheck(accountInfo.userID, data.leaveTypeID, leaveTime))
                     {
                         return Error("请假时间与已有请假记录存在重叠！请重新输入。");
                     }
@@ -580,9 +580,9 @@ namespace qingjia_MVC.Controllers.API
                     return Error("此请假类型尚未开通，请联系辅导员！");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return SystemError();
+                return SystemError(ex);
             }
         }
 
@@ -642,7 +642,7 @@ namespace qingjia_MVC.Controllers.API
                     model.BackTime = _backTime;
                     model.Reason = data.leave_reason.Trim();
 
-                    if (!DuplicateCheck(accountInfo.userID, _leaveTime, data.lesson.Trim()))
+                    if (DuplicateCheck(accountInfo.userID, _leaveTime, data.lesson.Trim()))
                     {
                         return Error("请假时间与已有请假记录存在重叠！请重新输入。");
                     }

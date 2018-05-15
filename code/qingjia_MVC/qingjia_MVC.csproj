@@ -318,6 +318,7 @@
     <Compile Include="Models\API\Student\LeaveClassModel.cs" />
     <Compile Include="Models\API\Student\LeaveSchoolModel.cs" />
     <Compile Include="Models\API\Student\LeaveSpecialModel.cs" />
+    <Compile Include="Models\API\Student\ReturnLeaveListInfo.cs" />
     <Compile Include="Models\API\Student\StudentInfo.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\API\User\LoginModel.cs" />
@@ -431,10 +432,10 @@
     <Compile Include="Models\vw_NightNameList.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vw_StudenBatch.cs">
+    <Compile Include="Models\vw_Student.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vw_Student.cs">
+    <Compile Include="Models\vw_StudentClassBatch.cs">
       <DependentUpon>qingjia.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_TeacherLeaveType.cs">

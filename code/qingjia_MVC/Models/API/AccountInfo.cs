@@ -38,5 +38,15 @@ namespace qingjia_MVC.Models.API
         /// 操作权限列表
         /// </summary>
         public List<string> permissionList { set; get; }
+
+        /// <summary>
+        /// 已开启的 请假类型
+        /// </summary>
+        public Dictionary<string, string> leaveTypeList { get; set; }
+
+        /// <summary>
+        /// 已开启的 短信服务请假类型
+        /// </summary>
+        public Dictionary<string, string> enableMessageLeaveList { get; set; }
     }
 }

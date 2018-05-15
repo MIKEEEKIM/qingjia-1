@@ -3,6 +3,7 @@ using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.Student;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Z.EntityFramework.Plus;
@@ -161,6 +162,84 @@ namespace qingjia_MVC.Controllers.API
             catch
             {
                 return SystemError();
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet, Route("getleavelistinfo")]
+        public ApiResult GetLeaveListInfo(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                ReturnLeaveListInfo data = new ReturnLeaveListInfo();
+                if (accountInfo.leaveTypeList.Any())
+                {
+                    foreach (var item in accountInfo.leaveTypeList)
+                    {
+                        if (item.Key == "1" || item.Key == "2" || item.Key == "3" || item.Key == "4")
+                        {
+                            data.leaveType.Add(item.Key, item.Value);
+                        }
+                        if (item.Key == "5")
+                        {
+                            data.weeklyMeetingType.Add(item.Key, item.Value);
+                        }
+                        if (item.Key == "6" || item.Key == "7")
+                        {
+                            data.selfStudyType.Add(item.Key, item.Value);
+                        }
+                        if (item.Key == "8")
+                        {
+                            data.classLeaveType.Add(item.Key, item.Value);
+                        }
+                    }
+                }
+
+                List<vw_New_LeaveList> leavelist = db.vw_New_LeaveList.Where(q => q.IsDelete == 0 && q.StudentID.Trim() == accountInfo.userID).OrderByDescending(q => q.SubmitTime).ToList();
+                if (leavelist.Any())
+                {
+                    data.leavelistArray = TransformLL(leavelist);
+                    foreach (var item in leavelist)
+                    {
+                        if (item.LeaveType.ToString().Trim() == "1" || item.LeaveType.ToString().Trim() == "2" || item.LeaveType.ToString().Trim() == "3" || item.LeaveType.ToString().Trim() == "4")
+                        {
+                            data.leaveNum++;
+                        }
+                        if (item.LeaveType.ToString().Trim() == "5")
+                        {
+                            data.weeklyMeetingNum++;
+                        }
+                        if (item.LeaveType.ToString().Trim() == "6" || item.LeaveType.ToString().Trim() == "7")
+                        {
+                            data.selfStudyNum++;
+                        }
+                        if (item.LeaveType.ToString().Trim() == "8")
+                        {
+                            data.classLeaveNum++;
+                        }
+                    }
+                }
+
+                return Success("获取成功", data);
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
             }
             #endregion
         }
