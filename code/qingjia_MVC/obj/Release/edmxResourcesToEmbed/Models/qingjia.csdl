@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="imaw_qingjiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="imaw_qingjia_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="T_Account">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Psd" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Psd" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Wechat" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="Q1" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -27,38 +27,8 @@
     <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="T_BatchLeave">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="TypeID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="TypeChildID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
-    <Property Name="StateLeave" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="StateBack" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="TimeLeave" Type="DateTime" Precision="3" />
-    <Property Name="TimeBack" Type="DateTime" Precision="3" />
-    <Property Name="AuditTeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="StudentsID" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
-    <Property Name="LeaveInfo" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="T_ChangeBatch">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="Batch" Type="Int32" />
-    <Property Name="Datetime" Type="DateTime" Precision="3" />
-    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="Reason" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
-    <Property Name="AuditState" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="AuditTeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="AutoUpdateTimeSpan" Type="Int32" />
   </EntityType>
   <EntityType Name="T_Class">
     <Key>
@@ -86,11 +56,14 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StartTime" Type="DateTime" Precision="3" />
     <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
     <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Int32" />
   </EntityType>
   <EntityType Name="T_Info">
     <Key>
@@ -170,6 +143,16 @@
     <Property Name="Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="AuditTeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="PrintTimes" Type="Int32" />
+    <Property Name="IsDelete" Type="Int32" />
+  </EntityType>
+  <EntityType Name="T_LeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="T_TeacherLeaveType" Relationship="Self.FK_T_TeacherLeaveType_T_LeaveType" FromRole="T_LeaveType" ToRole="T_TeacherLeaveType" />
   </EntityType>
   <EntityType Name="T_Menu">
     <Key>
@@ -180,6 +163,37 @@
     <Property Name="FatherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Url" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="T_New_LeaveList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+    <Property Name="StateLeave" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="StateBack" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RejectReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="LeaveType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="LeaveTypeChildrenID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+    <Property Name="BackTime" Type="DateTime" Precision="3" />
+    <Property Name="LeaveWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="BackWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Lesson" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="AuditTeacher" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="PrintTimes" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="IntershipCompany" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IntershipAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PrincipalName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="PrincipalTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_One" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_Two" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_Three" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IsDelete" Type="Int32" />
+  </EntityType>
   <EntityType Name="T_RoleMenu">
     <Key>
       <PropertyRef Name="ID" />
@@ -187,6 +201,18 @@
     <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="MenuID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_SendList">
+    <Key>
+      <PropertyRef Name="LV_Num" />
+    </Key>
+    <Property Name="LV_Num" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ST_Num" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MessageType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="timeString" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="result" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="reason" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="T_Statistic">
     <Key>
@@ -229,6 +255,19 @@
     <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="T_TeacherLeaveType" Relationship="Self.FK_T_TeacherLeaveType_T_Teacher" FromRole="T_Teacher" ToRole="T_TeacherLeaveType" />
+  </EntityType>
+  <EntityType Name="T_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveTypeID" Type="Int32" />
+    <Property Name="EnableMessage" Type="Int32" />
+    <Property Name="IsDelete" Type="Int32" />
+    <NavigationProperty Name="T_LeaveType" Relationship="Self.FK_T_TeacherLeaveType_T_LeaveType" FromRole="T_TeacherLeaveType" ToRole="T_LeaveType" />
+    <NavigationProperty Name="T_Teacher" Relationship="Self.FK_T_TeacherLeaveType_T_Teacher" FromRole="T_TeacherLeaveType" ToRole="T_Teacher" />
   </EntityType>
   <EntityType Name="T_Type">
     <Key>
@@ -252,14 +291,6 @@
     <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
   </EntityType>
-  <EntityType Name="T_NightNameList">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="State" />
-    </Key>
-    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
   <EntityType Name="T_Role">
     <Key>
       <PropertyRef Name="ID" />
@@ -269,19 +300,59 @@
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="XML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="vw_Class">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ClassName" />
+      <PropertyRef Name="Grade" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Batch" Type="Guid" />
+    <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeahcerTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="vw_ClassBatch">
     <Key>
       <PropertyRef Name="ID" />
       <PropertyRef Name="ClassName" />
-      <PropertyRef Name="Batch" />
-      <PropertyRef Name="Datetime" />
+      <PropertyRef Name="Grade" />
     </Key>
     <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Batch" Type="Int32" Nullable="false" />
-    <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Batch" Type="Int32" />
+    <Property Name="Datetime" Type="DateTime" Precision="3" />
     <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="AutoUpdateTimeSpan" Type="Int32" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_Holiday">
+    <Key>
+      <PropertyRef Name="HolidayID" />
+    </Key>
+    <Property Name="HolidayID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
+    <Property Name="TeacherID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelete" Type="Int32" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="vw_LeaveIntership">
     <Key>
@@ -374,6 +445,56 @@
     <Property Name="PrintTimes" Type="Int32" />
     <Property Name="AuditName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="vw_New_LeaveList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ST_Name" />
+      <PropertyRef Name="ST_Tel" />
+      <PropertyRef Name="ST_ContactOne" />
+      <PropertyRef Name="ST_OneTel" />
+      <PropertyRef Name="ST_Class" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+    <Property Name="StateLeave" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="StateBack" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RejectReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="LeaveTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+    <Property Name="BackTime" Type="DateTime" Precision="3" />
+    <Property Name="LeaveWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="BackWay" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Lesson" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="AuditTeacher" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="PrintTimes" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ST_Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ST_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_QQ" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_ContactOne" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ST_OneTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ST_Sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ST_Dor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ST_Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ST_MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IntershipCompany" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IntershipAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PrincipalName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="PrincipalTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_One" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_Two" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Pic_Three" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="LeaveTypeChildrenID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="IsDelete" Type="Int32" />
+  </EntityType>
   <EntityType Name="vw_NightNameList">
     <Key>
       <PropertyRef Name="Batch" />
@@ -390,20 +511,6 @@
     <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
-  <EntityType Name="vw_StudenBatch">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="StudentID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="ST_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-    <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="Datetime" Type="DateTime" Precision="3" />
-    <Property Name="Reason" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="AuditState" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Batch" Type="Int32" />
   </EntityType>
   <EntityType Name="vw_Student">
     <Key>
@@ -430,14 +537,53 @@
     <Property Name="ST_Class" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ST_Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="MonitorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="MonitorName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="ST_Teacher" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="ST_TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ClassID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityContainer Name="imaw_qingjiaEntities" annotation:LazyLoadingEnabled="true">
+  <EntityType Name="vw_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherGrade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LeaveTypeID" Type="Int32" />
+    <Property Name="LeaveTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveTypeDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="EnableMessage" Type="Int32" />
+    <Property Name="IsDelete" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_T_TeacherLeaveType_T_LeaveType">
+    <End Role="T_LeaveType" Type="Self.T_LeaveType" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_LeaveType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="LeaveTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_TeacherLeaveType_T_Teacher">
+    <End Role="T_Teacher" Type="Self.T_Teacher" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Teacher">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="TeacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="T_Account" EntityType="Self.T_Account" />
     <EntitySet Name="T_Batch" EntityType="Self.T_Batch" />
-    <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" />
-    <EntitySet Name="T_ChangeBatch" EntityType="Self.T_ChangeBatch" />
     <EntitySet Name="T_Class" EntityType="Self.T_Class" />
     <EntitySet Name="T_Deadline" EntityType="Self.T_Deadline" />
     <EntitySet Name="T_Holiday" EntityType="Self.T_Holiday" />
@@ -445,23 +591,72 @@
     <EntitySet Name="T_InfoDetail" EntityType="Self.T_InfoDetail" />
     <EntitySet Name="T_LeaveIntership" EntityType="Self.T_LeaveIntership" />
     <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" />
+    <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" />
     <EntitySet Name="T_Menu" EntityType="Self.T_Menu" />
+    <EntitySet Name="T_New_LeaveList" EntityType="Self.T_New_LeaveList" />
     <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" />
+    <EntitySet Name="T_SendList" EntityType="Self.T_SendList" />
     <EntitySet Name="T_Statistic" EntityType="Self.T_Statistic" />
     <EntitySet Name="T_Student" EntityType="Self.T_Student" />
     <EntitySet Name="T_Teacher" EntityType="Self.T_Teacher" />
+    <EntitySet Name="T_TeacherLeaveType" EntityType="Self.T_TeacherLeaveType" />
     <EntitySet Name="T_Type" EntityType="Self.T_Type" />
     <EntitySet Name="T_Vacation" EntityType="Self.T_Vacation" />
-    <EntitySet Name="T_NightNameList" EntityType="Self.T_NightNameList" />
     <EntitySet Name="T_Role" EntityType="Self.T_Role" />
+    <EntitySet Name="vw_Class" EntityType="Self.vw_Class" />
     <EntitySet Name="vw_ClassBatch" EntityType="Self.vw_ClassBatch" />
+    <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" />
     <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" />
     <EntitySet Name="vw_LeaveList" EntityType="Self.vw_LeaveList" />
+    <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" />
     <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" />
-    <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" />
     <EntitySet Name="vw_Student" EntityType="Self.vw_Student" />
-    <FunctionImport Name="sp_getNightNameList" ReturnType="Collection(String)">
+    <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" />
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">
+      <End Role="T_LeaveType" EntitySet="T_LeaveType" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_Teacher" Association="Self.FK_T_TeacherLeaveType_T_Teacher">
+      <End Role="T_Teacher" EntitySet="T_Teacher" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
+    <FunctionImport Name="sp_getNightNameList">
       <Parameter Name="TeacherID" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="T_LoginInfo" EntityType="imaw_qingjia_newModel.T_LoginInfo" />
+    <EntitySet Name="vw_StudentClassBatch" EntityType="imaw_qingjia_newModel.vw_StudentClassBatch" />
   </EntityContainer>
+  <EntityType Name="T_LoginInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="userName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="roleID" Type="Int32" />
+    <Property Name="roleName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="loginPort" Type="Int32" />
+    <Property Name="loginTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_StudentClassBatch">
+    <Key>
+      <PropertyRef Name="ST_Num" />
+      <PropertyRef Name="ST_Name" />
+    </Key>
+    <Property Name="ST_Num" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="ClassName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Batch" Type="Int32" />
+    <Property Name="Datetime" Type="DateTime" Precision="3" />
+    <Property Name="TeacherID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AutoUpdateTime" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="AutoUpdateTimeSpan" Type="Int32" />
+    <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="TeacherTel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="DeadLine" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

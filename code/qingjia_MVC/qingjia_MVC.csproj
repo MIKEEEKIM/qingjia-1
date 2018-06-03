@@ -265,6 +265,7 @@
     <Compile Include="Content\DataTableHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AddressList\AddressListController.cs" />
+    <Compile Include="Controllers\API\Admin\AdminController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\Common\PrintPic.cs" />
     <Compile Include="Controllers\API\Student\LeaveListController.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Models\API\AccountInfo.cs" />
     <Compile Include="Models\API\AddressList\StudentAddressInfo.cs" />
     <Compile Include="Models\API\AddressList\StudentListModel.cs" />
+    <Compile Include="Models\API\Admin\ReturnData.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Models\API\Audit\AuditReject.cs" />
     <Compile Include="Models\API\Audit\LeaveTypes.cs" />
@@ -299,6 +301,7 @@
     <Compile Include="Models\API\Common\PrintLeaveListModel.cs" />
     <Compile Include="Models\API\Holiday.cs" />
     <Compile Include="Models\API\LeaveList.cs" />
+    <Compile Include="Models\API\Admin\MessageStatistic.cs" />
     <Compile Include="Models\API\NightInfo.cs" />
     <Compile Include="Models\API\SelectCondition.cs" />
     <Compile Include="Models\API\Setting\HolidayInfo.cs" />
@@ -319,11 +322,13 @@
     <Compile Include="Models\API\Student\LeaveSchoolModel.cs" />
     <Compile Include="Models\API\Student\LeaveSpecialModel.cs" />
     <Compile Include="Models\API\Student\ReturnLeaveListInfo.cs" />
+    <Compile Include="Models\API\Student\ReturnLeaveListStatistic.cs" />
     <Compile Include="Models\API\Student\StudentInfo.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\API\User\LoginModel.cs" />
     <Compile Include="Models\API\User\LoginStateModel.cs" />
     <Compile Include="Models\API\User\ReturnUserModel.cs" />
+    <Compile Include="Models\API\User\TeacherIndexData.cs" />
     <Compile Include="Models\API\User\TeacherLeaveListPending.cs" />
     <Compile Include="Models\API\User\TeacherLeaveListStatistic.cs" />
     <Compile Include="Models\API\User\TeacherMeetingHolidayInfo.cs" />

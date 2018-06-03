@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>F:\WebSite\Web_qingjia</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\qingjia</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/AddressList/Views/ClassAddress/Index.cshtml">

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="imaw_qingjiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="imaw_qingjia_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="T_Account">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="Psd" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Psd" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Wechat" Type="varchar" MaxLength="64" />
     <Property Name="Q1" Type="nvarchar" MaxLength="64" />
@@ -27,38 +27,8 @@
     <Property Name="TeacherID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
     <Property Name="Location" Type="varchar" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="T_BatchLeave">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="TypeID" Type="nchar" MaxLength="10" />
-    <Property Name="TypeChildID" Type="nchar" MaxLength="10" />
-    <Property Name="Reason" Type="varchar" MaxLength="100" />
-    <Property Name="SubmitTime" Type="datetime" />
-    <Property Name="StateLeave" Type="nchar" MaxLength="10" />
-    <Property Name="StateBack" Type="nchar" MaxLength="10" />
-    <Property Name="TimeLeave" Type="datetime" />
-    <Property Name="TimeBack" Type="datetime" />
-    <Property Name="AuditTeacherID" Type="varchar" MaxLength="20" />
-    <Property Name="Notes" Type="varchar" MaxLength="100" />
-    <Property Name="StudentsID" Type="varchar" MaxLength="800" />
-    <Property Name="LeaveInfo" Type="varchar" MaxLength="800" />
-  </EntityType>
-  <EntityType Name="T_ChangeBatch">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="StudentID" Type="varchar" MaxLength="64" />
-    <Property Name="Batch" Type="int" />
-    <Property Name="Datetime" Type="datetime" />
-    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
-    <Property Name="Reason" Type="varchar" MaxLength="225" />
-    <Property Name="SubmitTime" Type="datetime" />
-    <Property Name="AuditState" Type="nchar" MaxLength="10" />
-    <Property Name="AuditTeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+    <Property Name="AutoUpdateTimeSpan" Type="int" />
   </EntityType>
   <EntityType Name="T_Class">
     <Key>
@@ -86,11 +56,14 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
+    <Property Name="DeadLine" Type="datetime" />
     <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
     <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
     <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="IsDelete" Type="int" />
   </EntityType>
   <EntityType Name="T_Info">
     <Key>
@@ -170,6 +143,28 @@
     <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="AuditTeacherID" Type="varchar" MaxLength="64" />
     <Property Name="PrintTimes" Type="int" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
+  <EntityType Name="T_LeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="T_LoginInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="nchar" MaxLength="20" />
+    <Property Name="userName" Type="nchar" MaxLength="20" />
+    <Property Name="roleID" Type="int" />
+    <Property Name="roleName" Type="nchar" MaxLength="10" />
+    <Property Name="grade" Type="nchar" MaxLength="10" />
+    <Property Name="loginPort" Type="int" />
+    <Property Name="loginTime" Type="datetime" />
   </EntityType>
   <EntityType Name="T_Menu">
     <Key>
@@ -180,18 +175,39 @@
     <Property Name="FatherID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="Url" Type="varchar" MaxLength="128" />
   </EntityType>
-  <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-  <EntityType Name="T_NightNameList">
+  <EntityType Name="T_New_LeaveList">
     <Key>
       <PropertyRef Name="ID" />
-      <PropertyRef Name="State" />
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StudentID" Type="varchar" MaxLength="64" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+    <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="StateLeave" Type="char" MaxLength="1" />
+    <Property Name="StateBack" Type="char" MaxLength="1" />
+    <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
+    <Property Name="LeaveType" Type="char" MaxLength="10" />
+    <Property Name="LeaveTypeChildrenID" Type="char" MaxLength="10" />
+    <Property Name="LeaveTime" Type="datetime" />
+    <Property Name="BackTime" Type="datetime" />
+    <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="BackWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="Address" Type="nvarchar" MaxLength="255" />
+    <Property Name="Lesson" Type="char" MaxLength="1" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
+    <Property Name="PrintTimes" Type="char" MaxLength="10" />
+    <Property Name="IntershipCompany" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="PrincipalName" Type="varchar" MaxLength="64" />
+    <Property Name="PrincipalTel" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_One" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Two" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Three" Type="varchar" MaxLength="64" />
+    <Property Name="IsDelete" Type="int" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.T_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="T_Role">
     <Key>
       <PropertyRef Name="ID" />
@@ -208,6 +224,18 @@
     <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="MenuID" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_SendList">
+    <Key>
+      <PropertyRef Name="LV_Num" />
+    </Key>
+    <Property Name="LV_Num" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Num" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="MessageType" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="timeString" Type="datetime" Nullable="false" />
+    <Property Name="result" Type="nchar" MaxLength="1" />
+    <Property Name="reason" Type="nchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="T_Statistic">
     <Key>
@@ -251,6 +279,16 @@
     <Property Name="Grade" Type="nchar" MaxLength="10" />
     <Property Name="Email" Type="varchar" MaxLength="64" />
   </EntityType>
+  <EntityType Name="T_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="LeaveTypeID" Type="int" />
+    <Property Name="EnableMessage" Type="int" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
   <EntityType Name="T_Type">
     <Key>
       <PropertyRef Name="ID" />
@@ -274,23 +312,67 @@
     <Property Name="Remark" Type="nchar" MaxLength="50" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Class”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_Class">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ClassName" />
+      <PropertyRef Name="Grade" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ClassName" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Grade" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Total" Type="int" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="MonitorID" Type="varchar" MaxLength="64" />
+    <Property Name="Batch" Type="uniqueidentifier" />
+    <Property Name="ST_Name" Type="nvarchar" MaxLength="64" />
+    <Property Name="ST_Tel" Type="varchar" MaxLength="64" />
+    <Property Name="ST_Email" Type="varchar" MaxLength="64" />
+    <Property Name="ST_QQ" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="TeahcerTel" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_ClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_ClassBatch">
     <Key>
       <PropertyRef Name="ID" />
       <PropertyRef Name="ClassName" />
-      <PropertyRef Name="Batch" />
-      <PropertyRef Name="Datetime" />
+      <PropertyRef Name="Grade" />
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ClassName" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="Batch" Type="int" Nullable="false" />
-    <Property Name="Datetime" Type="datetime" Nullable="false" />
+    <Property Name="Grade" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Batch" Type="int" />
+    <Property Name="Datetime" Type="datetime" />
     <Property Name="TeacherID" Type="varchar" MaxLength="64" />
     <Property Name="Location" Type="varchar" MaxLength="50" />
+    <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+    <Property Name="AutoUpdateTimeSpan" Type="int" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
+    <Property Name="DeadLine" Type="datetime" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Holiday”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_Holiday">
+    <Key>
+      <PropertyRef Name="HolidayID" />
+    </Key>
+    <Property Name="HolidayID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="DeadLine" Type="datetime" />
+    <Property Name="TeacherID" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDelete" Type="int" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="SubmitTime" Type="datetime" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_LeaveIntership">
     <Key>
       <PropertyRef Name="ID" />
@@ -335,7 +417,7 @@
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_LeaveList">
     <Key>
       <PropertyRef Name="ID" />
@@ -385,7 +467,59 @@
     <Property Name="AuditName" Type="nvarchar" MaxLength="64" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_New_LeaveList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_New_LeaveList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ST_Name" />
+      <PropertyRef Name="ST_Tel" />
+      <PropertyRef Name="ST_ContactOne" />
+      <PropertyRef Name="ST_OneTel" />
+      <PropertyRef Name="ST_Class" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="StudentID" Type="varchar" MaxLength="64" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+    <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="StateLeave" Type="char" MaxLength="1" />
+    <Property Name="StateBack" Type="char" MaxLength="1" />
+    <Property Name="RejectReason" Type="nvarchar" MaxLength="255" />
+    <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
+    <Property Name="LeaveTime" Type="datetime" />
+    <Property Name="BackTime" Type="datetime" />
+    <Property Name="LeaveWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="BackWay" Type="nvarchar" MaxLength="64" />
+    <Property Name="Address" Type="nvarchar" MaxLength="255" />
+    <Property Name="Lesson" Type="char" MaxLength="1" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="AuditTeacher" Type="varchar" MaxLength="64" />
+    <Property Name="PrintTimes" Type="char" MaxLength="10" />
+    <Property Name="ST_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Tel" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Email" Type="varchar" MaxLength="64" />
+    <Property Name="ST_QQ" Type="varchar" MaxLength="64" />
+    <Property Name="ST_ContactOne" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_OneTel" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Sex" Type="nchar" MaxLength="10" />
+    <Property Name="ST_Dor" Type="nchar" MaxLength="10" />
+    <Property Name="ST_Class" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Grade" Type="nchar" MaxLength="10" />
+    <Property Name="ST_MonitorID" Type="varchar" MaxLength="64" />
+    <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
+    <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipCompany" Type="varchar" MaxLength="64" />
+    <Property Name="IntershipAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="PrincipalName" Type="varchar" MaxLength="64" />
+    <Property Name="PrincipalTel" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_One" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Two" Type="varchar" MaxLength="64" />
+    <Property Name="Pic_Three" Type="varchar" MaxLength="64" />
+    <Property Name="LeaveType" Type="char" MaxLength="10" />
+    <Property Name="LeaveTypeChildrenID" Type="char" MaxLength="10" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_NightNameList”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_NightNameList">
     <Key>
       <PropertyRef Name="Batch" />
@@ -404,23 +538,7 @@
     <Property Name="Datetime" Type="datetime" Nullable="false" />
   </EntityType>
   <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_StudenBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-  <EntityType Name="vw_StudenBatch">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="StudentID" Type="varchar" MaxLength="64" />
-    <Property Name="ST_Name" Type="nvarchar" MaxLength="64" />
-    <Property Name="ST_Class" Type="varchar" MaxLength="64" />
-    <Property Name="Datetime" Type="datetime" />
-    <Property Name="Reason" Type="varchar" MaxLength="225" />
-    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
-    <Property Name="AuditState" Type="nchar" MaxLength="10" />
-    <Property Name="Batch" Type="int" />
-  </EntityType>
-  <!--生成过程中发现错误:
-警告 6002: 表/视图“imaw_qingjia.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="vw_Student">
     <Key>
       <PropertyRef Name="ST_Num" />
@@ -446,17 +564,80 @@
     <Property Name="ST_Class" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ST_Grade" Type="nchar" MaxLength="10" />
     <Property Name="MonitorID" Type="varchar" MaxLength="64" />
+    <Property Name="MonitorName" Type="nvarchar" MaxLength="64" />
     <Property Name="ST_Teacher" Type="nvarchar" MaxLength="64" />
     <Property Name="ST_TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="ClassID" Type="varchar" MaxLength="64" />
   </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_StudentClassBatch”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_StudentClassBatch">
+    <Key>
+      <PropertyRef Name="ST_Num" />
+      <PropertyRef Name="ST_Name" />
+    </Key>
+    <Property Name="ST_Num" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="ST_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="ClassName" Type="varchar" MaxLength="64" />
+    <Property Name="Grade" Type="nchar" MaxLength="10" />
+    <Property Name="Batch" Type="int" />
+    <Property Name="Datetime" Type="datetime" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="Location" Type="varchar" MaxLength="50" />
+    <Property Name="AutoUpdateTime" Type="nchar" MaxLength="1" />
+    <Property Name="AutoUpdateTimeSpan" Type="int" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherEmail" Type="varchar" MaxLength="64" />
+    <Property Name="DeadLine" Type="datetime" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_TeacherLeaveType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="vw_TeacherLeaveType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TeacherID" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
+    <Property Name="TeacherTel" Type="varchar" MaxLength="64" />
+    <Property Name="TeacherGrade" Type="nchar" MaxLength="10" />
+    <Property Name="LeaveTypeID" Type="int" />
+    <Property Name="LeaveTypeName" Type="varchar" MaxLength="20" />
+    <Property Name="LeaveTypeDescription" Type="varchar" MaxLength="200" />
+    <Property Name="EnableMessage" Type="int" />
+    <Property Name="IsDelete" Type="int" />
+  </EntityType>
+  <Association Name="FK_T_TeacherLeaveType_T_LeaveType">
+    <End Role="T_LeaveType" Type="Self.T_LeaveType" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_LeaveType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="LeaveTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_TeacherLeaveType_T_Teacher">
+    <End Role="T_Teacher" Type="Self.T_Teacher" Multiplicity="0..1" />
+    <End Role="T_TeacherLeaveType" Type="Self.T_TeacherLeaveType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Teacher">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="T_TeacherLeaveType">
+        <PropertyRef Name="TeacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_getNightNameList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TeacherID" Type="varchar" Mode="In" />
   </Function>
-  <EntityContainer Name="imaw_qingjiaModelStoreContainer">
+  <EntityContainer Name="imaw_qingjia_newModelStoreContainer">
     <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Batch" EntityType="Self.T_Batch" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_BatchLeave" EntityType="Self.T_BatchLeave" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_ChangeBatch" EntityType="Self.T_ChangeBatch" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Class" EntityType="Self.T_Class" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Deadline" EntityType="Self.T_Deadline" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Holiday" EntityType="Self.T_Holiday" Schema="dbo" store:Type="Tables" />
@@ -464,19 +645,18 @@
     <EntitySet Name="T_InfoDetail" EntityType="Self.T_InfoDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveIntership" EntityType="Self.T_LeaveIntership" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_LeaveList" EntityType="Self.T_LeaveList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_LeaveType" EntityType="Self.T_LeaveType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_LoginInfo" EntityType="Self.T_LoginInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Menu" EntityType="Self.T_Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_New_LeaveList" EntityType="Self.T_New_LeaveList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_RoleMenu" EntityType="Self.T_RoleMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_SendList" EntityType="Self.T_SendList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Statistic" EntityType="Self.T_Statistic" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Student" EntityType="Self.T_Student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Teacher" EntityType="Self.T_Teacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_TeacherLeaveType" EntityType="Self.T_TeacherLeaveType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Type" EntityType="Self.T_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Vacation" EntityType="Self.T_Vacation" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_NightNameList" EntityType="Self.T_NightNameList" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [T_NightNameList].[ID] AS [ID], 
-    [T_NightNameList].[State] AS [State]
-    FROM [dbo].[T_NightNameList] AS [T_NightNameList]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="T_Role" EntityType="Self.T_Role" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [T_Role].[ID] AS [ID], 
@@ -484,15 +664,52 @@
     [T_Role].[XML] AS [XML]
     FROM [dbo].[T_Role] AS [T_Role]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_Class" EntityType="Self.vw_Class" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_Class].[ID] AS [ID], 
+    [vw_Class].[ClassName] AS [ClassName], 
+    [vw_Class].[Grade] AS [Grade], 
+    [vw_Class].[Total] AS [Total], 
+    [vw_Class].[TeacherID] AS [TeacherID], 
+    [vw_Class].[MonitorID] AS [MonitorID], 
+    [vw_Class].[Batch] AS [Batch], 
+    [vw_Class].[ST_Name] AS [ST_Name], 
+    [vw_Class].[ST_Tel] AS [ST_Tel], 
+    [vw_Class].[ST_Email] AS [ST_Email], 
+    [vw_Class].[ST_QQ] AS [ST_QQ], 
+    [vw_Class].[TeacherName] AS [TeacherName], 
+    [vw_Class].[TeahcerTel] AS [TeahcerTel]
+    FROM [dbo].[vw_Class] AS [vw_Class]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vw_ClassBatch" EntityType="Self.vw_ClassBatch" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_ClassBatch].[ID] AS [ID], 
     [vw_ClassBatch].[ClassName] AS [ClassName], 
+    [vw_ClassBatch].[Grade] AS [Grade], 
     [vw_ClassBatch].[Batch] AS [Batch], 
     [vw_ClassBatch].[Datetime] AS [Datetime], 
     [vw_ClassBatch].[TeacherID] AS [TeacherID], 
-    [vw_ClassBatch].[Location] AS [Location]
+    [vw_ClassBatch].[Location] AS [Location], 
+    [vw_ClassBatch].[AutoUpdateTime] AS [AutoUpdateTime], 
+    [vw_ClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
+    [vw_ClassBatch].[TeacherName] AS [TeacherName], 
+    [vw_ClassBatch].[TeacherTel] AS [TeacherTel], 
+    [vw_ClassBatch].[TeacherEmail] AS [TeacherEmail], 
+    [vw_ClassBatch].[DeadLine] AS [DeadLine]
     FROM [dbo].[vw_ClassBatch] AS [vw_ClassBatch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_Holiday" EntityType="Self.vw_Holiday" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_Holiday].[HolidayID] AS [HolidayID], 
+    [vw_Holiday].[Name] AS [Name], 
+    [vw_Holiday].[StartTime] AS [StartTime], 
+    [vw_Holiday].[EndTime] AS [EndTime], 
+    [vw_Holiday].[DeadLine] AS [DeadLine], 
+    [vw_Holiday].[TeacherID] AS [TeacherID], 
+    [vw_Holiday].[IsDelete] AS [IsDelete], 
+    [vw_Holiday].[TeacherName] AS [TeacherName], 
+    [vw_Holiday].[SubmitTime] AS [SubmitTime]
+    FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -556,6 +773,50 @@
     [vw_LeaveList].[AuditName] AS [AuditName]
     FROM [dbo].[vw_LeaveList] AS [vw_LeaveList]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_New_LeaveList" EntityType="Self.vw_New_LeaveList" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_New_LeaveList].[ID] AS [ID], 
+    [vw_New_LeaveList].[StudentID] AS [StudentID], 
+    [vw_New_LeaveList].[Reason] AS [Reason], 
+    [vw_New_LeaveList].[SubmitTime] AS [SubmitTime], 
+    [vw_New_LeaveList].[StateLeave] AS [StateLeave], 
+    [vw_New_LeaveList].[StateBack] AS [StateBack], 
+    [vw_New_LeaveList].[RejectReason] AS [RejectReason], 
+    [vw_New_LeaveList].[LeaveTypeName] AS [LeaveTypeName], 
+    [vw_New_LeaveList].[LeaveTime] AS [LeaveTime], 
+    [vw_New_LeaveList].[BackTime] AS [BackTime], 
+    [vw_New_LeaveList].[LeaveWay] AS [LeaveWay], 
+    [vw_New_LeaveList].[BackWay] AS [BackWay], 
+    [vw_New_LeaveList].[Address] AS [Address], 
+    [vw_New_LeaveList].[Lesson] AS [Lesson], 
+    [vw_New_LeaveList].[Teacher] AS [Teacher], 
+    [vw_New_LeaveList].[AuditTeacher] AS [AuditTeacher], 
+    [vw_New_LeaveList].[PrintTimes] AS [PrintTimes], 
+    [vw_New_LeaveList].[ST_Name] AS [ST_Name], 
+    [vw_New_LeaveList].[ST_Tel] AS [ST_Tel], 
+    [vw_New_LeaveList].[ST_Email] AS [ST_Email], 
+    [vw_New_LeaveList].[ST_QQ] AS [ST_QQ], 
+    [vw_New_LeaveList].[ST_ContactOne] AS [ST_ContactOne], 
+    [vw_New_LeaveList].[ST_OneTel] AS [ST_OneTel], 
+    [vw_New_LeaveList].[ST_Sex] AS [ST_Sex], 
+    [vw_New_LeaveList].[ST_Dor] AS [ST_Dor], 
+    [vw_New_LeaveList].[ST_Class] AS [ST_Class], 
+    [vw_New_LeaveList].[ST_Grade] AS [ST_Grade], 
+    [vw_New_LeaveList].[ST_MonitorID] AS [ST_MonitorID], 
+    [vw_New_LeaveList].[ST_Teacher] AS [ST_Teacher], 
+    [vw_New_LeaveList].[ST_TeacherID] AS [ST_TeacherID], 
+    [vw_New_LeaveList].[IntershipCompany] AS [IntershipCompany], 
+    [vw_New_LeaveList].[IntershipAddress] AS [IntershipAddress], 
+    [vw_New_LeaveList].[PrincipalName] AS [PrincipalName], 
+    [vw_New_LeaveList].[PrincipalTel] AS [PrincipalTel], 
+    [vw_New_LeaveList].[Pic_One] AS [Pic_One], 
+    [vw_New_LeaveList].[Pic_Two] AS [Pic_Two], 
+    [vw_New_LeaveList].[Pic_Three] AS [Pic_Three], 
+    [vw_New_LeaveList].[LeaveType] AS [LeaveType], 
+    [vw_New_LeaveList].[LeaveTypeChildrenID] AS [LeaveTypeChildrenID], 
+    [vw_New_LeaveList].[IsDelete] AS [IsDelete]
+    FROM [dbo].[vw_New_LeaveList] AS [vw_New_LeaveList]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vw_NightNameList" EntityType="Self.vw_NightNameList" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_NightNameList].[Batch] AS [Batch], 
@@ -566,19 +827,6 @@
     [vw_NightNameList].[ST_Teacher] AS [ST_Teacher], 
     [vw_NightNameList].[Datetime] AS [Datetime]
     FROM [dbo].[vw_NightNameList] AS [vw_NightNameList]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vw_StudenBatch" EntityType="Self.vw_StudenBatch" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [vw_StudenBatch].[ID] AS [ID], 
-    [vw_StudenBatch].[StudentID] AS [StudentID], 
-    [vw_StudenBatch].[ST_Name] AS [ST_Name], 
-    [vw_StudenBatch].[ST_Class] AS [ST_Class], 
-    [vw_StudenBatch].[Datetime] AS [Datetime], 
-    [vw_StudenBatch].[Reason] AS [Reason], 
-    [vw_StudenBatch].[TeacherID] AS [TeacherID], 
-    [vw_StudenBatch].[AuditState] AS [AuditState], 
-    [vw_StudenBatch].[Batch] AS [Batch]
-    FROM [dbo].[vw_StudenBatch] AS [vw_StudenBatch]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_Student" EntityType="Self.vw_Student" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -598,9 +846,51 @@
     [vw_Student].[ST_Class] AS [ST_Class], 
     [vw_Student].[ST_Grade] AS [ST_Grade], 
     [vw_Student].[MonitorID] AS [MonitorID], 
+    [vw_Student].[MonitorName] AS [MonitorName], 
     [vw_Student].[ST_Teacher] AS [ST_Teacher], 
-    [vw_Student].[ST_TeacherID] AS [ST_TeacherID]
+    [vw_Student].[ST_TeacherID] AS [ST_TeacherID], 
+    [vw_Student].[ClassID] AS [ClassID]
     FROM [dbo].[vw_Student] AS [vw_Student]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_StudentClassBatch" EntityType="Self.vw_StudentClassBatch" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_StudentClassBatch].[ST_Num] AS [ST_Num], 
+    [vw_StudentClassBatch].[ST_Name] AS [ST_Name], 
+    [vw_StudentClassBatch].[ClassName] AS [ClassName], 
+    [vw_StudentClassBatch].[Grade] AS [Grade], 
+    [vw_StudentClassBatch].[Batch] AS [Batch], 
+    [vw_StudentClassBatch].[Datetime] AS [Datetime], 
+    [vw_StudentClassBatch].[TeacherID] AS [TeacherID], 
+    [vw_StudentClassBatch].[Location] AS [Location], 
+    [vw_StudentClassBatch].[AutoUpdateTime] AS [AutoUpdateTime], 
+    [vw_StudentClassBatch].[AutoUpdateTimeSpan] AS [AutoUpdateTimeSpan], 
+    [vw_StudentClassBatch].[TeacherName] AS [TeacherName], 
+    [vw_StudentClassBatch].[TeacherTel] AS [TeacherTel], 
+    [vw_StudentClassBatch].[TeacherEmail] AS [TeacherEmail], 
+    [vw_StudentClassBatch].[DeadLine] AS [DeadLine]
+    FROM [dbo].[vw_StudentClassBatch] AS [vw_StudentClassBatch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_TeacherLeaveType" EntityType="Self.vw_TeacherLeaveType" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_TeacherLeaveType].[ID] AS [ID], 
+    [vw_TeacherLeaveType].[TeacherID] AS [TeacherID], 
+    [vw_TeacherLeaveType].[TeacherName] AS [TeacherName], 
+    [vw_TeacherLeaveType].[TeacherTel] AS [TeacherTel], 
+    [vw_TeacherLeaveType].[TeacherGrade] AS [TeacherGrade], 
+    [vw_TeacherLeaveType].[LeaveTypeID] AS [LeaveTypeID], 
+    [vw_TeacherLeaveType].[LeaveTypeName] AS [LeaveTypeName], 
+    [vw_TeacherLeaveType].[LeaveTypeDescription] AS [LeaveTypeDescription], 
+    [vw_TeacherLeaveType].[EnableMessage] AS [EnableMessage], 
+    [vw_TeacherLeaveType].[IsDelete] AS [IsDelete]
+    FROM [dbo].[vw_TeacherLeaveType] AS [vw_TeacherLeaveType]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_LeaveType" Association="Self.FK_T_TeacherLeaveType_T_LeaveType">
+      <End Role="T_LeaveType" EntitySet="T_LeaveType" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_TeacherLeaveType_T_Teacher" Association="Self.FK_T_TeacherLeaveType_T_Teacher">
+      <End Role="T_Teacher" EntitySet="T_Teacher" />
+      <End Role="T_TeacherLeaveType" EntitySet="T_TeacherLeaveType" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

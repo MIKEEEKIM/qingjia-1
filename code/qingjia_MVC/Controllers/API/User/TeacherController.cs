@@ -328,6 +328,43 @@ namespace qingjia_MVC.Controllers.API.User
             #endregion
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet, Route("getteacherindexdata")]
+        public ApiResult GetTeacherIndexData(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                List<ApiResult> data = new List<ApiResult>
+                {
+                    LeaveListPending(access_token),
+                    StudengLeave(access_token),
+                    SystemLogin(access_token),
+                    SystemLeaveListStatistic(access_token),
+                    GetMeetingInfo(access_token),
+                    GetHolidayInfo(access_token)
+                };
+                return Success("获取成功", data);
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
         private TeacherMeetingHolidayInfo Get_MeetingInfoTeacherID(string teacherID)
         {
             try

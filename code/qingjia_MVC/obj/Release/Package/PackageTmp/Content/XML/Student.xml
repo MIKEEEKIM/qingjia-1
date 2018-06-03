@@ -3,16 +3,16 @@
   <TreeNode Text="请假管理" Icon="LayoutContent" Expanded="true">
     <TreeNode Text="申请请假" NavigateUrl="~/Leave/LeaveList" IconFont="SignIn">
     </TreeNode>
-    <TreeNode Text="实习请假" NavigateUrl="~/Leave/LeaveList/leaveinternship" IconFont="SignIn">
-    </TreeNode>
+    <!--<TreeNode Text="实习请假" NavigateUrl="~/Leave/LeaveList/leaveinternship" IconFont="SignIn">
+    </TreeNode>-->
     <!--<TreeNode Text="请假说明" NavigateUrl="~/Leave/LeaveForm" IconFont="SignIn">
     </TreeNode>-->
   </TreeNode>
   <TreeNode Text="表单管理" Icon="ApplicationForm" Expanded="true">
     <TreeNode Text="请假记录" NavigateUrl="~/Leave/LeaveList/leavelist" IconFont="SignIn">
     </TreeNode>
-    <TreeNode Text="实习请假记录" NavigateUrl="~/Leave/LeaveList/leaveinternshiplist" IconFont="SignIn">
-    </TreeNode>
+    <!--<TreeNode Text="实习请假记录" NavigateUrl="~/Leave/LeaveList/leaveinternshiplist" IconFont="SignIn">
+    </TreeNode>-->
     <TreeNode Text="班级通讯录" NavigateUrl="~/AddressList/ClassAddress" IconFont="SignIn">
     </TreeNode>
   </TreeNode>

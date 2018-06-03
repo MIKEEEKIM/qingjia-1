@@ -11,7 +11,7 @@
 
         public bool Check()
         {
-            if (this.access_token == null || this.leaveTypeChildrenID == null || this.leave_date == null || this.leave_reason == null || this.teacher_name == null || this.lesson == null)
+            if (access_token == null || leaveTypeChildrenID == null || leave_date == null || leave_reason == null || teacher_name == null || lesson == null || access_token == "" || leaveTypeChildrenID == "" || leave_date == "" || leave_reason == "" || teacher_name == "" || lesson == "")
             {
                 return false;
             }

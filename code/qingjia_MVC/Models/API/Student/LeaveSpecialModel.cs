@@ -10,7 +10,7 @@
 
         public bool Check()
         {
-            if (access_token == null || leaveTypeID == null || leaveTypeChildrenID == null || leave_date == null || leave_reason == null)
+            if (access_token == null || leaveTypeID == null || leaveTypeChildrenID == null || leave_date == null || leave_reason == null || access_token == "" || leaveTypeID == "" || leaveTypeChildrenID == "" || leave_date == "" || leave_reason == "")
             {
                 return false;
             }

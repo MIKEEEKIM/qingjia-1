@@ -1159,5 +1159,38 @@ namespace qingjia_MVC.Controllers.API.Setting
             #endregion
         }
         #endregion
+
+        #region 系统数据整理
+        //public ApiResult SystemDataClear(string access_token)
+        //{
+        //    #region 逻辑操作
+        //    try
+        //    {
+        //        AccountInfo accountInfo = GetAccountInfo(access_token);
+        //        if (accountInfo.userRoleID != "3" && accountInfo.userRoleID != "0")
+        //        {
+        //            return Error("此接口仅限辅导员或管理员访问");
+        //        }
+
+        //        IQueryable<vw_Student> list = db.vw_Student;
+
+        //        if (accountInfo.userRoleID == "3")
+        //        {
+        //            list = list.Where(q => q.ST_Grade.Trim() == accountInfo.Grade);
+        //        }
+
+        //        foreach (var item in list)
+        //        {
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return SystemError(ex);
+        //    }
+        //    #endregion
+
+        //    return null;
+        //}
+        #endregion
     }
 }

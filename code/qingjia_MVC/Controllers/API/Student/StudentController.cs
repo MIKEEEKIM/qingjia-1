@@ -213,7 +213,17 @@ namespace qingjia_MVC.Controllers.API
                 List<vw_New_LeaveList> leavelist = db.vw_New_LeaveList.Where(q => q.IsDelete == 0 && q.StudentID.Trim() == accountInfo.userID).OrderByDescending(q => q.SubmitTime).ToList();
                 if (leavelist.Any())
                 {
-                    data.leavelistArray = TransformLL(leavelist);
+                    //判断请假类型是否开启
+                    List<vw_New_LeaveList> _leaveList = new List<vw_New_LeaveList>();
+                    foreach (var item in leavelist)
+                    {
+                        if (accountInfo.leaveTypeList.ContainsKey(item.LeaveType.ToString().Trim()))
+                        {
+                            _leaveList.Add(item);
+                        }
+                    }
+
+                    data.leavelistArray = TransformLL(_leaveList);
                     foreach (var item in leavelist)
                     {
                         if (item.LeaveType.ToString().Trim() == "1" || item.LeaveType.ToString().Trim() == "2" || item.LeaveType.ToString().Trim() == "3" || item.LeaveType.ToString().Trim() == "4")
@@ -236,6 +246,61 @@ namespace qingjia_MVC.Controllers.API
                 }
 
                 return Success("获取成功", data);
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet,Route("getleaveliststatistic")]
+        public ApiResult GetLeaveListStatistic(string access_token)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                ReturnLeaveListStatistic data = new ReturnLeaveListStatistic();
+                IQueryable<vw_New_LeaveList> ll_data = db.vw_New_LeaveList.Where(q => q.IsDelete == 0 && q.StudentID.Trim() == accountInfo.userID).OrderByDescending(q => q.SubmitTime);
+                if (ll_data.Any())
+                {
+                    List<vw_New_LeaveList> _ll_data = ll_data.ToList();
+                    if (accountInfo.leaveTypeList.Any())
+                    {
+                        foreach (var item in accountInfo.leaveTypeList)
+                        {
+                            data.statisticByLeaveType.Add(item.Value, _ll_data.Where(q => q.LeaveType.Trim() == item.Key).Count());
+                        }
+                        data.statisticByStatus.Add("待审核", _ll_data.Where(q => q.StateLeave.Trim() == "0" && q.StateBack.Trim() == "0").Count());
+                        data.statisticByStatus.Add("待销假", _ll_data.Where(q => q.StateLeave.Trim() == "1" && q.StateBack.Trim() == "0").Count());
+                        data.statisticByStatus.Add("已销假", _ll_data.Where(q => q.StateLeave.Trim() == "1" && q.StateBack.Trim() == "1").Count());
+                        data.statisticByStatus.Add("已驳回", _ll_data.Where(q => q.StateLeave.Trim() == "2" && q.StateBack.Trim() == "1").Count());
+
+                        return Success("获取成功", data);
+                    }
+                    else
+                    {
+                        return Error("尚未开启任意请假类型！");
+                    }
+                }
+                else
+                {
+                    return Error("尚无请假数据！");
+                }
             }
             catch (Exception ex)
             {

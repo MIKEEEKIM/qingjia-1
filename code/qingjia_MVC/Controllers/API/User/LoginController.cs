@@ -104,6 +104,9 @@ namespace qingjia_MVC.Controllers.API.User
                         accountInfo.userName = data.UserName;
                         accountInfo.userRoleID = data.RoleID;
                         accountInfo.permissionList = null;
+
+                        LoginRecord(accountInfo.userID, accountInfo.userName, Convert.ToInt32(accountInfo.userRoleID), accountInfo.userRoleName, accountInfo.Grade, 0);
+
                         HttpRuntime.Cache.Insert(accountInfo.access_token, accountInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
                         HttpRuntime.Cache.Insert(model.id.ToString().Trim(), new LoginStateModel { access_token = _access_token, times = -1 }, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
 
@@ -154,7 +157,91 @@ namespace qingjia_MVC.Controllers.API.User
                 return SystemError();
             }
         }
-        
+
+        /// <summary>
+        /// 管理员账号登录
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, Route("adminlogin")]
+        public ApiResult LoginAdmin([FromBody]LoginModel model)
+        {
+            #region 参数检验
+            if (model.id.Trim() == "" || model.password.Trim() == "")
+            {
+                return Error("管理员账户和密码不能为空！");
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                int times = 1;//代表登录次数
+
+                LoginStateModel loginState = (LoginStateModel)HttpRuntime.Cache.Get(model.id.ToString().Trim());
+                if (loginState != null)
+                {
+                    if (loginState.times == -1)
+                    {
+                        //已登录账号、不需要重新登录，请退出后再登录
+                        HttpRuntime.Cache.Remove(loginState.access_token);
+                        HttpRuntime.Cache.Remove(model.id.ToString().Trim());
+                        //return Error("账号已在其他地方登录，请重新尝试！");
+                    }
+                    else if (loginState.times < 3)
+                    {
+                        times = loginState.times + 1;
+                    }
+                    else if (loginState.times == 3)
+                    {
+                        return Error("已输入密码错误3次，请1分钟之后再次尝试。");
+                    }
+                }
+
+
+                ReturnUserModel data = new ReturnUserModel();
+
+                string adminID = ConfigurationManager.AppSettings["adminID"].ToString();
+                string adminPsd = ConfigurationManager.AppSettings["adminPsd"].ToString();
+
+                if (model.id == adminID && model.password == adminPsd)
+                {
+                    //登陆成功
+                    string _access_token = Guid.NewGuid().ToString();
+                    AccountInfo accountInfo = new AccountInfo
+                    {
+                        userID = model.id,
+                        userName = "管理员",
+                        userRoleID = "0",
+                        userRoleName = "管理员",
+                        access_token = _access_token
+                    };
+
+                    LoginRecord(model.id, "管理员", 0, "管理员", "", 0);
+
+                    HttpRuntime.Cache.Insert(accountInfo.access_token, accountInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
+                    HttpRuntime.Cache.Insert(model.id.ToString().Trim(), new LoginStateModel { access_token = _access_token, times = -1 }, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
+
+                    data.access_token = _access_token;
+                    data.UserID = model.id.ToString().Trim();
+                    data.UserName = "管理员";
+                    data.RoleID = "0";
+
+                    return Success("登陆成功！", data);
+                }
+                else
+                {
+                    HttpRuntime.Cache.Insert(model.id.ToString().Trim(), new LoginStateModel { access_token = "", times = times }, null, DateTime.MaxValue, TimeSpan.FromMinutes(1));
+                    return Error("管理员账户或密码错误！已输入错误" + times + "次，请重新输入！");
+                }
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
         #region 忘记密码 尚未完成
         [HttpGet, Route("forgetpsd")]
         public ApiResult ForgetPassWord(string id)
@@ -228,6 +315,38 @@ namespace qingjia_MVC.Controllers.API.User
             returnData.Add(leaveTypeList);
             returnData.Add(enableMessageList);
             return returnData;
+        }
+        #endregion
+
+        #region 登录记录
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="userName">用户名</param>
+        /// <param name="roleID">用户角色ID</param>
+        /// <param name="roleName">用户角色名</param>
+        /// <param name="grade">用户年级</param>
+        /// <param name="loginPort">登陆端口  0-网页端  1-微信端   2-易班端</param>
+        private void LoginRecord(string userID, string userName, int roleID, string roleName, string grade, int loginPort)
+        {
+            try
+            {
+                T_LoginInfo loginInfo = new T_LoginInfo();
+                loginInfo.userID = userID;
+                loginInfo.userName = userName;
+                loginInfo.roleID = roleID;
+                loginInfo.roleName = roleName;
+                loginInfo.grade = grade;
+                loginInfo.loginPort = loginPort;
+                loginInfo.loginTime = DateTime.Now;
+                db.T_LoginInfo.Add(loginInfo);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
         #endregion
     }

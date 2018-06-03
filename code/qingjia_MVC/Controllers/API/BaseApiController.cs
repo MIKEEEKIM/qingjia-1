@@ -184,9 +184,11 @@ namespace qingjia_MVC.Controllers.API
                 //强制返回401错误
                 ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
 
-                ApiResult result_401 = new ApiResult();
-                result_401.status = "error";
-                result_401.messages = "发生401错误（处于测试模式）";
+                ApiResult result_401 = new ApiResult
+                {
+                    status = "error",
+                    messages = "发生401错误（处于测试模式）"
+                };
 
                 return result_401;
             }

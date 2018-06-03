@@ -15,7 +15,7 @@
 
         public bool Check()
         {
-            if (access_token == null || leaveTypeID == null || leave_date == null || leave_time == null || back_date == null || back_time == null || leave_reason == null)
+            if (access_token == null || leaveTypeID == null || leave_date == null || leave_time == null || back_date == null || back_time == null || leave_reason == null || access_token == "" || leaveTypeID == "" || leave_date == "" || leave_time == "" || back_date == "" || back_time == "" || leave_reason == "")
             {
                 return false;
             }
