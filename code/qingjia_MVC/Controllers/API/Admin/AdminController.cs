@@ -3,7 +3,12 @@ using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.Admin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Z.EntityFramework.Plus;
 
@@ -158,6 +163,23 @@ namespace qingjia_MVC.Controllers.API.Admin
                 return SystemError(ex);
             }
             #endregion
+        }
+
+        [HttpGet, Route("downloadtemplet")]
+        public HttpResponseMessage DownLoadTemplet()
+        {
+            var root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Templet");
+            string fileName = "学生模板.xlsx";
+            string path = Path.Combine(root, fileName);
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream = new FileStream(path, FileMode.Open);
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            result.Content.Headers.ContentDisposition.FileName = fileName;
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(fileName));
+            result.Content.Headers.ContentLength = stream.Length;
+            return result;
         }
     }
 }

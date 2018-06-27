@@ -370,6 +370,7 @@
     <Property Name="IsDelete" Type="int" />
     <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
     <Property Name="SubmitTime" Type="datetime" />
+    <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -708,7 +709,8 @@
     [vw_Holiday].[TeacherID] AS [TeacherID], 
     [vw_Holiday].[IsDelete] AS [IsDelete], 
     [vw_Holiday].[TeacherName] AS [TeacherName], 
-    [vw_Holiday].[SubmitTime] AS [SubmitTime]
+    [vw_Holiday].[SubmitTime] AS [SubmitTime], 
+    [vw_Holiday].[AutoAudit] AS [AutoAudit]
     FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">

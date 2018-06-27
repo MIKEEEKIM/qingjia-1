@@ -101,13 +101,13 @@ namespace qingjia_MVC.Common
             // 实际应用中，请自行设置您的AccessKey和SecretKey
             Mac mac = new Mac(_AccessKey, _SecretKey);
             string bucket = _bucket;
-            string key = LV_NUM;
+            string key = LV_NUM + ".jpg";
             BucketManager bm = new BucketManager(mac);
             StatResult result = bm.Stat(bucket, key);
             if (result.Code.ToString().Trim() == "200")
             {
                 //200 状态码代表 已存在该图片
-                return _QiNiuUrl + LV_NUM;
+                return _QiNiuUrl + key;
             }
             else
             {

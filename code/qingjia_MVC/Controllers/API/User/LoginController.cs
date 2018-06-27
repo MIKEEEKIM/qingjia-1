@@ -79,6 +79,11 @@ namespace qingjia_MVC.Controllers.API.User
                             List<Dictionary<string, string>> leaveTypeSetting = GetLeaveTypeSetting(studentModel.ST_TeacherID.ToString().Trim());
                             accountInfo.leaveTypeList = leaveTypeSetting[0];
                             accountInfo.enableMessageLeaveList = leaveTypeSetting[1];
+                            if (db.vw_Class.Where(q => q.MonitorID.Trim() == accountModel.ID).Any())
+                            {
+                                //此学生为班级负责人
+                                data.IsMonitor = "1";
+                            }
                         }
                         if (accountModel.RoleID.ToString().Trim() == "2")
                         {

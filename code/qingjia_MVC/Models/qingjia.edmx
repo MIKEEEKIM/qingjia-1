@@ -375,6 +375,7 @@
           <Property Name="IsDelete" Type="int" />
           <Property Name="TeacherName" Type="nvarchar" MaxLength="64" />
           <Property Name="SubmitTime" Type="datetime" />
+          <Property Name="AutoAudit" Type="nchar" MaxLength="10" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“imaw_qingjia_new.dbo.vw_LeaveIntership”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -713,7 +714,8 @@
     [vw_Holiday].[TeacherID] AS [TeacherID], 
     [vw_Holiday].[IsDelete] AS [IsDelete], 
     [vw_Holiday].[TeacherName] AS [TeacherName], 
-    [vw_Holiday].[SubmitTime] AS [SubmitTime]
+    [vw_Holiday].[SubmitTime] AS [SubmitTime], 
+    [vw_Holiday].[AutoAudit] AS [AutoAudit]
     FROM [dbo].[vw_Holiday] AS [vw_Holiday]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_LeaveIntership" EntityType="Self.vw_LeaveIntership" store:Type="Views" store:Schema="dbo">
@@ -1255,6 +1257,7 @@
           <Property Name="IsDelete" Type="Int32" />
           <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+          <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_LeaveIntership">
           <Key>
@@ -1924,6 +1927,7 @@
           <EntitySetMapping Name="vw_Holiday">
             <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
               <MappingFragment StoreEntitySet="vw_Holiday">
+                <ScalarProperty Name="AutoAudit" ColumnName="AutoAudit" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

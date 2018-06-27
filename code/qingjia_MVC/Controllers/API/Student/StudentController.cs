@@ -224,23 +224,27 @@ namespace qingjia_MVC.Controllers.API
                     }
 
                     data.leavelistArray = TransformLL(_leaveList);
+                    
                     foreach (var item in leavelist)
                     {
-                        if (item.LeaveType.ToString().Trim() == "1" || item.LeaveType.ToString().Trim() == "2" || item.LeaveType.ToString().Trim() == "3" || item.LeaveType.ToString().Trim() == "4")
+                        if (accountInfo.leaveTypeList.ContainsKey(item.LeaveType.ToString().Trim()))
                         {
-                            data.leaveNum++;
-                        }
-                        if (item.LeaveType.ToString().Trim() == "5")
-                        {
-                            data.weeklyMeetingNum++;
-                        }
-                        if (item.LeaveType.ToString().Trim() == "6" || item.LeaveType.ToString().Trim() == "7")
-                        {
-                            data.selfStudyNum++;
-                        }
-                        if (item.LeaveType.ToString().Trim() == "8")
-                        {
-                            data.classLeaveNum++;
+                            if (item.LeaveType.ToString().Trim() == "1" || item.LeaveType.ToString().Trim() == "2" || item.LeaveType.ToString().Trim() == "3" || item.LeaveType.ToString().Trim() == "4")
+                            {
+                                data.leaveNum++;
+                            }
+                            if (item.LeaveType.ToString().Trim() == "5")
+                            {
+                                data.weeklyMeetingNum++;
+                            }
+                            if (item.LeaveType.ToString().Trim() == "6" || item.LeaveType.ToString().Trim() == "7")
+                            {
+                                data.selfStudyNum++;
+                            }
+                            if (item.LeaveType.ToString().Trim() == "8")
+                            {
+                                data.classLeaveNum++;
+                            }
                         }
                     }
                 }

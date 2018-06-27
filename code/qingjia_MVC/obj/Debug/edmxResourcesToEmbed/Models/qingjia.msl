@@ -358,6 +358,7 @@
     <EntitySetMapping Name="vw_Holiday">
       <EntityTypeMapping TypeName="imaw_qingjia_newModel.vw_Holiday">
         <MappingFragment StoreEntitySet="vw_Holiday">
+          <ScalarProperty Name="AutoAudit" ColumnName="AutoAudit" />
           <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
           <ScalarProperty Name="HolidayID" ColumnName="HolidayID" />
           <ScalarProperty Name="Name" ColumnName="Name" />

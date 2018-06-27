@@ -89,8 +89,10 @@ namespace qingjia_MVC.Controllers.API.User
                             vw_Student studentModel = db.vw_Student.Where(q => q.ST_Num.Trim() == item.StudentID.Trim()).ToList().First();
                             if (studentModel != null)
                             {
-                                studentIDList.Add(item.StudentID.ToString().Trim());
-                                studentList.Add(item.StudentID.Trim(), studentModel);
+                                if (studentIDList.Add(item.StudentID.ToString().Trim()))
+                                {
+                                    studentList.Add(item.StudentID.Trim(), studentModel);
+                                }
                             }
                         }
                     }

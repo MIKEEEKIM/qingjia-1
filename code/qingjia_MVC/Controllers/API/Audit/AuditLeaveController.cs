@@ -1,10 +1,19 @@
-﻿using qingjia_MVC.Common;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.HSSF.Util;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using qingjia_MVC.Common;
 using qingjia_MVC.Models;
 using qingjia_MVC.Models.API;
 using qingjia_MVC.Models.API.Audit;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Web.Http;
 
@@ -213,9 +222,13 @@ namespace qingjia_MVC.Controllers.API.Audit
                     conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
                     conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
                 }
+                else if (state == "5")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
                 else
                 {
-                    return Error("state参数值范围为[0,1,2,3,4]");
+                    return Error("state参数值范围为[0,1,2,3,4,5]");
                 }
 
                 if (leaveTypeID != "0")
@@ -336,9 +349,13 @@ namespace qingjia_MVC.Controllers.API.Audit
                     conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
                     conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
                 }
+                else if (state == "5")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
                 else
                 {
-                    return Error("state参数值范围为[0,1,2,3,4]");
+                    return Error("state参数值范围为[0,1,2,3,4,5]");
                 }
 
                 if (leaveTypeID != "0")
@@ -454,9 +471,13 @@ namespace qingjia_MVC.Controllers.API.Audit
                     conditionsModel.conditions.Add(CreatCondition("StateLeave", "2"));
                     conditionsModel.conditions.Add(CreatCondition("StateBack", "1"));
                 }
+                else if (model.state == "5")
+                {
+                    conditionsModel.conditions.Add(CreatCondition("StateBack", "0"));
+                }
                 else
                 {
-                    return Error("state参数值范围为[0,1,2,3,4]");
+                    return Error("state参数值范围为[0,1,2,3,4,5]");
                 }
 
                 //请假类型搜索
@@ -519,7 +540,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                 vw_New_LeaveList LL = GetLeaveListModel(LL_ID);
                 if (LL != null)
                 {
-                    if (LL.ST_Grade == accountInfo.Grade && LL.ST_TeacherID == accountInfo.userID)
+                    if (LL.ST_Grade.Trim() == accountInfo.Grade && LL.ST_TeacherID.Trim() == accountInfo.userID)
                     {
                         if (LL.StateLeave == "0" && LL.StateBack == "0")
                         {
@@ -542,8 +563,8 @@ namespace qingjia_MVC.Controllers.API.Audit
                             db.SaveChanges();
 
                             //创建线程执行短信操作
-                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
-                            MsgThread.Start(CreatMessage(LL, "go"));
+                            //Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            //MsgThread.Start(CreatMessage(LL, "go"));
 
                             return Success("已同意请假！");
                             #endregion
@@ -608,8 +629,8 @@ namespace qingjia_MVC.Controllers.API.Audit
                             db.SaveChanges();
 
                             //创建线程执行短信操作
-                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
-                            MsgThread.Start(CreatMessage(LL, "back"));
+                            //Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            //MsgThread.Start(CreatMessage(LL, "back"));
 
                             return Success("已同意销假！");
                             #endregion
@@ -660,7 +681,7 @@ namespace qingjia_MVC.Controllers.API.Audit
                 vw_New_LeaveList LL = GetLeaveListModel(model.LL_ID);
                 if (LL != null)
                 {
-                    if (LL.ST_Grade == accountInfo.Grade && LL.ST_TeacherID == accountInfo.userID)
+                    if (LL.ST_Grade.Trim() == accountInfo.Grade && LL.ST_TeacherID.Trim() == accountInfo.userID)
                     {
                         if (LL.StateLeave == "0" && LL.StateBack == "0")
                         {
@@ -675,8 +696,8 @@ namespace qingjia_MVC.Controllers.API.Audit
                             db.SaveChanges();
 
                             //创建线程执行短信操作
-                            Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
-                            MsgThread.Start(CreatMessage(LL, "failed"));
+                            //Thread MsgThread = new Thread(new ParameterizedThreadStart(SendAsync));
+                            //MsgThread.Start(CreatMessage(LL, "failed"));
 
                             return Success("已驳回请假！");
                             #endregion
@@ -758,6 +779,334 @@ namespace qingjia_MVC.Controllers.API.Audit
             }
             #endregion
         }
+
+        #region 节假日去向导出模块
+        [HttpGet, Route("getholidayleavelist")]
+        public ApiResult GetHolidayLeaveList(string access_token, string startTime, string endTime, string classID)
+        {
+            #region 令牌验证
+            result = Check(access_token);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
+            #region 逻辑操作
+            try
+            {
+                AccountInfo accountInfo = GetAccountInfo(access_token);
+                DateTime _startTime = Convert.ToDateTime(startTime);
+                DateTime _endTime = Convert.ToDateTime(endTime);
+                IQueryable<vw_New_LeaveList> list = db.vw_New_LeaveList.Where(q => q.LeaveType.Trim() == "4" && q.IsDelete == 0 && q.StateBack.Trim() == "0");//4 代表节假日请假
+                list = list.Where(q => ((q.LeaveTime <= _startTime && q.BackTime >= _startTime) || (q.LeaveTime <= _endTime && q.BackTime >= _endTime) || (q.LeaveTime <= _startTime && q.BackTime >= _endTime) || (q.LeaveTime >= _startTime && q.BackTime <= _endTime)));
+                if (accountInfo.userRoleID == "1")
+                {
+                    List<vw_Class> classList = db.vw_Class.Where(q => q.MonitorID.Trim() == accountInfo.userID).ToList();
+                    if (classList.Any())
+                    {
+                        string className = classList.First().ClassName.Trim();
+                        list = list.Where(q => q.ST_Class.Trim() == className);
+                    }
+                    else
+                    {
+                        return Error("仅班级负责人账号可以到处节假日去向表！");
+                    }
+                }
+                else if (accountInfo.userRoleID == "2")
+                {
+                    list = list.Where(q => q.ST_Class.Trim() == accountInfo.userName);
+                }
+                else if (accountInfo.userRoleID == "3")
+                {
+                    list = list.Where(q => q.ST_TeacherID.Trim() == accountInfo.userID);
+                }
+                else
+                {
+                    return Error("此角色不支持到处节假日去向！");
+                }
+
+                list = list.OrderBy(q => q.StudentID);
+
+                return Success("获取成功", TransportHolidayData(list.ToList(), classID));
+            }
+            catch (Exception ex)
+            {
+                return SystemError(ex);
+            }
+            #endregion
+        }
+
+        [HttpGet, Route("downloadholidaylist")]
+        public HttpResponseMessage DownLoadExeclData(string access_token, string startTime, string endTime, string classID)
+        {
+            ApiResult result = GetHolidayLeaveList(access_token, startTime, endTime, classID);
+            if (result.status == "success")
+            {
+                try
+                {
+                    T_Class classModel = db.T_Class.Find(classID);
+                    if (classModel == null)
+                    {
+                        return null;
+                    }
+                    string fileName = "节假日去向表--" + classModel.ClassName.Trim() + ".xls";
+                    HttpResponseMessage _result = new HttpResponseMessage(HttpStatusCode.OK);
+                    var stream = ToExcel((List<HolidayTable>)result.data, classModel.ClassName.Trim(), fileName);
+                    _result.Content = new StreamContent(stream);
+                    _result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                    _result.Content.Headers.ContentDisposition.FileName = fileName;
+                    _result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-excel");
+                    _result.Content.Headers.ContentLength = stream.Length;
+                    return _result;
+                }
+                catch
+                {
+                    throw new Exception("生成表格发生错误！");
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 从数据库中查询数据
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="UserID"></param>
+        /// <param name="RoleID"></param>
+        /// <param name="className"></param>
+        private List<HolidayTable> TransportHolidayData(List<vw_New_LeaveList> list, string classID)
+        {
+            List<HolidayTable> tableLeaveList = new List<HolidayTable>();
+            List<vw_Student> studnetList = db.vw_Student.Where(q => q.ClassID.Trim() == classID).OrderBy(q => q.ST_Num).ToList();
+            if (studnetList.Any())
+            {
+                foreach (var item in studnetList)
+                {
+                    HolidayTable model = new HolidayTable();
+                    model.ST_Num = item.ST_Num.Trim();
+                    model.ST_Name = item.ST_Name.Trim();
+                    model.ST_Class = item.ST_Class;
+                    model.Contact = item.ContactOne == null ? "" : item.ContactOne;
+                    model.Tel = item.ST_Tel == null ? "" : item.ST_Tel;
+
+                    model.ST_Go = "留校";
+                    model.TimeLeave = "";
+                    model.TimeBack = "";
+                    model.LeaveWay = "";
+                    model.BackWay = "";
+                    model.Address = "";
+                    foreach (var _item in list)
+                    {
+                        if (_item.StudentID.Trim() == item.ST_Num.Trim())
+                        {
+                            model.ST_Go = _item.Reason;
+                            model.TimeLeave = ((DateTime)_item.LeaveTime).ToString("yyyy-MM-dd HH:mm:ss");
+                            model.TimeBack = ((DateTime)_item.BackTime).ToString("yyyy-MM-dd HH:mm:ss");
+                            model.LeaveWay = _item.LeaveWay;
+                            model.BackWay = _item.BackWay;
+                            model.Address = _item.Address;
+                            break;
+                        }
+                    }
+
+                    tableLeaveList.Add(model);
+                }
+
+                return tableLeaveList;
+            }
+            else
+            {
+                throw new Exception("数据库数据错误，该班级不包含任何学生");
+            }
+        }
+
+        private MemoryStream ToExcel(List<HolidayTable> table_LL, string className, string title)
+        {
+            //文件名称   必须包含 .xls
+            string fileName = "节假日去向表--" + className + ".xls";
+
+            //创建工作簿、工作表
+            HSSFWorkbook newExcel = new HSSFWorkbook();
+            HSSFSheet sheet = (HSSFSheet)newExcel.CreateSheet("离校去向表");
+            setSheet(newExcel, sheet, table_LL, title);
+
+            //输出
+            MemoryStream ms = new MemoryStream();
+            newExcel.Write(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
+
+        private void setSheet(HSSFWorkbook newExcel, HSSFSheet sheet, List<HolidayTable> dt, string title)
+        {
+            #region 设置行宽，列高
+            sheet.SetColumnWidth(0, 30 * 256);
+            sheet.SetColumnWidth(1, 30 * 256);
+            sheet.SetColumnWidth(2, 30 * 256);
+            sheet.SetColumnWidth(3, 30 * 256);
+            sheet.SetColumnWidth(4, 30 * 256);
+            sheet.SetColumnWidth(5, 30 * 256);
+            sheet.SetColumnWidth(6, 30 * 256);
+            sheet.SetColumnWidth(7, 30 * 256);
+            sheet.SetColumnWidth(8, 30 * 256);
+            sheet.SetColumnWidth(9, 30 * 256);
+            sheet.SetColumnWidth(10, 30 * 256);
+            sheet.SetColumnWidth(11, 30 * 256);
+            sheet.SetColumnWidth(12, 30 * 256);
+            sheet.DefaultRowHeight = 15 * 20;
+            #endregion
+
+            #region 设置字体
+            HSSFFont font_title = (HSSFFont)newExcel.CreateFont();
+            font_title.FontHeightInPoints = 10;
+
+            HSSFFont font_name = (HSSFFont)newExcel.CreateFont();
+            font_name.FontHeightInPoints = 7;
+            font_name.IsBold = true;
+
+            HSSFFont font_data = (HSSFFont)newExcel.CreateFont();
+            font_data.FontHeightInPoints = 7;
+            #endregion
+
+            #region 设置样式
+            //1、标题的样式
+            HSSFCellStyle style_title = (HSSFCellStyle)newExcel.CreateCellStyle();
+            style_title.Alignment = HorizontalAlignment.Center;
+            style_title.VerticalAlignment = VerticalAlignment.Center;
+            style_title.SetFont(font_title);
+
+            //2、字段名的样式
+            HSSFCellStyle style_name = (HSSFCellStyle)newExcel.CreateCellStyle();
+            style_name.Alignment = HorizontalAlignment.Center;
+            style_name.VerticalAlignment = VerticalAlignment.Center;
+            style_name.SetFont(font_name);
+            style_name.BorderTop = BorderStyle.Thin;
+            style_name.BorderBottom = BorderStyle.Thin;
+            style_name.BorderLeft = BorderStyle.Thin;
+            style_name.BorderRight = BorderStyle.Thin;
+
+            //3、批次的样式
+            HSSFCellStyle style_batch = (HSSFCellStyle)newExcel.CreateCellStyle();
+            style_batch.Alignment = HorizontalAlignment.Center;
+            style_batch.VerticalAlignment = VerticalAlignment.Center;
+            style_batch.FillPattern = FillPattern.SolidForeground;
+            style_batch.FillForegroundColor = HSSFColor.Grey40Percent.Index;
+            style_batch.SetFont(font_data);
+            style_batch.BorderTop = BorderStyle.Thin;
+            style_batch.BorderBottom = BorderStyle.Thin;
+            style_batch.BorderLeft = BorderStyle.Thin;
+            style_batch.BorderRight = BorderStyle.Thin;
+
+            //4、数据的样式
+            HSSFCellStyle style_data = (HSSFCellStyle)newExcel.CreateCellStyle();
+            style_data.Alignment = HorizontalAlignment.Center;
+            style_data.VerticalAlignment = VerticalAlignment.Center;
+            style_data.SetFont(font_data);
+            style_data.BorderTop = BorderStyle.Thin;
+            style_data.BorderBottom = BorderStyle.Thin;
+            style_data.BorderLeft = BorderStyle.Thin;
+            style_data.BorderRight = BorderStyle.Thin;
+            #endregion
+
+            #region 设置内容
+            //第一行 标题
+            HSSFRow row_title = (HSSFRow)sheet.CreateRow(0);
+            HSSFCell cell_title = (HSSFCell)row_title.CreateCell(0);
+            cell_title.SetCellValue(title);
+            cell_title.CellStyle = style_title;
+            sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, 12));   //合并单元格(起始行，结束行，起始列，结束列)
+
+            //第二行 字段名 
+            HSSFRow row_name = (HSSFRow)sheet.CreateRow(1);
+
+            HSSFCell cell_name_1 = (HSSFCell)row_name.CreateCell(0);
+            cell_name_1.SetCellValue("序号");
+            cell_name_1.CellStyle = style_name;
+
+            HSSFCell cell_name_2 = (HSSFCell)row_name.CreateCell(1);
+            cell_name_2.SetCellValue("学号");
+            cell_name_2.CellStyle = style_name;
+
+            HSSFCell cell_name_3 = (HSSFCell)row_name.CreateCell(2);
+            cell_name_3.SetCellValue("班级");
+            cell_name_3.CellStyle = style_name;
+
+            HSSFCell cell_name_4 = (HSSFCell)row_name.CreateCell(3);
+            cell_name_4.SetCellValue("姓名");
+            cell_name_4.CellStyle = style_name;
+
+            HSSFCell cell_name_5 = (HSSFCell)row_name.CreateCell(4);
+            cell_name_5.SetCellValue("节假日去向");
+            cell_name_5.CellStyle = style_name;
+
+            HSSFCell cell_name_6 = (HSSFCell)row_name.CreateCell(5);
+            cell_name_6.SetCellValue("离校时间");
+            cell_name_6.CellStyle = style_name;
+
+            HSSFCell cell_name_7 = (HSSFCell)row_name.CreateCell(6);
+            cell_name_7.SetCellValue("返校时间");
+            cell_name_7.CellStyle = style_name;
+
+            HSSFCell cell_name_8 = (HSSFCell)row_name.CreateCell(7);
+            cell_name_8.SetCellValue("离校方式");
+            cell_name_8.CellStyle = style_name;
+
+            HSSFCell cell_name_9 = (HSSFCell)row_name.CreateCell(8);
+            cell_name_9.SetCellValue("返校方式");
+            cell_name_9.CellStyle = style_name;
+
+            HSSFCell cell_name_10 = (HSSFCell)row_name.CreateCell(9);
+            cell_name_10.SetCellValue("离校去向地址");
+            cell_name_10.CellStyle = style_name;
+
+            HSSFCell cell_name_11 = (HSSFCell)row_name.CreateCell(10);
+            cell_name_11.SetCellValue("联系人");
+            cell_name_11.CellStyle = style_name;
+
+            HSSFCell cell_name_12 = (HSSFCell)row_name.CreateCell(11);
+            cell_name_12.SetCellValue("联系方式");
+            cell_name_12.CellStyle = style_name;
+
+            HSSFCell cell_name_13 = (HSSFCell)row_name.CreateCell(12);
+            cell_name_13.SetCellValue("签名确认");
+            cell_name_13.CellStyle = style_name;
+
+            //数据
+            int n = 2;
+            int i = 1;
+            foreach (HolidayTable item in dt)
+            {
+                HSSFRow row = (HSSFRow)sheet.CreateRow(n++);//写入行  
+                row.CreateCell(0).SetCellValue(i++);
+                row.CreateCell(1).SetCellValue(item.ST_Num);
+                row.CreateCell(2).SetCellValue(item.ST_Class);
+                row.CreateCell(3).SetCellValue(item.ST_Name);
+                row.CreateCell(4).SetCellValue(item.ST_Go);
+                row.CreateCell(5).SetCellValue(item.TimeLeave);
+                row.CreateCell(6).SetCellValue(item.TimeBack);
+                row.CreateCell(7).SetCellValue(item.LeaveWay);
+                row.CreateCell(8).SetCellValue(item.BackWay);
+                row.CreateCell(9).SetCellValue(item.Address);
+                row.CreateCell(10).SetCellValue(item.Contact);
+                row.CreateCell(11).SetCellValue(item.Tel);
+                row.CreateCell(12).SetCellValue("");
+                foreach (ICell cell in row)
+                {
+                    if (cell.ColumnIndex == 0)
+                    {
+                        cell.CellStyle = style_batch;
+                    }
+                    else
+                    {
+                        cell.CellStyle = style_data;
+                    }
+                }
+            }
+            #endregion
+        }
+        #endregion
 
         #region 发送短信
         /// <summary>

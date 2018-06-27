@@ -353,6 +353,7 @@
     <Property Name="IsDelete" Type="Int32" />
     <Property Name="TeacherName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+    <Property Name="AutoAudit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="vw_LeaveIntership">
     <Key>

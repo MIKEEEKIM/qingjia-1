@@ -381,7 +381,7 @@ namespace qingjia_MVC.Common
                 {
                     #region 请假条打印
                     //上课请假
-                    if (model.LeaveTypeID == "7")
+                    if (model.LeaveTypeID == "8")
                     {
                         //事假、病假
                         if (model.LeaveTypeChildrenID == "2" || model.LeaveTypeChildrenID == "3")

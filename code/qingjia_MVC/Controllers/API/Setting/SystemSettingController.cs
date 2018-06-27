@@ -130,7 +130,6 @@ namespace qingjia_MVC.Controllers.API.Setting
                 foreach (string _item in model.leaveTypeIdList)
                 {
                     int itemID = Convert.ToInt32(model.leaveTypeIdList[i].ToString().Trim());
-                    //int itemEnableMessage = Convert.ToInt32(model.enableMessage[i].ToString().Trim());
                     int itemEnableMessage = model.enableMessage[i] == "true" ? 1 : 0;
                     if (db.T_LeaveType.Find(itemID) != null)
                     {
@@ -469,19 +468,20 @@ namespace qingjia_MVC.Controllers.API.Setting
                     if (holiday != null && holiday.TeacherID == accountInfo.userID)
                     {
 
-                        IQueryable<IGrouping<string, vw_New_LeaveList>> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).OrderByDescending(q => q.SubmitTime).GroupBy(q => q.ST_Class);
+                        IQueryable<IGrouping<string, vw_New_LeaveList>> _LL = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime))).OrderByDescending(q => q.SubmitTime).GroupBy(q => q.ST_Class);
 
                         //待审核
-                        int a = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "0" && q.StateBack.ToString().Trim() == "0").ToList().Count();
+                        int a = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "0" && q.StateBack.ToString().Trim() == "0").ToList().Count();
 
                         //待销假
-                        int b = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "0").ToList().Count();
+                        int b = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "0").ToList().Count();
 
                         //已销假
-                        int c = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "1").ToList().Count();
+
+                        int c = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "1" && q.StateBack.ToString().Trim() == "1").ToList().Count();
 
                         //已驳回
-                        int d = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "2" && q.StateBack.ToString().Trim() == "1").ToList().Count();
+                        int d = db.vw_New_LeaveList.Where(q => q.LeaveType.ToString().Trim() == "4" && q.ST_TeacherID.ToString().Trim() == accountInfo.userID && ((q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.StartTime) || (q.LeaveTime <= holiday.EndTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime <= holiday.StartTime && q.BackTime >= holiday.EndTime) || (q.LeaveTime >= holiday.StartTime && q.BackTime <= holiday.EndTime))).Where(q => q.StateLeave.ToString().Trim() == "2" && q.StateBack.ToString().Trim() == "1").ToList().Count();
 
                         HolidayLeaveListInfo data = new HolidayLeaveListInfo();
                         Dictionary<string, DataList> _ll_info_groupbyclass = new Dictionary<string, DataList>();

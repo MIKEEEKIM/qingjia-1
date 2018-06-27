@@ -431,12 +431,40 @@ namespace qingjia_MVC.Controllers.API
                 T_TeacherLeaveType leaveType = IsLeaveTypeExist(accountInfo.userID, Convert.ToInt32(data.leaveTypeID.ToString().Trim()));
                 if (leaveType != null)
                 {
+                    bool IsAutoAudit = false;
+                    
                     T_New_LeaveList model = new T_New_LeaveList();
 
                     string leaveTimeString = data.leave_date + " " + data.leave_time;
                     string backTimeString = data.back_date + " " + data.back_time;
                     DateTime leaveTime = Convert.ToDateTime(leaveTimeString);
                     DateTime backTime = Convert.ToDateTime(backTimeString);
+                    
+                    #region 节假日请假验证
+                    //验证是否设置节假日请假、是否请假已截止、是否在请假区间内、是否自动通过审批
+                    if (data.leaveTypeID.Trim() == "4")
+                    {
+                        string teacherID = GetTeacherID(accountInfo);
+                        IQueryable<vw_Holiday> holidayModelList = db.vw_Holiday.Where(q => q.IsDelete == 0 && q.TeacherID.Trim() == teacherID).OrderByDescending(q => q.SubmitTime);
+                        if (holidayModelList.Any())
+                        {
+                            vw_Holiday holidayModel = holidayModelList.ToList().First();
+                            if (holidayModel.DeadLine < DateTime.Now)
+                            {
+                                return Error("节假日请假已截止！");
+                            }
+                            if (holidayModel.AutoAudit.Trim() == "1" && leaveTime >= holidayModel.StartTime && backTime <= holidayModel.EndTime)
+                            {
+                                IsAutoAudit = true;
+                            }
+                        }
+                        else
+                        {
+                            return Error("辅导员尚未设置节假日请假信息！");
+                        }
+                    }
+                    #endregion
+                    
                     if (backTime <= leaveTime)
                     {
                         return Error("开始时间不能小于结束时间");
@@ -502,6 +530,15 @@ namespace qingjia_MVC.Controllers.API
                         model.BackWay = data.back_way.Trim();
                         model.Address = data.address.Trim();
                         model.Reason = data.leave_reason.Trim();
+                        
+                        if (Leave(model, IsAutoAudit) == 1)
+                        {
+                            return Success("申请请加成功，请及时联系辅导员审批。");
+                        }
+                        else
+                        {
+                            return Error("保存至数据库失败！");
+                        }
                         #endregion
                     }
                     else
@@ -694,6 +731,56 @@ namespace qingjia_MVC.Controllers.API
             model.SubmitTime = DateTime.Now;
             model.StateLeave = "0";
             model.StateBack = "0";
+            model.RejectReason = "";
+            model.IsDelete = 0;
+            model.PrintTimes = "1";
+
+            db.T_New_LeaveList.Add(model);
+            if (db.SaveChanges() == 1)
+            {
+                //return Success("请假成功，请联系辅导员审批");
+                return 1;
+            }
+            else
+            {
+                //return SystemError();
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 保存请假记录到数据库表格，返回值为插入请假记录成功条数 是否自动审批
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="autoAudit"></param>
+        /// <returns></returns>
+        private int Leave(T_New_LeaveList model, bool autoAudit)
+        {
+            string _LL_ID = "";
+
+            #region 生成请假单号
+            _LL_ID = DateTime.Now.ToString("yyMMdd");
+            string endString = "0001";
+            var leavelist = from T_New_LeaveList in db.T_New_LeaveList where (T_New_LeaveList.ID.StartsWith(_LL_ID)) orderby T_New_LeaveList.ID descending select T_New_LeaveList.ID;
+            if (leavelist.Any())
+            {
+                string leaveNumTop = leavelist.First().ToString().Trim();
+                int end = Convert.ToInt32(leaveNumTop.Substring(6, 4));
+                end++;
+                endString = end.ToString("0000");//按照此格式Tostring
+            }
+            _LL_ID += endString;
+            #endregion
+
+            model.ID = _LL_ID;
+            model.SubmitTime = DateTime.Now;
+            model.StateLeave = "0";
+            model.StateBack = "0";
+            if (autoAudit)
+            {
+                model.StateLeave = "1";
+                model.StateBack = "0";
+            }
             model.RejectReason = "";
             model.IsDelete = 0;
             model.PrintTimes = "1";
